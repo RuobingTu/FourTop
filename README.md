@@ -47,6 +47,7 @@ cd objectSelection
 
 # Create an output directory
 mkdir output
+mkdir obj
 
 # Compile the code
 make
