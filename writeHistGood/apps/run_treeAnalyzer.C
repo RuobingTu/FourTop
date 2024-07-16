@@ -33,37 +33,78 @@ void run_treeAnalyzer(
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau0l_v75OverlapRemovalFTau/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v76For1tau2l/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v75OverlapRemovalFTau/mc/",
-    TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/",
+    TString inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v76WithVLLSample/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/",
-    TString process = "tttt",
+    // TString process = "tttt",
     // TString process = "fakeTau_tauF",
     // TString process = "TTTT",
     // TString process = "ttbar_0l",
     // TString process = "ttbar_2l",
     // TString process = "jetHT_2016E",
-    // TString process = "ttZ",
+    TString process = "ttZ",
+    std::vector<TString> allProcesses = {
+        "VLL_EE_M1000",
+        "VLL_EN_M1000",
+        "VLL_NN_M1000",
+        // "VLL_EE_M600",
+        // "VLL_EN_M600",
+        // "VLL_NN_M600",
+        // "VLL_EE_M800",
+        // "VLL_EN_M800",
+        // "VLL_NN_M800",
+        // "VLL_EE_M700",
+        // "VLL_EN_M700",
+        // "VLL_NN_M700",
+        "tttt",
+        "ttbar_0l",
+        "ttbar_2l",
+        "ttbar_1l",
+        "ttG",
+        "ttZ",  
+        "ttW",
+        "ttH_bb", 
+        "ttH_nonbb", 
+
+        "st_tZq",
+        "st_tW_antitop",
+        "st_tW_top",
+
+        "WJetsToLNu_HT-200To400",
+        "WJetsToLNu_HT-400To600",
+        "WJetsToLNu_HT-600To800",
+        "WJetsToLNu_HT-800To1200",
+        "WJetsToLNu_HT-1200To2500",
+        "WJetsToLNu_HT-2500ToInf",
+
+        // "fakeTau_tauF",
+        // "fakeTau_tauT",
+        // "fakeTau_tauFGen",
+        // "fakeTau_tauTGen",
+    },
     // TString process = "TTto4Q",
     // TString process = "TTto2L2Nu",
-    TString histVersion = "v0_test",
+    TString histVersion = "v0Basictraining1tau1l_VLLm1000",
     // Int_t channel = 0,//0: 1tau1l
     TString channel = "1tau1l",//0: 1tau1l
     // TString channel = "1tau0l",//
     // TString channel = "1tau2l",//
-    Bool_t isTest = kTRUE)
-    // Bool_t isTest = kFALSE)
+    // Bool_t isTest = kTRUE)
+    Bool_t isTest = kFALSE)
 {
+    for(std::vector<TString>::size_type i=0; i<allProcesses.size();i++){
+        process = allProcesses[i];
+        TStopwatch t;
+        t.Start();
+        treeAnalyzer writeBDTHist(inputDir, process, histVersion, channel, isTest);
+        writeBDTHist.Init();
+        writeBDTHist.LoopTree(); //!!!maybe provide cut and weight as parameter here
+        writeBDTHist.Terminate();
 
-    TStopwatch t;
-    t.Start();
-    treeAnalyzer writeBDTHist(inputDir, process, histVersion, channel, isTest);
-    writeBDTHist.Init();
-    writeBDTHist.LoopTree(); //!!!maybe provide cut and weight as parameter here
-    writeBDTHist.Terminate();
-
-    t.Stop();
-    t.Print();
+        t.Stop();
+        t.Print();
+    }
 }
 
 int main(int argc, char const *argv[])
@@ -86,7 +127,7 @@ int main(int argc, char const *argv[])
         version = boost::lexical_cast<std::string>(argv[3]);
         channel = boost::lexical_cast<std::string>(argv[4]);
         isTest = boost::lexical_cast<Bool_t>(argv[5]);
-        run_treeAnalyzer(inputDir, inputProcess, version, channel, isTest);
+        // run_treeAnalyzer(inputDir, inputProcess, version, channel, isTest);
     }
 
     return 0;

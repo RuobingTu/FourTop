@@ -13,16 +13,16 @@ def main():
 
     # inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/inputList_1tau0l.csv.root'
     # inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/training.log'
-    inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v1allVar/inputList_1tau0l.csv.root'
-    inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v1allVar/training.log'
+    inputRoot = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600/inputList_1tau1l_btag.csv.root'
+    inputLog = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600/training.log'
 
     outDir = os.path.dirname(inputRoot)
     
-    vListDir = generateVarList(inputRoot, inputLog)
-    # submitTrainingJobs(vListDir, inputRoot)
+    #vListDir = generateVarList(inputRoot, inputLog)
+    #submitTrainingJobs(vListDir, inputRoot)
 
-    # plot_auc_vs_num_variables(outDir+ '/variableList/' +'BDTTrain/')
-    # plot_auc_vs_num_variables(outDir+ '/variableListv0/' +'BDTTrain/')
+    #plot_auc_vs_num_variables(outDir+ '/variableList/' +'BDTTrain/')
+    plot_auc_vs_num_variables(outDir+ '/variableListv0/' +'BDTTrain/')
 
 
 def get_auc_and_num_variables(root_file):
@@ -97,6 +97,7 @@ def plot_auc_vs_num_variables(input_dir):
     outDir = input_dir + '/results/'
     uf.checkMakeDir(outDir)
     era = uf.getEraFromDir(outDir)
+    era = "2018"
     st.addCMSTextToPad(canvas, era)
     # Save the plot as a PNG file
     canvas.SaveAs( outDir + "auc_vs_num_variables.png")
@@ -104,10 +105,11 @@ def plot_auc_vs_num_variables(input_dir):
 def submitTrainingJobs(vListDir, inputRoot):
     jobDir = vListDir + 'jobs/'
     uf.checkMakeDir(jobDir)
-    exeDir = '/workfs2/cms/huahuil/4topCode/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/'
+    exeDir = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode'
     subScript = jobDir + 'submitJobs.sh'
 
     inputDir = inputRoot.split('/mc/')[0] + '/mc/'
+    inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/"
     outDir = vListDir + 'BDTTrain/'
     uf.checkMakeDir(outDir)
     g_weight = 'global_weight*EVENT_genWeight*EVENT_prefireWeight*PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight*musTopMVAT_weight*btagWPMedium_weight'

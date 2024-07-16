@@ -24,7 +24,9 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
 {
     // TString signal = ifVLL ? "VLLm600" : "tttt";
     std::vector<TString> allProcesses = {
-        "tttt",
+        "VLL_EE_M600",
+        "VLL_EN_M600",
+        "VLL_NN_M600",
         // "VLL_EE_M600",
         // "VLL_EN_M600",
         // "VLL_NN_M600",
@@ -34,6 +36,7 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
         // "VLL_EE_M700",
         // "VLL_EN_M700",
         // "VLL_NN_M700",
+    "tttt",
     "ttbar_0l",
     "ttbar_2l",
     "ttbar_1l",
@@ -54,10 +57,10 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
     "WJetsToLNu_HT-1200To2500",
     "WJetsToLNu_HT-2500ToInf",
 
-    "fakeTau_tauF",
-    "fakeTau_tauT",
-    "fakeTau_tauFGen",
-    "fakeTau_tauTGen",
+    // "fakeTau_tauF",
+    // "fakeTau_tauT",
+    // "fakeTau_tauFGen",
+    // "fakeTau_tauTGen",
 
     };
 
@@ -98,22 +101,22 @@ int tmvaBDT_training(
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v3cut1tau1lSR6thJetpt34_v75OverlapRemovalFTau/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLSample/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/",
-    TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/",
+    TString inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/",
     TString outDir = "output/",
-    Bool_t isTest = true,
+    Bool_t isTest = false,
     // TString variableListCsv = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2017/v8tau1elCut_v60fixeJetBtagBug/1tau1l_v1/variableList/varibleList_16.csv",
     // TString variableListCsv = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/plotting/branch_names.csv",
     // TString variableListCsv = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau0l.csv",
-    TString variableListCsv = "/workfs2/cms/huahuil/4topCode/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau0l.csv",
+    // TString variableListCsv = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau0l.csv",
     // TString variableListCsv = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau2l.csv",
-    // TString variableListCsv = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l.csv",
+    TString variableListCsv = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l.csv",
 // const TCut g_weight = "EVENT_genWeight *EVENT_prefireWeight *PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagShape_weight * btagShapeR ";
-    // const TString g_weight = "global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagWPMedium_weight ") //for btag WP
+    const TString g_weight = "global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagWPMedium_weight ", //for btag WP
     // const TString g_weight = "global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*tauT_IDSF_weight_new*elesTopMVAT_weight*musTopMVAT_weight*btagWPMedium_weight ",
-    const TString g_weight = "event_allWeight_1tau0l", //1tau0l
+    // const TString g_weight = "event_allWeight_1tau0l", //1tau0l
     // const TString channel = "1tau2l"
-    // const TString channel = "1tau1l",
-    const TString channel = "1tau0l",
+    const TString channel = "1tau1l",
+    // const TString channel = "1tau0l",
     // const Bool_t ifVLL=kTRUE
     const TString ifVLL = ""
     ) //for btag WP
@@ -163,7 +166,8 @@ int tmvaBDT_training(
     getProcessesVec(inputDir, processVec, channel, ifVLL);
     for (UInt_t i=0;i<processVec.size(); i++){
         if(processVec.at(i).getTree()->GetEntries()<=0) continue;
-        if(processVec.at(i).isbg(!ifVLL.IsNull())){
+        // if(processVec.at(i).isbg(!ifVLL.IsNull())){
+        if(i>=3){
             std::cout << "bg tree: " << processVec.at(i).getName() << "\n";
             dataloader->AddBackgroundTree(processVec.at(i).getTree());
             if(!isTest){

@@ -24,7 +24,8 @@ void makeRootForCombine_1tau0l(){
     //output file for combine
     // TString outputName = "/publicfs/cms/user/huahuil/TauOfTTTT/2016v1/TMVAOutput/v46_v3addBtagHLTweights/1tau0l_v1/11bins/dataDriven_1tau0l_forCombine.root";
     // TString outputName = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2016/v2Add2Variables_fromV9/1tau0l_HT/dataDriven_1tau0l_forCombine.root";
-    TString outputName = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2016/v0preselection_fromV14/1tau0l_HT/dataDriven_1tau0l_forCombine.root";
+    //TString outputName = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2016/v0preselection_fromV14/1tau0l_HT/dataDriven_1tau0l_forCombine.root";
+    TString outputName = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/tmp";
     TFile *output = new TFile( outputName, "RECREATE" );
 
     //scale to  7679, scale it to the QCD event yield that Fabio estimated by using the fake rate method

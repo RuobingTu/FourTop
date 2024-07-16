@@ -33,6 +33,20 @@ void writeHistToFile( const std::vector<TH1D*> groupedBgsAndSignal, TString plot
 // void writeToCsv( std::vectro<TH1D*> groupedBGsAndSignal  ){
 
 // }
+std::map<TString, Double_t> lumiMap = {
+   // fb-1*1000 = pb-1
+    // https://twiki.cern.ch/twiki/bin/viewauth/CMS/TWikiLUM
+    //https://twiki.cern.ch/twiki/bin/view/CMS/PdmVRun3Analysis#Year_2022
+    {"2016preVFP", 19500}, //"UL2016_preVFP", 19500.0 from Fabio
+    {"2016postVFP", 16810},
+    {"2016", 36310},
+    {"2017", 41480.0},
+    {"2018", 59830.0},
+    {"2022", 	37300},
+    {"2022preEE", 	7875}, 
+    {"2022postEE", 	26337}, 
+};
+
 
 
 void EYandSP_usingClass_v3(){ 

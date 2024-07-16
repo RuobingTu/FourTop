@@ -48,9 +48,9 @@ codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
 # jobVersionName = 'v75AddTauTTTTNoHTCut/'
 # jobVersionName = 'v75OverlapRemovalFTau/'
 # jobVersionName = 'v76For1tau2l/'
-jobVersionName = 'v77ForHLT/'
+# jobVersionName = 'v77ForHLT/'
 # jobVersionName = 'v76WithVLLSample/'
-# jobVersionName = 'v76WithVLLAllMass/'
+jobVersionName = 'v76WithVLLAllMass2/'
 
 #run3
 # jobVersionName = 'v0Testing/'
@@ -92,7 +92,7 @@ def main():
     
 
 
-    onlyMC = False
+    onlyMC = True
 
 
 ###########################################
@@ -129,7 +129,7 @@ def getInputOutDir( jobVersionName, era):
         '2022_13p6/crabNanoPost_2022preEE_v3': '2022preEE',
     }
     inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
-    outputBase = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/'
+    outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/'
     inputDir = inputBase + era +'/'
     outputDir = outputBase + eraDic[era] + '/' +jobVersionName  
     uf.checkMakeDir( outputDir) 

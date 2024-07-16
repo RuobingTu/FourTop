@@ -169,7 +169,7 @@ def addSummedHists( TMVAppDir ):
         if '.root' in ifile:
             print( ifile )
             ifile = TMVAppDir + ifile
-            command = 'root -q \'/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/autoTraining_correlation/sumBGsTogether_Nano.C( \"{}\")\''.format(ifile)
+            command = 'root -q \'/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/autoTraining_correlation/sumBGsTogether_Nano.C( \"{}\")\''.format(ifile)
             print(command)
             process = subprocess.run( command, shell=True )
             output = process.stdout

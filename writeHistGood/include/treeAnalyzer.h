@@ -59,7 +59,7 @@ private:
     Bool_t m_isTest = kTRUE;
     TTree *m_tree;
     TFile *m_file;
-    TString m_era = "2016";
+    TString m_era = "2018";
     Bool_t m_isData = kFALSE;
     Bool_t m_isRun3 = kFALSE;
     TString m_outputFolder;

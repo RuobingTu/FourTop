@@ -450,6 +450,7 @@ def getHistFromFile(fileName, histNames):
     return histograms
     
 def getHistFromFileDic(fileName, regionList, varList, subPro):
+    print(fileName, regionList, varList, subPro)
     file = ROOT.TFile.Open(fileName)
     if not file or file.IsZombie():
         print("Error: Unable to open the file.")
@@ -461,7 +462,9 @@ def getHistFromFileDic(fileName, regionList, varList, subPro):
         for ire in regionList:
             histName = subPro + '_' + ire + '_' + ivar 
             subProHist[ivar][ire] = {}
+            print(fileName, [histName])
             subProHist[ivar][ire][subPro] = getHistFromFile(fileName, [histName])[0]
+
     return subProHist
             
              

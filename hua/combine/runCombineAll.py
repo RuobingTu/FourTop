@@ -2,9 +2,16 @@ import os
 import subprocess
 import sys
 
-import usefulFunc as uf
+#import usefulFunc as uf
 
 #!!!run this with python2 because the CMSSW supports only python2
+
+def checkMakeDir( folder,ifDelete=False) :
+    if not os.path.exists( folder ):
+        os.mkdir( folder )
+    else:
+        if ifDelete:
+            os.system('rm -rf '+folder + '/*')
 
 def main():
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineAddMoreSys_v58addGenBranches/mc/variableHists_v41tau0lGenTauSys/combine_modifyFakeDataError/datacardOnlyBtagCerr2/'
@@ -70,28 +77,31 @@ def main():
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/variableHists_v0BDT1tau0l_3bins/combine/datacard_noPdfAlphaS/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/combine/datacard_mainSys/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/combine/datacard_mainSys/'
-    cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/combine/datacard_mainSys/'
-    
-    #combination
-    # cardDir = 'combinationV6/run2_1tau0l/'
-    # cardDir = 'combinationV6/run2_bothChannels/'
-    # cardDir = 'combinationV6/combinationRun2andRun3/'
-    # cardDir = 'combinationV8/1tau1lCom/'
-    # cardDir = 'combinationV8/run2_1tau1lAnd1tau0l/'
-    # cardDir = 'combinationV8/run2_1tau0l/'
-    # cardDir = 'combinationV9/run2_1tau1l/'
-    # cardDir = 'combinationV9/run2_1tau0l/'
-    # cardDir = 'combinationV9/run2/'
-    # cardDir = 'combinationV9/2022_1tau1l/'
-    # cardDir = 'combinationV9/run2AndRun3/'
+    # cardDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/combine/datacard_mainSys/'
+    #for i in [600,650,700,750,800,850,900,950,1000]:
+    for i in [600]:
+        cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm{i}/combine/datacard_mainSys/"
 
+        #combination
+        # cardDir = 'combinationV6/run2_1tau0l/'
+        # cardDir = 'combinationV6/run2_bothChannels/'
+        # cardDir = 'combinationV6/combinationRun2andRun3/'
+        # cardDir = 'combinationV8/1tau1lCom/'
+        # cardDir = 'combinationV8/run2_1tau1lAnd1tau0l/'
+        # cardDir = 'combinationV8/run2_1tau0l/'
+        # cardDir = 'combinationV9/run2_1tau1l/'
+        # cardDir = 'combinationV9/run2_1tau0l/'
+        # cardDir = 'combinationV9/run2/'
+        # cardDir = 'combinationV9/2022_1tau1l/'
+        # cardDir = 'combinationV9/run2AndRun3/'
+
+            
+        cardToWorkspaces( cardDir )
+        runCombineSig( cardDir, True )
+        runCombineSig( cardDir, False )
+        copyCombineResultsToDir( cardDir )
         
-    cardToWorkspaces( cardDir )
-    runCombineSig( cardDir, True )
-    runCombineSig( cardDir, False )
-    copyCombineResultsToDir( cardDir )
-    
-    runImpact(cardDir+'workspace/datacard_1tau1lSys.root', cardDir+'combineResults/')
+        runImpact(cardDir+'workspace/datacard_1tau1lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_1tau0lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_1tau2lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_comb_1tau1l.root', cardDir+'combineResults/')
@@ -104,7 +114,7 @@ def main():
     
 def runImpact(wf, outFolder):
     impacDir = outFolder+ 'impactResult/'
-    uf.checkMakeDir(impacDir)
+    checkMakeDir(impacDir)
     step1 = 'combineTool.py -M Impacts -d {} -m 125 --doInitialFit --robustFit 1  '.format(wf)
     step2 = 'combineTool.py -M Impacts -d {} -m 125 --robustFit 1 --doFits  '.format(wf)
     step3 = 'combineTool.py -M Impacts -d {} -m 125 -robustFit 1 -o {}/impacts.json '.format(wf, impacDir)
@@ -139,7 +149,7 @@ def copyCombineResultsToDir( cardDir ):
 def runCombineSig( cardDir, isLimit ):
     workspaceDir =  cardDir + 'workspace/'
     resultDir = workspaceDir+'results/'
-    uf.checkMakeDir(resultDir)
+    checkMakeDir(resultDir)
     for ifile in os.listdir( workspaceDir ):
         if ifile.find( 'root')>0:
             iname = '_'+ ifile.split('.root')[0]

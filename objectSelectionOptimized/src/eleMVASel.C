@@ -21,8 +21,8 @@ EleMVASel::EleMVASel(TTree *outTree, const TString era, const Bool_t isData, Boo
 
     //
     TString jsonBase = "../../jsonpog-integration/POG/";
-    cset_eleScale = correction::CorrectionSet::from_file((jsonBase + eleScaleSmear.at(m_era).at(0)).Data());
     std::cout<<"electron scale and smearing files: "<<jsonBase + eleScaleSmear.at(m_era).at(0)<<"\n";
+    cset_eleScale = correction::CorrectionSet::from_file((jsonBase + eleScaleSmear.at(m_era).at(0)).Data());
     for (auto const& corr : *cset_eleScale) {
         std::cout << "eleScale: " << corr.first << "\n";
     }

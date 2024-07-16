@@ -5,9 +5,15 @@ import usefulFunc as uf
 
 def main():
     inputFile = {
-        600: '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v76WithVLLSample/mc/variableHists_v0Basictraining1tau1l_VLL/combine/datacard_noSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        700: '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        800: '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        600: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm600/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        650: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm650/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        700: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        750: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm750/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        800: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        850: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm850/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        900: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm900/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        950: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm950/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        1000: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm1000/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
     }
     
     # outDir = 
@@ -132,7 +138,7 @@ def main():
     canvas.Update()
     canvas.Draw()
 
-    canvas.SaveAs("limits_vs_mass.png")
+    canvas.SaveAs("pngout/limits_vs_mass_rtu_v1.png")
 
 def getCrossSection(mass_points):
     # sumPros = ['VLLm{}'.format(mass) for mass in mass_points]

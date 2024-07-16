@@ -88,7 +88,7 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baselineHardro_btagMTWeight_v76WithVLLAllMass/mc/variableHists_v0dataMC_allCorrectionBtagMT/'
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm600/'
     
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baseline_v3HLTPre/mc/variableHists_v3dataMC_pileupBtagHLTSFNewTTBR/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baselineBtagWeightFix_v3HLTPre/mc/variableHists_v0dataMC_noCorrectionNewTTBR/'
@@ -129,19 +129,19 @@ def main():
     # variables = [ 'bjetsM_HT', 'bjetsM_MHT', 'bjetsM_minDeltaR', 'bjetsM_invariantMass', 'bjetsM_2pt', 'bjetsM_num', 'bjetsM_1pt', 'muonsTopMVAT_1pt', 'elesTopMVAT_1pt', 'bjetsPTM_num', 'bjetsPTT_num'] #for 1tau1l BDT input
     # variables = ['tausT_num', 'tausF_num', 'tausTT_num', 'tausT_1pt', 'tausF_1pt', 'tausTT_1pt', 'tausT_1decayMode', 'tausF_1decayMode', 'tausTT_1decayMode', 'tausT_1genFlavour', 'tausTT_1genFlavour', 'tausF_1genFlavour', 'tausT_leptonsTopMVA_chargeMulti','tausT_leptonsT_invariantMass', 'tausT_1eta', 'tausTT_1lepton1_charge', 'tausTTT_1lepton1_charge']
 
-    input1tau1l = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau1lSRBjet2_v76WithVLLAllMass/mc/BDTTrain/v0allVar/variableList/varibleList_30.csv'
-    variables = read_csv_as_lines(input1tau1l)
-    print(variables)
+    input1tau1l = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final29.csv'
+    #variables = read_csv_as_lines(input1tau1l)
+    #print(variables)
     
-    regionList = ['1tau1lCR1', '1tau1lCR2', '1tau1lSR']
+    regionList = ['1tau1lSR']
     # regionList = ['1tau1lSR']
     # regionList = ['1tau0lSRTest']
     # regionList = ['1tau2lSR']
-    # variables = ['BDT']
+    variables = ['BDT']
     # regionList = ['1tau0lSR', '1tau0lMR', '1tau0lVR', '1tau0lCR']
-    plotName = 'dataVsMC_v3'
+    plotName = 'dataVsMC_v8'
     ifFTau = False
-    ifVLL = ''
+    ifVLL = 'VLLm600'
     # ifVLL = 'VLLm800'
     # ifVLL = 'VLLm700'
     # is1tau0l = True
@@ -195,7 +195,7 @@ def read_csv_as_lines(file_path, delimiter=','):
 def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFakeTau=False, ifVLL='', is1tau0l=False):
     # sigPro = 'tttt' if not ifVLL else 'VLLm600'
     # sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
-    sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
+    sumProList = ['tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
     # sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'VLLm600'] #1tau1l
     # sumProList = ['jetHT','qcd','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] 
     # sumProList = ['jetHT','tt', 'tttt'] # run3 1tau1l for now 
@@ -219,7 +219,7 @@ def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFake
     for variable in variables:
         for iRegion in regionList:       
             # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 500 ) 
-            makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 50, False, False, False, ifVLL) 
+            makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, True, True, ifVLL) 
             # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, True, True) 
             # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, True, True, ifVLL) 
     
