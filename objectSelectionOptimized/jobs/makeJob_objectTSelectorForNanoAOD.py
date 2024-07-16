@@ -79,13 +79,12 @@ jobVersionName = 'v76WithVLLAllMass2/'
 def main():
     # era = '2016'
     # era = '2016APV'
-    # era = '2017'
-    era = '2018'
+    era = '2017'
+    # era = '2018'
     # era = '2022_13p6/crabNanoPost_2022postEE_v3'
     # era = '2022_13p6/crabNanoPost_2022preEE_v3'
     # onlyMC = True
-    dataList = ['jetHT']
-    # dataList = [ 'jetHT', 'singleMu'] 
+    dataList = ['jetHT', 'BTagCSV']
     # dataList = ['singleMu'] 
     # dataList = ['JetMET', 'JetHT']
     # dataList = [ 'Muon']
@@ -103,7 +102,7 @@ def main():
     uf.checkMakeDir(jobsDir)
     isRun3 = uf.isRun3(inputDir)
     print( "era: ", era, 'isRun3=', isRun3 )
-
+    print('version: ', jobVersionName)
 
     inputDirMC = inputDir + 'mc/'
     makeJobsInDir( inputDirMC, outputDir , False, '',  eraOut, isRun3 )

@@ -6,7 +6,7 @@
 class HLTSelector
 {
 public:
-    HLTSelector(TTree *outTree, const TString era, const Bool_t isData = kFALSE, const  Bool_t isRun3= kFALSE);
+    HLTSelector(TTree *outTree, const TString era, const TString processName, const Bool_t isData = kFALSE, const  Bool_t isRun3= kFALSE);
     ~HLTSelector(){};
 
     Bool_t SelectTauTri(const eventForNano *e, const Bool_t ifHLTSel=kFALSE);
@@ -16,6 +16,7 @@ public:
 
 private:
     const TString m_era;
+    const TString m_processName;
     const Bool_t m_isData;
     const Bool_t m_isRun3;
     // output branches
@@ -30,6 +31,7 @@ private:
     Bool_t HLT_PFHT430_SixPFJet40_PFBTagDeepCSV_1p5_ = kFALSE;
     Bool_t HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5_ = kFALSE;
     Bool_t HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5_ = kFALSE;
+    Bool_t HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0_ = kFALSE;
     //dilepton triggers
     Bool_t HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8_ = kFALSE;
     Bool_t HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_ = kFALSE;
@@ -41,6 +43,8 @@ private:
     Bool_t HLT_PFHT430_SixJet40_BTagCSV_p080_ = kFALSE;
     Bool_t HLT_PFHT380_SixJet32_DoubleBTagCSV_p075_ = kFALSE;    // run<299329
     Bool_t HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2_ = kFALSE; // run<=306460 2017 end
+    Bool_t HLT_PFHT1050_ = kFALSE;
+    Bool_t HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07_ = kFALSE;
     //2022
     Bool_t HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59_ = kFALSE;
     Bool_t HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94_ = kFALSE;

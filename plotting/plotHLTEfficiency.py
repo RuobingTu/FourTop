@@ -40,7 +40,10 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450Jet6pt32_v75NoHLTNoTauHT400Jet6pt30/mc/variableHists_v4HLT_4bDifBinningDifBBinC/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v77ForHLT/mc/variableHists_v0HLT_HT480Jet6pt37/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v77ForHLT/mc/variableHists_v1HLT_varyingCutOnBjetBinD/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v77ForHLT/mc/variableHists_v0HLTMeasure/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v77ForHLT/mc/variableHists_v0HLTMeasure/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v77ForHLT/mc/variableHists_v0HLTMeasure/'
+    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79forHLT/mc/variableHists_v0HLTMeasure/'
+
    
     
     isRun3 = uf.isRun3(inputDir)
@@ -53,10 +56,10 @@ def main():
     # plotEfficiencyHLT(inputDirDic, '', isRun3)
     # plotEfficiencyHLT(inputDirDic, '2b', isRun3)
     # plotEfficiencyHLT(inputDirDic, '3b', isRun3)
-    plotEfficiencyHLT(inputDirDic, '4b', isRun3)
+    # plotEfficiencyHLT(inputDirDic, '4b', isRun3)
     
     #plotSF
-    # plotSF(inputDirDic, False, isRun3)
+    plotSF(inputDirDic, False, isRun3)
     
     
    
@@ -137,8 +140,8 @@ def plotSFSingle(de_2D, nu_2D, plotName, canTitle, ifOnlyDraw=False):
     
 def plotEfficiencyHLT(inputDirDic, bjet = '', isRun3 = False):
     # regionList = ['baseline1Muon', 'baseline1Muon_HLT', 'baseline', 'baseline_HLT']
-    # regionList = [f"baseline1Muon{bjet}", f"baseline1Muon{bjet}_HLT", f"baseline{bjet}", f"baseline{bjet}_HLT"]
-    regionList = [f"baseline1Muon{bjet}", f"baseline1Muon{bjet}_HLT", f"baseline{bjet}", f"baseline{bjet}_HLT", f"baselineMuTri{bjet}", f"baselineMuTri{bjet}_HLT"]
+    regionList = [f"baseline1Muon{bjet}", f"baseline1Muon{bjet}_HLT", f"baseline{bjet}", f"baseline{bjet}_HLT"]
+    # regionList = [f"baseline1Muon{bjet}", f"baseline1Muon{bjet}_HLT", f"baseline{bjet}", f"baseline{bjet}_HLT", f"baselineMuTri{bjet}", f"baselineMuTri{bjet}_HLT"]
     
     variableDic = {
         'jets_HT': np.array( [400., 448, 520, 640, 760, 1000,  1240,  1600, 2800] ),
@@ -167,10 +170,10 @@ def plotEfficiencyHLT(inputDirDic, bjet = '', isRun3 = False):
         overlayName = plotDir + 'HLTefficiencyOverlay_' + ivar  + bjet+'_v0' 
         uf.plotOverlay(overlayList, legendList, era, 'HLT efficiency',  overlayName, 'AP', [0.4, 0.3, 0.9, 0.5],  [0, 1.2])
 
-        eff_ttMuTri = plotEffHLT(ivar, variableDic[ivar], f"baselineMuTri{bjet}", f"baselineMuTri{bjet}_HLT", sumProcessPerVar, f"ttMuTriTrueEff{bjet}", 'tt', plotDir, 'tt')
-        overlayList2 = [eff_ttTruth, eff_ttRef, eff_ttMuTri]
-        legendList2 = [ 'tt: true', 'tt: muTri+muOffline', 'tt: muTri']   
-        uf.plotOverlay(overlayList2, legendList2, era, 'HLT efficiency',  overlayName+'_muTri', 'AP', [0.4, 0.3, 0.9, 0.5],  [0, 1.2])
+        # eff_ttMuTri = plotEffHLT(ivar, variableDic[ivar], f"baselineMuTri{bjet}", f"baselineMuTri{bjet}_HLT", sumProcessPerVar, f"ttMuTriTrueEff{bjet}", 'tt', plotDir, 'tt')
+        # overlayList2 = [eff_ttTruth, eff_ttRef, eff_ttMuTri]
+        # legendList2 = [ 'tt: true', 'tt: muTri+muOffline', 'tt: muTri']   
+        # uf.plotOverlay(overlayList2, legendList2, era, 'HLT efficiency',  overlayName+'_muTri', 'AP', [0.4, 0.3, 0.9, 0.5],  [0, 1.2])
   
    
 def group_third_layer(dictionary, grouping_dict): ##!!!seems not working

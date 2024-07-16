@@ -69,9 +69,11 @@ void WriteHist_btagEff::LoopTree(UInt_t entry)
 
         // Bool_t pass = e->jets_num.v() >= 6  && e->jets_HT.v() > 500. && e->jets_6pt.v() > 40. && e->tausT_num.v()>=0;
         // Bool_t pass = e->jets_num.v() >= 6  && e->jets_HT.v() > 550. && e->jets_6pt.v() > 40. && e->tausT_num.v()>=0;
-        Bool_t pass = e->jets_num.v() >= 5  && e->jets_HT.v() > 350. && e->tausT_num.v()>=0; //new
+        // Bool_t pass = e->jets_num.v() >= 5  && e->jets_HT.v() > 350. && e->tausT_num.v()>=0; //new
+        // Bool_t pass = baselineSelection(e, m_isRun3, kFALSE); //! can not have b-tag cut here 
 
-        // if (!(baselineSelection(e)))
+        Bool_t pass = e->jets_num.v() >= 6  && e->jets_HT.v() > 500. && e->jets_6pt.v()>40.;//
+
         if (!(pass))
         {
             continue;

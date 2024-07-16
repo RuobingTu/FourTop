@@ -95,7 +95,7 @@ private:
     LumiAndPVSel lumiAndPVSelection{m_isData, m_era, m_isRun3}; 
     METFilter metFilter{m_era, m_isRun3};                       //!!! for run3
     // osBase muonSelection{m_outTree};
-    HLTSelector HLTselection{m_outTree, m_era, m_isData, m_isRun3};
+    HLTSelector HLTselection{m_outTree, m_era, m_processName, m_isData, m_isRun3};
     EleTopMVASel eleTopMVATSel{m_outTree, m_era, m_isRun3};
     MuSel muSel{m_outTree, m_era, m_isRun3, 2};//muons Tight for both run 2 and run 3
     // MuSel muSelT{m_outTree, m_era, m_isRun3, 3};
@@ -130,7 +130,7 @@ private:
     ULong_t m_jetsTotal = 0;
     ULong_t m_bjetsM = 0;
 
-    TH1D *m_cutflow = new TH1D("OScutflow", "initial: Met: HLT: >=1tauT: >=6jet: >=1bjetM:HT>400", 7, 0, 7);
+    TH1D *m_cutflow = new TH1D("OScutflow", "initial: Met: HLT: >=1tauF: >5jet: >1bjetM:HT>480,6thjet>38", 7, 0, 7);
     TH1D *CF_initial = new TH1D("OS_initial", "OS_initial", 2, -1, 1);
     TH1D *CF_met = new TH1D("OS_MetFilter", "OS_MetFilter", 2, -1, 1);
     TH1D *CF_HLT = new TH1D("OS_HLT", "OS_HLT", 2, -1, 1);

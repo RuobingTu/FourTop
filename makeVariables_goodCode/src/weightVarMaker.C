@@ -136,20 +136,15 @@ WeightVarMaker::WeightVarMaker(TTree *outTree, TString era, Bool_t isData, const
     std::cout << "b tag R file used: " << MV::btagR_map.at(m_era) << "\n";
 
     //btag WP efficieny files
-    btagEffHist_b = TTTT::getHistogramFromFile<TH2D>(MV::btagWPEff_map.at(m_era), "jets_ptEta_genB");
+    btagEffHist_b = TTTT::getHistogramFromFile<TH2D>(MV::btagWPEff_map.at(m_era)+"bEff_B.root", "jets_ptEta_genB");
+    btagEffHist_c = TTTT::getHistogramFromFile<TH2D>(MV::btagWPEff_map.at(m_era)+"bEff_C.root", "jets_ptEta_genC");
+    btagEffHist_l = TTTT::getHistogramFromFile<TH2D>(MV::btagWPEff_map.at(m_era)+"bEff_L.root", "jets_ptEta_genL");
     std::cout << "b tag WP file used: " << MV::btagWPEff_map.at(m_era) << "\n";
-    TString btagEff_b = MV::btagWPEff_map.at(m_era);
-    TString btagEff_c = btagEff_b.ReplaceAll("bEff_B", "bEff_C");
-    TString btagEff_l = btagEff_b.ReplaceAll("bEff_C", "bEff_L");
-    btagEffHist_c = TTTT::getHistogramFromFile<TH2D>(btagEff_c, "jets_ptEta_genC");
-    btagEffHist_l = TTTT::getHistogramFromFile<TH2D>(btagEff_l, "jets_ptEta_genL");
-    btagEffHist_b->Print();
-    btagEffHist_c->Print();
-    btagEffHist_l->Print();
 
     btagTEffHist_b = TTTT::getHistogramFromFile<TH2D>(MV::btagWPTEff_map.at(m_era)+"bEff_B.root", "jets_ptEta_genB");
     btagTEffHist_c = TTTT::getHistogramFromFile<TH2D>(MV::btagWPTEff_map.at(m_era)+"bEff_C.root", "jets_ptEta_genC");
     btagTEffHist_l = TTTT::getHistogramFromFile<TH2D>(MV::btagWPTEff_map.at(m_era)+"bEff_L.root", "jets_ptEta_genL");
+    std::cout<<"b tag Tight WP used: "<<MV::btagWPTEff_map.at(m_era)<<"\n";
     std::cout<<"\n";
 
     // trigger
@@ -160,8 +155,8 @@ WeightVarMaker::WeightVarMaker(TTree *outTree, TString era, Bool_t isData, const
     std::cout<<"trigger SF: "<<triggerSFdir<<"\n\n";
 
     //get FR
-    TFile* file=new TFile("/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450_v75OverlapRemovalFTau/mc/variableHists_v0FR_measure1prong_jetEta/results/fakeRateInPtEta.root", "READ"); 
-    TFile* file3Prong=new TFile("/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450_v75OverlapRemovalFTau/mc/variableHists_v0FR_measureNot1prong_jetEta/results/fakeRateInPtEta.root", "READ"); 
+    TFile* file = new TFile(MV::FR_map.at(m_era).at(0), "READ");
+    TFile* file3Prong = new TFile(MV::FR_map.at(m_era).at(1), "READ");
     std::cout<<"FR files used: "<<file->GetName()<<"\n"<<file3Prong->GetName()<<"\n";
     // Assuming these graphs are already created and stored in the ROOT file
     m_graphs.emplace_back(0.0, 0.8, 1, dynamic_cast<TGraphAsymmErrors*>(file->Get("fakeRate_Eta1")));
@@ -172,9 +167,11 @@ WeightVarMaker::WeightVarMaker(TTree *outTree, TString era, Bool_t isData, const
     m_graphs.emplace_back(1.5, 2.7, 3, dynamic_cast<TGraphAsymmErrors*>(file3Prong->Get("fakeRate_Eta3")));
 
     if(!m_isData){
-        global_weight = TTTT::lumiMap.at(m_era) * TTTT::crossSectionMap.at(m_processName) / TTTT::genSumDic.at(m_processName);
+        // global_weight = TTTT::lumiMap.at(m_era) * TTTT::crossSectionMap.at(m_processName) / TTTT::genSumDic.at(m_processName);//!only BDT training uses this
+        global_weight = TTTT::lumiMap.at(m_era) * TTTT::crossSectionMap.at(m_processName) / TTTT::genSumDic.at(m_era).at(m_processName);//!only BDT training uses this
         std::cout<<"global_weight="<<global_weight<<"\n";
-        std::cout<<"lumi="<<TTTT::lumiMap.at(m_era)<<" crossSection="<<TTTT::crossSectionMap.at(m_processName)<<" genSum="<<TTTT::genSumDic.at(m_processName)<<"\n";
+        // std::cout<<"lumi="<<TTTT::lumiMap.at(m_era)<<" crossSection="<<TTTT::crossSectionMap.at(m_processName)<<" genSum="<<TTTT::genSumDic.at(m_processName)<<"\n";
+        std::cout<<"lumi="<<TTTT::lumiMap.at(m_era)<<" crossSection="<<TTTT::crossSectionMap.at(m_processName)<<" genSum="<<TTTT::genSumDic.at(m_era).at(m_processName)<<"\n";
     }
 
     std::cout << "Done initializing ............\n";
@@ -276,10 +273,7 @@ void WeightVarMaker::makeVariables(EventForMV *e, const Double_t jets_HT,  Doubl
     if(e->tausF_jetPt.GetSize()>0){
         Double_t errUp, errDown, nominal;
         Int_t tauProng =  e->tausF_decayMode.At(0)/5 + 1 ;
-        // std::cout<<"tauProng="<<tauProng<<"\n";
         tauProng = tauProng==1? 1 : 3;
-        // ifFR = TTTT::getFRandError(m_graphs, std::abs(e->tausF_jetEta.At(0)), tauProng, e->tausF_jetPt.At(0), FR_weight, errUp, errDown);
-        // ifFR = TTTT::getFRandError(m_graphs, std::abs(e->tausF_jetEta.At(0)), tauProng, e->tausF_jetPt.At(0), FR_weight, errDown, errUp);
         ifFR = TTTT::getFRandError(m_graphs, std::abs(e->tausF_jetEta.At(0)), tauProng, e->tausF_jetPt.At(0), nominal, errDown, errUp);
         if (!ifFR)
             {

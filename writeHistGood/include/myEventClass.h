@@ -187,6 +187,7 @@ public:
     myBranch<Double_t> jets_5btag{"jets_5btag"};
     myBranch<Double_t> jets_6btag{"jets_6btag"};
     myBranch<Double_t> jets_7btag{"jets_7btag"};
+    myBranch<Double_t> jets_8btag{"jets_8btag"};
 
     myBranch<Double_t> MET_pt{"MET_pt"};
 
@@ -289,8 +290,8 @@ public:
     myBranch<Int_t> tausF_1genFlavour{"tausF_1genFlavour"};
     myBranch<Int_t> tausF_1decayMode{"tausF_1decayMode"};
     myBranch<Int_t> tausF_1prongNum{"tausF_1prongNum"};
-
-
+    myBranch<Double_t> tausF_1Met_transMass{"tausF_1Met_transMass"};
+    myBranch<Double_t> tausF_invariantMass{"tausF_invariantMass"};
 
     myBranch<Int_t> tausM_1genFlavour{"tausM_1genFlavour"};
     myBranch<Int_t> tausT_1decayMode{"tausT_1decayMode"};
@@ -351,7 +352,10 @@ public:
     myBranch<Bool_t> HLT_PFHT430_SixJet40_BTagCSV_p080{"HLT_PFHT430_SixJet40_BTagCSV_p080"};
     myBranch<Bool_t> HLT_PFHT380_SixJet32_DoubleBTagCSV_p075{"HLT_PFHT380_SixJet32_DoubleBTagCSV_p075"};
     myBranch<Bool_t> HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2{"HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2"};
-    //2022
+    myBranch<Bool_t> HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0{"HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0"};
+    myBranch<Bool_t> HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07{"HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07"};
+    myBranch<Bool_t> HLT_PFHT1050{"HLT_PFHT1050"};
+    // 2022
     myBranch<Bool_t> HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59{"HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59"};
     myBranch<Bool_t> HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94{"HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94"};
 
@@ -454,6 +458,7 @@ private:
     {jets_5btag.n(), &jets_5btag},
     {jets_6btag.n(), &jets_6btag},
     {jets_7btag.n(), &jets_7btag},
+    {jets_8btag.n(), &jets_8btag},
 
         {MET_pt.n(), &MET_pt},
 
@@ -533,6 +538,8 @@ private:
         {tausF_1charge.n(), &tausF_1charge},
         {tausF_1decayMode.n(), &tausF_1decayMode},
         {tausF_1prongNum.n(), &tausF_1prongNum},
+        {tausF_1Met_transMass.n(), &tausF_1Met_transMass},
+        {tausF_invariantMass.n(), &tausF_invariantMass},
 
         {tausT_1decayMode.n(), &tausT_1decayMode},
         {tausTT_1decayMode.n(), &tausTT_1decayMode},
@@ -603,6 +610,9 @@ private:
         {HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2.n(), &HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2},
         {HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59.n(), &HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59},
         {HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94.n(), &HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94},
+        {HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0.n(), &HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0},
+        {HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07.n(), &HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07},
+        {HLT_PFHT1050.n(), &HLT_PFHT1050},
 
         {PV_npvsGood.n(), &PV_npvsGood},
     };

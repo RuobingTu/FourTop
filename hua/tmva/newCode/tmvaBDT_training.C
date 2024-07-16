@@ -64,22 +64,23 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
 
     };
 
-    if(!ifVLL.IsNull()){
-        allProcesses.push_back(ifVLL);
-    }
+    // if(!ifVLL.IsNull()){
+    //     allProcesses.push_back(ifVLL);
+    // }
 
     processVec.clear();
-    for(UInt_t i=0; i<allProcesses.size(); i++){
-        TString ifile = inputDir+allProcesses.at(i)+".root";
-        if(channel=="1tau0l"){
-            if(!allProcesses.at(i).Contains("fakeTau")){
-                ifile = inputDir+allProcesses.at(i)+"_tauGen.root";//!important
-            }
-        }else{
-            if(allProcesses.at(i).Contains("fakeTau")){
-                continue;
-            }
-        }
+    // for(UInt_t i=0; i<allProcesses.size(); i++){
+    for(UInt_t i=0; i<allProcesses.at(channel).size(); i++){
+        TString ifile = inputDir+allProcesses.at(channel).at(i)+".root";
+        // if(channel=="1tau0l"){
+        //     if(!allProcesses.at(i).Contains("fakeTau")){
+        //         ifile = inputDir+allProcesses.at(i)+"_tauGen.root";//!important
+        //     }
+        // }else{
+        //     if(allProcesses.at(i).Contains("fakeTau")){
+        //         continue;
+        //     }
+        // }
 
         Process iPro{ifile};
         processVec.push_back(iPro);
@@ -87,15 +88,9 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
 
 }
 
+
 int tmvaBDT_training(
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v4forBDT1tau1lCut_v61fixesLepRemovalBug/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1NewHLTSF1tau1lCut_v64PreAndHLTSel/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0NewHLTSFHT550BinF_v64PreAndHLTSel/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v2cut1tau1l_v64PreAndHLTSel/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau1l_v74AddMETPhi/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau1l_v75AddTauTTTTNoHTCut/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450Cut1tau1l_v75OverlapRemovalFTau/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau0l_v75OverlapRemovalFTau/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau2l_v76For1tau2l/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v5cut1tau1lSR_v75OverlapRemovalFTau/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v3cut1tau1lSR6thJetpt34_v75OverlapRemovalFTau/mc/",

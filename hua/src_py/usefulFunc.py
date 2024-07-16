@@ -569,7 +569,7 @@ def merge_dicts(dict1, dict2):
 
 def isData(subPro):
     isdata = False
-    if ('jetHT' in subPro) or ('singleMu' in subPro):
+    if ('jetHT' in subPro) or ('singleMu' in subPro) or ('BTagCSV' in subPro):
         isdata = True
     if('JetHT' in subPro) or ('Muon' in subPro) or ('JetMET' in subPro):
         isdata = True
@@ -672,11 +672,9 @@ def remove_last_char_if_1(s):
     
 def checkIfInputDic(entry, isRun3):
     ifInDic = False
-    # entryName = drop_last_one(entry) 
     entryName = remove_last_char_if_1(entry)
     # print('entryName=', entryName)
     if not isRun3:
-        # if  entryName in gq.samples: 
         if  entryName in gq.histoGramPerSample.keys(): 
             ifInDic = True
     else:

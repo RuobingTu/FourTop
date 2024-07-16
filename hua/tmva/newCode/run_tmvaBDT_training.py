@@ -36,6 +36,7 @@ def main():
     # g_weight = "event_allWeight_1tau0l" 
     # channel = '1tau0l'
     # outVersion = 'v0'
+    outVersion = 'v1final26Var'
     
     #1tau1l 
     # g_weight = "EVENT_genWeight*PUweight_*EVENT_prefireWeight" 
