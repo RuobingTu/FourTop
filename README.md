@@ -43,10 +43,14 @@ To run the analysis, execute the following:
 
 ```bash
 # Change to the objectSelection directory
-cd objectSelection
+cd myLibrary
+make
+
+cd ../objectSelection
 
 # Create an output directory
 mkdir output
+mkdir obj
 
 # Compile the code
 make
