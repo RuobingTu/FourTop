@@ -1,11 +1,11 @@
 import os
 
 # 文件目录
-directory = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600/variableListv0/'  # 请根据实际情况修改
+directory = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/variableListv0/'  # 请根据实际情况修改
 
 # 要删除的文件序号
-files_to_remove = [10, 13, 14, 15, 20, 21, 23, 24, 26, 30, 32, 34, 36, 38, 39, 40, 42, 43, 44, 45, 47, 48, 50, 51]
-N = 51
+files_to_remove = [4, 11, 12, 15, 16, 17, 18, 23, 25, 26, 26, 27, 28, 29, 30, 31, 33, 34, 36, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 52, 54, 55, 57, 58, 60, 61, 63, 66, 68]
+N = 69
 
 def read_file(filename):
     with open(filename, 'r') as file:

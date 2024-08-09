@@ -195,13 +195,87 @@ int tmvaBDT_training(
     std::cout << trainingSetup << "\n";
     dataloader->PrepareTrainingAndTestTree("", "", trainingSetup); // 60% goes to training, 1tau1l
 
-    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT",
-                            // "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
-                            // "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30");
-                            // "!H:!V:NTrees=850:MinNodeSize=5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");//trainA: increase MinNodeSize
-                            "!H:!V:NTrees=1000:MinNodeSize=5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30:Shrinkage=0.1");//trainB: increase MinNodeSize
+    //factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT",
+    //                        // "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
+    //                        // "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30");
+    //                        // "!H:!V:NTrees=850:MinNodeSize=5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");//trainA: increase MinNodeSize
+    //                        "!H:!V:NTrees=1000:MinNodeSize=5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30:Shrinkage=0.1");//trainB: increase MinNodeSize
     
     // BDT Hyperparameter tuning
+    std::vector<int> nTrees = {500, 750, 1000};
+    std::vector<std::string> minNodeSize = {"2.5%", "5.0%", "7.5%"};
+    std::vector<int> maxDepth = {3, 4, 5};
+    std::vector<int> nCuts = {20, 30, 40};
+
+    double bestROC = -1;
+    TString bestParams;
+
+    for (int nt : nTrees) {
+        for (const std::string &mns : minNodeSize) {
+            for (int md : maxDepth) {
+                for (int nc : nCuts) {
+                    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I:AnalysisType=Classification");
+                    TString methodName = Form("BDT_%d_%s_%d_%d", nt, mns.c_str(), md, nc);
+                    TString params = Form("NTrees=%d:MinNodeSize=%s:MaxDepth=%d:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=%d", nt, mns.c_str(), md, nc);
+                    factory->BookMethod(dataloader, TMVA::Types::kBDT, methodName, params);
+
+                    factory->TrainAllMethods();
+                    factory->TestAllMethods();
+                    factory->EvaluateAllMethods();
+
+                    // Save the output and close the file
+                    outputFile->Write();
+                    outputFile->Close();
+
+                    // Reopen the file to read the ROC curve
+                    TFile *rocFile = TFile::Open(outfileName);
+                    if (!rocFile || rocFile->IsZombie()) {
+                        std::cerr << "Error opening ROC file: " << outfileName << std::endl;
+                        return 1;
+                    }
+
+                    // Print the contents of the file for debugging
+                    rocFile->ls();
+
+                    // Get the ROC curve
+                    TString rocPath = Form("dataset/Method_BDT/%s/MVA_%s_rejBvsS", methodName.Data(), methodName.Data());
+                    TObject *obj = rocFile->Get(rocPath);
+                    if (!obj) {
+                        std::cerr << "Path does not exist: " << rocPath << std::endl;
+                        rocFile->Close();
+                        return 1;
+                    }
+                    TH1 *rocHist = dynamic_cast<TH1*>(obj);
+                    if (!rocHist) {
+                        std::cerr << "Error getting ROC graph at path: " << rocPath << std::endl;
+                        rocFile->Close();
+                        return 1;
+                    }
+
+                    // Calculate AUC from TGraph
+                    double roc = 0.0;
+                    int nBins = rocHist->GetNbinsX();
+                    for (int i = 1; i <= nBins; ++i) {
+                        double binWidth = rocHist->GetBinWidth(i);
+                        double binContent = rocHist->GetBinContent(i);
+                        roc += binContent * binWidth;
+                    }
+                    rocFile->Close();
+                    std::cout << roc << std::endl;
+                    if (roc > bestROC) {
+                        bestROC = roc;
+                        bestParams = params;
+                    }
+                    outputFile = TFile::Open(outfileName, "update");
+                    SafeDelete(factory);
+                }
+            }
+        }
+    }
+
+    std::cout << "Best BDT Parameters: " << bestParams << std::endl;
+    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I:AnalysisType=Classification");
+    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT", bestParams);
 
     // if (Use["BDTB"]) // Bagging
     //   factory->BookMethod( dataloader, TMVA::Types::kBDT, "BDTB",

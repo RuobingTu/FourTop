@@ -1,14 +1,16 @@
 import subprocess 
 import os
+import ROOT
 #!set up Voms credentials first 
 #!also cmsenv, for the xroot dependance wrong
 import input.VLL_Charis as VLL_Charis
+import sys
 
 #!xroot -r for copying directory too slow
 
 
 def copyDir():
-    redirector = 'root://cmsxrootd.hep.wisc.edu//'
+    redirector = 'root://cms-xrd-global.cern.ch/'
     # redirector = ''
     #from Charis: https://gitlab.cern.ch/ckoraka/vll-analysis/-/blob/master/samples/fileLists/Signal_2018.py?ref_type=heads
     sampleDic = {
@@ -20,13 +22,10 @@ def copyDir():
     # 'VLL_EN_M650': '/store/user/ckoraka/VLferm_EWcouplings_4321_m650GeV_EN_to_4b/RunIISummer20UL18_NanoAODv9/230718_212847/0000/',
     # 'VLL_NN_M650': '/store/user/ckoraka/VLferm_EWcouplings_4321_m650GeV_NN_to_4b/RunIISummer20UL18_NanoAODv9/230718_212915/0000/',#done
 
-    'VLL_EE_M700': '/store/user/ckoraka/VLferm_EWcouplings_4321_m700GeV_EE_to_4b/RunIISummer20UL18_NanoAODv9/230718_212943/0000/',
-    'VLL_EN_M700': '/store/user/ckoraka/VLferm_EWcouplings_4321_m700GeV_EN_to_4b/RunIISummer20UL18_NanoAODv9/230718_213011/0000/',
-    'VLL_NN_M700': '/store/user/ckoraka/VLferm_EWcouplings_4321_m700GeV_NN_to_4b/RunIISummer20UL18_NanoAODv9/230718_213039/0000/',
+    'VLL_EE_M600': '/store/mc/RunIISummer20UL18NanoAODv9/VLferm_m600GeV_EE_to_4b_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/2820000/',
+    'VLL_EN_M600': '/store/mc/RunIISummer20UL18NanoAODv9/VLferm_m600GeV_EN_to_4b_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/',
+    'VLL_NN_M600': '/store/mc/RunIISummer20UL18NanoAODv9/VLferm_m600GeV_NN_to_4b_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/',
 
-    'VLL_EE_M750': '/store/user/ckoraka/VLferm_EWcouplings_4321_m750GeV_EE_to_4b/RunIISummer20UL18_NanoAODv9/230718_213110/0000/',
-    'VLL_EN_M750': '/store/user/ckoraka/VLferm_EWcouplings_4321_m750GeV_EN_to_4b/RunIISummer20UL18_NanoAODv9/230718_213135/0000/',
-    'VLL_NN_M750': '/store/user/ckoraka/VLferm_EWcouplings_4321_m750GeV_NN_to_4b/RunIISummer20UL18_NanoAODv9/230718_213202/0000/',
 
     # 'VLL_EE_M800': '/store/user/ckoraka/VLferm_EWcouplings_4321_m800GeV_EE_to_4b/RunIISummer20UL18_NanoAODv9/230718_213240/0000/',
     # 'VLL_EN_M800': '/store/user/ckoraka/VLferm_EWcouplings_4321_m800GeV_EN_to_4b/RunIISummer20UL18_NanoAODv9/230718_213240/0000/',
@@ -40,7 +39,7 @@ def copyDir():
     VLLfile = 'root://cmsxrootd.hep.wisc.edu///store/user/ckoraka/VLferm_EWcouplings_4321_m500GeV_EE_to_4b/RunIISummer20UL18_NanoAODv9/230718_212434/0000/NanoAODv9_10.root'
 
     # outDir = '/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/VVL_600/' 
-    outDir = '/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/' 
+    outDir = '/publicfs/cms/data/TopQuark/Fourtop_VLL/2018/' 
 
     for isam, ifile in sampleDic.items():
         inputDir = redirector + ifile
@@ -48,7 +47,7 @@ def copyDir():
         if not os.path.exists( ioutDir ):
             os.mkdir( ioutDir )
         # command = 'xrdcp -r ' + inputDir + ' ' + ioutDir
-        command = 'xrdcp -r --parallel 5 ' + inputDir + ' ' + ioutDir
+        command = 'xrdcp -r --parallel 3 ' + inputDir + ' ' + ioutDir
         # command = 'xrdcp -r --parallel 5 ' + inputDir + '*.root ' + ioutDir
         print(command)
         # process = subprocess.run([command], shell=True)
@@ -63,24 +62,52 @@ def copyDir():
     # output =  process.stdout
     # print(output)
     
-def copySingleFile():
+def copySingleFile(number):
     for isam, ifile in VLL_Charis.filesetSignal.items():
+        if not f"{number}" in isam: continue
+        #if not 'NN' in isam: continue
         print(isam)
         outName = transform_string(isam) 
         # outDir = '/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/VLL/' + outName + '/'
-        outDir = '/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/VLL/' + outName + '/'
+        outDir = '/publicfs/cms/data/TopQuark/Fourtop_VLL/2018/' + outName + '/'
         
         if not os.path.exists( outDir ):
             os.mkdir( outDir )
         print(outName)
         # if not outName == 'VLL_EE_M500': continue
         # if outName == 'VLL_EE_M500': continue
-        if not '1000' in outName: continue
         
+        #for inano in ifile:
+        ## inputDir = redirector + inano
+        #    command = f'xrdcp {inano} {outDir}'
+        #    print(command)
+        #    
+        #    try:
+        #        process = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=300)
+        #        output = process.stdout
+        #        error = process.stderr
+        #        returncode = process.returncode
+        #        print(f"Output:\n{output}")
+        #        print(f"Error:\n{error}")
+        #        print(f"Return Code: {returncode}")
+        #    except subprocess.TimeoutExpired:
+        #        print(f"Command '{command}' timed out.")
+        #    except Exception as e:
+        #        print(f"An error occurred: {e}")
+
         for inano in ifile:
             # inputDir = redirector + inano
-            command = 'xrdcp ' + inano + ' ' + outDir
+            command = 'xrdcp --verbose ' + inano + ' ' + outDir
             print(command)
+            file_name = inano.split('/')[-1]
+            if os.path.exists(outDir+file_name):
+                root_file = ROOT.TFile.Open(outDir+file_name)
+                if root_file.IsZombie():
+                    print(f'rm {outDir+file_name}')
+                    subprocess.run([f'rm {outDir+file_name}'], shell=True)
+                else:
+                    print(f"{file_name} exists!!!")
+                    continue
             process = subprocess.run([command], shell=True)
             output =  process.stdout
             print(output)
@@ -105,6 +132,9 @@ def transform_string(input_str):
         
 if __name__=='__main__':
     # copyDir()
-    copySingleFile()
+    args = sys.argv
+    if len(args) > 1:
+        first_arg = args[1]
+    copySingleFile(first_arg)
 
 

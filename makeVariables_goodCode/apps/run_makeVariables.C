@@ -57,65 +57,65 @@ void run_objectSelection(
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/2022preEE/v10addBjetPTT/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/2022preEE/v11overlapRemovalTausT/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/2022preEE/v13BetterHLTSel/mc/",
-    TString inputDir = "tttt",
-    std::vector<TString> allProcesses = {
-        //"VLL_EE_M500",
-        //"VLL_EN_M500",
-        //"VLL_NN_M500",
-        //"VLL_EE_M550",
-        //"VLL_EN_M550",
-        //"VLL_NN_M550",
-        "VLL_EE_M600",
-        "VLL_EN_M600",
-        "VLL_NN_M600",
-        "VLL_EE_M650",
-        "VLL_EN_M650",
-        "VLL_NN_M650",
-        "VLL_EE_M700",
-        "VLL_EN_M700",
-        "VLL_NN_M700",
-        "VLL_EE_M750",
-        "VLL_EN_M750",
-        "VLL_NN_M750",
-        "VLL_EE_M800",
-        "VLL_EN_M800",
-        "VLL_NN_M800",
-        "VLL_EE_M850",
-        "VLL_EN_M850",
-        "VLL_NN_M850",
-        "VLL_EE_M900",
-        "VLL_EN_M900",
-        "VLL_NN_M900",
-        "VLL_EE_M950",
-        "VLL_EN_M950",
-        "VLL_NN_M950",
-        "VLL_NN_M1000",
-
-        "tttt",
-        "ttbar_0l",
-        "ttbar_2l",
-        "ttbar_1l",
-        "ttG",
-        "ttZ",  
-        "ttW",
-        "ttH_bb", 
-        "ttH_nonbb", 
-
-        "st_tZq",
-        "st_tW_antitop",
-        "st_tW_top",
-
-        "WJetsToLNu_HT-200To400",
-        "WJetsToLNu_HT-400To600",
-        "WJetsToLNu_HT-600To800",
-        "WJetsToLNu_HT-800To1200",
-        "WJetsToLNu_HT-1200To2500",
-        "WJetsToLNu_HT-2500ToInf",
-    },
+    // TString inputDir = "tttt",
+    //std::vector<TString> allProcesses = {
+    //    //"VLL_EE_M500",
+    //    //"VLL_EN_M500",
+    //    //"VLL_NN_M500",
+    //    //"VLL_EE_M550",
+    //    //"VLL_EN_M550",
+    //    //"VLL_NN_M550",
+    //    "VLL_EE_M600",
+    //    "VLL_EN_M600",
+    //    "VLL_NN_M600",
+    //    "VLL_EE_M650",
+    //    "VLL_EN_M650",
+    //    "VLL_NN_M650",
+    //    "VLL_EE_M700",
+    //    "VLL_EN_M700",
+    //    "VLL_NN_M700",
+    //    "VLL_EE_M750",
+    //    "VLL_EN_M750",
+    //    "VLL_NN_M750",
+    //    "VLL_EE_M800",
+    //    "VLL_EN_M800",
+    //    "VLL_NN_M800",
+    //    "VLL_EE_M850",
+    //    "VLL_EN_M850",
+    //    "VLL_NN_M850",
+    //    "VLL_EE_M900",
+    //    "VLL_EN_M900",
+    //    "VLL_NN_M900",
+    //    "VLL_EE_M950",
+    //    "VLL_EN_M950",
+    //    "VLL_NN_M950",
+    //    "VLL_NN_M1000",
+//
+    //    "tttt",
+    //    "ttbar_0l",
+    //    "ttbar_2l",
+    //    "ttbar_1l",
+    //    "ttG",
+    //    "ttZ",  
+    //    "ttW",
+    //    "ttH_bb", 
+    //    "ttH_nonbb", 
+//
+    //    "st_tZq",
+    //    "st_tW_antitop",
+    //    "st_tW_top",
+//
+    //    "WJetsToLNu_HT-200To400",
+    //    "WJetsToLNu_HT-400To600",
+    //    "WJetsToLNu_HT-600To800",
+    //    "WJetsToLNu_HT-800To1200",
+    //    "WJetsToLNu_HT-1200To2500",
+    //    "WJetsToLNu_HT-2500ToInf",
+    //},
     // TString inputDir = "VLL_EE_M600",
     // TString inputDir = "VLL_EE_M800",
-    TString inputDir = "ttbar_0l",
-    // TString inputDir = "ttbar_1l",
+    // TString inputDir = "ttbar_0l",
+    TString inputDir = "ttbar_1l",
     // TString inputDir = "jetHT_2017f",
     // TString inputDir = "BTagCSV_2017c",
     // TString inputDir = "JetMET2022D",
@@ -132,10 +132,10 @@ void run_objectSelection(
     // Int_t numEntries = 10000)
     Int_t numEntries = 0)
 {   
-    for(std::vector<TString>::size_type i=0; i<allProcesses.size();i++){
+    //for(std::vector<TString>::size_type i=0; i<allProcesses.size();i++){
         TStopwatch t;
         t.Start();
-        inputDir = allProcesses[i];
+        //inputDir = allProcesses[i];
         TString inputDir1 = inputBase + inputDir + "/";
         TString processName = inputDir;
         Bool_t isData = TTTT::getIsData(inputDir1);
@@ -152,7 +152,7 @@ void run_objectSelection(
 
         t.Stop();
         t.Print();
-    }
+    //}
     return;
 }
 
@@ -175,7 +175,7 @@ int main(int argc, char const *argv[])
         inputProcess = boost::lexical_cast<std::string>(argv[2]);
         outputDir = boost::lexical_cast<std::string>(argv[3]);
         numEntries = boost::lexical_cast<Int_t>(argv[4]);
-        // run_objectSelection(inputDir, inputProcess, allProcesses, outputDir, numEntries);
+        run_objectSelection(inputDir, inputProcess, outputDir, numEntries);
         return 0;
     }
 

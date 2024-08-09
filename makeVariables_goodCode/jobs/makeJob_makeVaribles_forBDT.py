@@ -13,7 +13,7 @@ def main():
     # year = '2022'
     # year = '2016'
     # year = '2018'
-    year = '2017'
+    year = '2018'
     # inVersion = 'v67TheoryWeightAdded'
     # inVersion = 'v70BetterHLT'
     # inVersion = 'v71NoHLTNoTau'
@@ -29,11 +29,11 @@ def main():
     # inVersion = 'v77forBtagMeasurement'
     # inVersion = 'v77HadroPresel'
     # inVersion = 'v79forHLT'
-    inVersion = 'v79HadroPresel'
+    inVersion = 'v76WithVLLAllMassOfficial'
     # outVersion = 'v0baselineHardro'
     # outVersion = 'v1baselineHardro_FRweightSys'
     # outVersion = 'v1cut1tau1lSR'
-    outVersion = 'v2cut1tau0lSRTauF'
+    outVersion = 'v2cut1tau1lSRTauF'
     # outVersion = 'v4cut1tau2l'
     
     #2022
@@ -67,7 +67,7 @@ def main():
     
     
     isRun3 = uf.isRun3Era(year)
-    justMC = False
+    justMC = True
     
     
     print('jobVersion:', outVersion + '_'+ inVersion) 
@@ -106,8 +106,8 @@ def main():
 
 
 def getInOutDic( year, inVersion, outVersion, justMC ):
-    inputBase = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/'
-    outputBase = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/'
+    inputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/'
+    outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/'
     # outputBase = '/scratchfs/cms/huahuil/forMVA/'
     inputOutputDic={
         '2016postVFP': 'UL2016_postVFP',
@@ -169,7 +169,8 @@ def generateJobsForDir( inOutList, dirKind, jobDir , isRun3=False):
         uf.checkMakeDir(inOutList[1] +"log/")
         logFile = inOutList[1] +   "log/" + entry + ".log"
         errFile = inOutList[1] +  "log/" + entry +".err"
-        subDirJobs.write( 'hep_sub  '+ processJob  + " -o " + logFile + " -e " + errFile +'\n'   )
+        #subDirJobs.write( 'hep_sub  '+ processJob  + " -o " + logFile + " -e " + errFile +'\n'   )
+        subDirJobs.write( 'hep_sub -os CentOS7 '+ processJob  + " -o " + logFile + " -e " + errFile +'\n'   )
 
     subprocess.run( 'chmod 777 '+jobsDir +'*.sh', shell = True )
     subprocess.run( 'chmod 777 ' + subDirName, shell = True)

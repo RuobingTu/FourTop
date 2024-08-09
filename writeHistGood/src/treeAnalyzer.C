@@ -82,7 +82,7 @@ void treeAnalyzer::Init()
         std::cout << "initializing for 1tau1l\n";
         // std::vector<Double_t> bins = {-0.25, -0.05, 0, 0.05, 0.1, 0.18, 0.4 }; //1tau1l testing
         // std::vector<Double_t> bins = {-0.25, -0.05, 0, 0.04, 0.08, 0.12, 0.16, 0.18, 0.4 }; //1tau1l Bin B
-        std::vector<Double_t> bins = {-0.3, -0.17, -0.04, 0.08, 0.20}; //1tau1l Bin B
+        std::vector<Double_t> bins = {-0.3, -0.17, -0.08, 0.04, 0.20}; //1tau1l Bin B
         SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, bins, sysRegions);//bin3
         // SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, 4, -0.3, 0.4, sysRegions);//testing
         // SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, 3, -0.3, 0.4, sysRegions);//testing
@@ -95,10 +95,10 @@ void treeAnalyzer::Init()
         // TString weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2tau1l1CutHT4006jetpt30_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/
         // TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450Cut1tau1l_v75OverlapRemovalFTau/mc/BDTTrain/v2NoBtag/dataset/weight/TMVAClassification_BDT.weights.xml";
-        variableList = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final29.csv"; 
+        variableList = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_M600_26var.csv"; 
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v5cut1tau1lSR_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v3cut1tau1lSR6thJetpt34_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/TMVAClassification_BDT.weights.xml";
-        weightfile = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM1000/inputList_1tau1l_final29.csv/dataset/weight/TMVAClassification_BDT.weights.xml";
+        weightfile = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM1000/inputList_1tau1l_M600_26var.csv/dataset/weight/TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLSample/mc/BDTTrain/v0allVar/dataset/weight/TMVAClassification_BDT.weights.xml";//!weight file for VLL in 1tau1l
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/BDTTrain/v1VLLM800/dataset/weight/TMVAClassification_BDT.weights.xml";//!VLL 800
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/BDTTrain/v1VLLM700/dataset/weight/TMVAClassification_BDT.weights.xml";//!VLL700

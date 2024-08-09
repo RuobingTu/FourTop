@@ -116,7 +116,7 @@ def main():
     # regionList = ['1tau2lSR']
     variables = ['BDT']
     # regionList = ['1tau0lSR', '1tau0lMR', '1tau0lVR', '1tau0lCR']
-    plotName = 'dataVsMC_v8'
+    plotName = 'dataVsMC_v726'
     ifFTau = False
     ifVLL = 'VLLm600'
     # ifVLL = 'VLLm800'
@@ -128,7 +128,7 @@ def main():
     #1tau0l
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau0l_v75OverlapRemovalFTau/mc/variableHists_v0BDT1tau0l_3bins/'
     # variables = [  'jets_MHT', 'jets_centrality', 'MET_pt', 'jets_aplanarity',  'jets_4largestBscoreSum', 'jets_bScore', 'jets_5pt', 'jets_7pt' , 'bjetsM_HT', 'bjetsT_num', 'bjetsT_MHT',  'bjetsM_minDeltaR', 'bjetsM_invariantMass', 'bjetsM_2MET_stransMass' ] #!1tau0l BDT inputs
-    variables = ['jets_num', 'jets_HT',  'jets_6pt', 'bjetsM_num','jets_bScore', 'tausF_1decayMode',  'tausF_1jetPt', 'tausF_1jetEtaAbs', 'tausF_1prongNum', 'tausF_num']#!fake rate validation
+    # variables = ['jets_num', 'jets_HT',  'jets_6pt', 'bjetsM_num','jets_bScore', 'tausF_1decayMode',  'tausF_1jetPt', 'tausF_1jetEtaAbs', 'tausF_1prongNum', 'tausF_num']#!fake rate validation
     # variables = [ 'tausF_prongNum', 'tausF_charge', 'tausF_1decayMode', 'tausL_1ptFRWeight', 'tausL_1etaAbsFRWeight' , 'tausF_1jetPtFRWeight', 'tausF_1eta', 'PV_npvs', 'tausF_1pt', 'jets_HT', 'jets_bScore', 'jets_bScoreMultiply', 'jets_4largestBscoreSum', 'jets_4largestBscoreMulti', 'bjetsM_invariantMass', 'jets_1pt', 'jets_2pt','jets_3pt', 'jets_4pt', 'jets_5pt', 'jets_6pt', 'jets_num', 'bjetsM_num']  
     # regionList = ['1tau0lCR', '1tau0lCRGen', '1tau0lCRLTauNotT_Weighted', '1tau0lCRLTauNotTGen_Weighted']
     # regionList = ['1tau0lVR', '1tau0lVRGen', '1tau0lVRLTauNotT_Weighted', '1tau0lVRLTauNotTGen_Weighted'] # new MR
@@ -138,7 +138,7 @@ def main():
     # regionList = ['1tau0lCR']
     # regionList = ['1tau0lSR']
     # variables = ['BDT']
-    regionList = ['1tau0lVR', '1tau0lMR', '1tau0lCR', '1tau0lSR']
+    # regionList = ['1tau0lVR', '1tau0lMR', '1tau0lCR', '1tau0lSR']
     # ifFTau = True #if use fakeTau bg and other bg with genTau requirement
 
     
@@ -182,7 +182,8 @@ def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFake
             sumProList.insert(1, 'fakeTau')
             plotName = plotName + 'fakeTau'
         else:
-            sumProList.append('qcd')
+            # sumProList.append('qcd')
+            pass
     if ifVLL:
         # sumProList.append('VLLm600')
         # sumProList.append('VLLm800')
@@ -510,6 +511,10 @@ def getHists(nominal,  legendOrder, ifBlind, doSystmatic, ifStackSignal = False,
     colourPerSample = {
         'tttt':kBlue,
         'VLLm600':TColor.GetColor("#D10363"),
+        'VLLm650':TColor.GetColor("#D10363"),
+        'VLLm750':TColor.GetColor("#D10363"),
+        'VLLm850':TColor.GetColor("#D10363"),
+        'VLLm900':TColor.GetColor("#D10363"),
         # 'VLLm600':kMagenta,
         'VLLm800': TColor.GetColor("#D10363"),
         'VLLm700': TColor.GetColor("#D10363"),

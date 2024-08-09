@@ -13,8 +13,8 @@ def main():
 
     # inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/inputList_1tau0l.csv.root'
     # inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/training.log'
-    inputRoot = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600/inputList_1tau1l_btag.csv.root'
-    inputLog = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600/training.log'
+    inputRoot = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/inputList_1tau1l_btag.csv.root'
+    inputLog = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/training.log'
 
     outDir = os.path.dirname(inputRoot)
     
@@ -76,7 +76,26 @@ def plot_auc_vs_num_variables(input_dir):
     num_vars_array = array.array('d', num_vars_sorted)
     aucs_array = array.array('d', aucs_sorted)
     graph = ROOT.TGraph(len(num_vars), num_vars_array, aucs_array)
-
+    tmp_delta = []
+    bad_list = []
+    notgood_list = []
+    print(len(num_vars))
+    for i in range(1, len(num_vars)):
+        tmp_delta.append([num_vars_array[i],aucs_array[i]-aucs_array[i-1]])
+    for i in range(len(tmp_delta)):
+        if tmp_delta[i][1] < 0:
+            bad_list.append(tmp_delta[i])
+        elif tmp_delta[i][1] < 0.002:
+            notgood_list.append(tmp_delta[i])
+    #print(bad_list)
+    #print(notgood_list)
+    total_list = bad_list + notgood_list
+    print(len(total_list))
+    num_vars_remove_list = [int(item[0])-4 for item in total_list]
+    notgood_var_remove_list = [int(item[0])-4 for item in notgood_list]
+    print(sorted(notgood_var_remove_list))
+    print(sorted(num_vars_remove_list))
+    
     graph.SetTitle("AUC as a Function of Number of Input Variables;Number of Input Variables;AUC")
     graph.SetMarkerStyle(20)
 

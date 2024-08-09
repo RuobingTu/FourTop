@@ -55,7 +55,7 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/variableHists_v0BDT1tau0l_3bins/' 
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/'#!1tau1l TTTT
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm650/'#!1tau1l TTTT
     #run3 
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baseline_v2leptonsNameChange/mc/variableHists_v0NoSystematic/' 
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0baseline_v2leptonsNameChange/mc/variableHists_v0NoSystematic/' 
@@ -63,7 +63,7 @@ def main():
     channel = '1tau1l' 
     # channel = '1tau2l'
     # ifVLL = True
-    ifVLL = False
+    ifVLL = True
    
    
    
@@ -82,7 +82,7 @@ def main():
     # proList = ['tttt', 'tt', 'fakeTau', 'ttX', 'singleTop', 'WJets'] #!1tau0l
     # proList = ['tttt', 'tt', 'ttX', 'singleTop', 'WJets', 'VLLm700'] #!1tau0l
     # proList = ['tttt', 'tt', 'ttX', 'singleTop', 'WJets', 'VLLm800'] #!1tau0l
-    proList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
+    proList = ['VLLm1000','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
     allSubPro = uf.getAllSubPro(proList, isRun3)
     print(allSubPro)
 
@@ -128,7 +128,7 @@ def main():
 def getSysHist(summedHistDicAllSys, allSubPro,inputDir, outFile, isRun3=False):
     #loop through all subProcess
     for isub in allSubPro:
-        if 'jetHT' in isub or 'singleMu' in isub or 'JetMET' in isub or 'JetHT' in isub or 'Muon' in isub: continue
+        if 'jetHT' in isub or 'singleMu' in isub or 'JetMET' in isub or 'JetHT' in isub or 'Muon' in isub or "BTagCSV" in isub: continue
         print(isub)
         ifile = inputDir + isub + '.root'
         iroot = ROOT.TFile(ifile, 'READ')

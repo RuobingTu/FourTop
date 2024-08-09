@@ -21,9 +21,9 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/myLibrary/
 
 #for xgboost
-# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/xgboost/1.3.3/lib64/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/xgboost/1.3.3/lib64/
 export PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/cms/cmssw/CMSSW_12_2_4/external/slc7_amd64_gcc900/bin/:$PATH
-# export LD_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/py3-correctionlib/2.0.0-0c4f44c8dd5561d8c0660135feeb81f4/lib/python3.9/site-packages/correctionlib/lib/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/py3-correctionlib/2.0.0-0c4f44c8dd5561d8c0660135feeb81f4/lib/python3.9/site-packages/correctionlib/lib/:$LD_LIBRARY_PATH
 
 #for cmake
 export PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc900/external/cmake/3.18.2/bin/:$PATH

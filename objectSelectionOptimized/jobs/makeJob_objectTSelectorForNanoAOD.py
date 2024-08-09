@@ -50,7 +50,7 @@ codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
 # jobVersionName = 'v76For1tau2l/'
 # jobVersionName = 'v77ForHLT/'
 # jobVersionName = 'v76WithVLLSample/'
-jobVersionName = 'v76WithVLLAllMass2/'
+jobVersionName = 'v76WithVLLAllMassOfficial/'
 
 #run3
 # jobVersionName = 'v0Testing/'
@@ -79,7 +79,7 @@ jobVersionName = 'v76WithVLLAllMass2/'
 def main():
     # era = '2016'
     # era = '2016APV'
-    era = '2017'
+    era = '2018'
     # era = '2018'
     # era = '2022_13p6/crabNanoPost_2022postEE_v3'
     # era = '2022_13p6/crabNanoPost_2022preEE_v3'
@@ -104,6 +104,7 @@ def main():
     print( "era: ", era, 'isRun3=', isRun3 )
     print('version: ', jobVersionName)
 
+    #inputDirMC = inputDir #+ 'mc/'
     inputDirMC = inputDir + 'mc/'
     makeJobsInDir( inputDirMC, outputDir , False, '',  eraOut, isRun3 )
     if not onlyMC:
@@ -127,8 +128,9 @@ def getInputOutDir( jobVersionName, era):
         '2022_13p6/crabNanoPost_2022postEE_v3': '2022postEE',
         '2022_13p6/crabNanoPost_2022preEE_v3': '2022preEE',
     }
+    #inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
     inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
-    outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/'
+    outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/'
     inputDir = inputBase + era +'/'
     outputDir = outputBase + eraDic[era] + '/' +jobVersionName  
     uf.checkMakeDir( outputDir) 
@@ -217,7 +219,7 @@ def makeJobsInDir( inputDir, outputDir, isData, dataSet, era, isRun3):
                 
                 logFile = kOutDirLog + smallFile + ".log"
                 errFile = kOutDirLog + smallFile + ".err"
-                sub_oneProcess.write( "hep_sub " + iSmallJobName + " -o " + logFile + " -e " + errFile + "\n")
+                sub_oneProcess.write( "hep_sub -os CentOS7 " + iSmallJobName + " -o " + logFile + " -e " + errFile + "\n")
 
         os.popen('chmod 777 '+ jobScriptsFolder + sample_k + "/*sh")
         sub_oneProcess.close()

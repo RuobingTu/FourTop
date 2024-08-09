@@ -56,23 +56,23 @@ void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t
         Int_t bjetM_num = m_isRun3? bjetPTMVarMaker.getJet_num(): bjetMVarMaker.getJet_num();
         if (baselineSel)
         {
-            // if (!(jetVarMaker.getHT() > 200. && jetVarMaker.getJet_num() >=4 && bjetM_num >= 2)) //!1tau2l basleline selection
+            if (!(jetVarMaker.getHT() > 200. && jetVarMaker.getJet_num() >=4 && bjetM_num >= 2)) //!1tau2l basleline selection
             // if (!(jetVarMaker.getHT() > 550 && jetVarMaker.getJet_6pt() > 40 && jetVarMaker.getJet_num() >=6 )) //!!!for btag-efficiency measurement
-            if(!(jetVarMaker.getJet_num()>= 6 && bjetM_num>=2 && jetVarMaker.getJet_6pt()>38. && jetVarMaker.getHT()>480.))//!!!1tau1l and 1tau1l baseline selection
+            //if(!(jetVarMaker.getJet_num()>= 6 && bjetM_num>=2 && jetVarMaker.getJet_6pt()>38. && jetVarMaker.getHT()>480.))//!!!1tau1l and 1tau1l baseline selection
             {
                 continue;
             }
-            if(bjetM_num<4){//!
-                if(!(jetVarMaker.getHT()>500. && jetVarMaker.getJet_6pt()>40.)){
-                    continue;
-                }
-            }
+            //if(bjetM_num<4){//!
+            //    if(!(jetVarMaker.getHT()>500. && jetVarMaker.getJet_6pt()>40.)){
+            //        continue;
+            //    }
+            //}
         }
         if(tau1e1Sel){
             // if(!(jetVarMaker.getJet_num()>=7 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){
             // if(!(jetVarMaker.getJet_num()>= 6 && bjetM_num >= 3 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1&& jetVarMaker.getJet_6pt()>34. )){//!1tau1l SR
-            // if(!(jetVarMaker.getJet_num()>= 7 && bjetM_num >= 3 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){//!1tau1l SR
-            if(! ((eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1) ){//!test!
+            if(!(jetVarMaker.getJet_num()>= 7 && bjetM_num >= 3 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){//!1tau1l SR
+            // if(! ((eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1) ){//!test!
             // if(!(jetVarMaker.getJet_num()>= 7 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){//!1tau1l SR loosed for more tt events
             // if(!(jetVarMaker.getJet_num()>= 8 && bjetM_num >= 3 && tauFVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==0  )){ //!1tau0lSR, can not add tauT cut, for fake tau estimation later
             // if(!(jetVarMaker.getJet_num()>= 4 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==2 )){ //!1tau2lSR
@@ -111,14 +111,14 @@ void MakeVariablesMain::Terminate()
         if (!m_isRun3)
         {
             if(m_processName.Contains("VLL")){
-                chain2.Add(m_inputDir + "NanoAODv9*.root");
+                chain2.Add(m_inputDir + "*.root");
             }else{
-                chain2.Add(m_inputDir + "outTree*.root");
+                chain2.Add(m_inputDir + "*.root");
             }
         }
         else
         {
-            chain2.Add(m_inputDir + "tree*.root");
+            chain2.Add(m_inputDir + "*.root");
         }
         // chain2.Merge(m_output, 2000);
         TTree *Runs = chain2.CloneTree();

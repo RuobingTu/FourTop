@@ -4,7 +4,7 @@ import sys
 import ROOT
 import usefulFunc as uf
 
-sys.path.insert(1, '/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/autoTraining_correlation/')
+sys.path.insert(1, '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/autoTraining_correlation/')
 import plotAUC
 
 
@@ -12,7 +12,7 @@ def main(
     # resultDir = '/publicfs/cms/user/huahuil/TauOfTTTT/2016v1/TMVAOutput/v46_v3addBtagHLTweights/1tau1l_v1/AppResults/datacard/sumDC/combineResults/'
     # resultDir = '/publicfs/cms/user/huahuil/TauOfTTTT/2016v1/TMVAOutput/v46_v3addBtagHLTweights/1tau1l_v1/AppResults_11bins/datacard/sumDC/combineResults/'
     # resultDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2016/v3extra1tau1lCut_v41addVertexSelection/1tau1l_v0/AppResults_30bins/datacard/sumDC_10/combineResults/'
-    resultDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2017/v3extra1tau1lCut_v41addVertexSelection/1tau1l_v0/AppResults_30bins/datacard/sumDC_10/combineResults/'
+    resultDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm600/combine/datacard_mainSys/combineResults/'
         ):
     variable_nums, mediumLimits = getMediumLimit( resultDir, False )
     variable_numsSig, mediumSigs = getMediumLimit( resultDir, True )
