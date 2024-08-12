@@ -33,8 +33,8 @@ void run_objectSelection(
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v75NoHLTNoTauHT400Jet6pt30/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v77ForHLT/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v76WithVLLSample/mc/",
-    TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v76WithVLLAllMass/mc/",
-    // TString inputBase = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/UL2018/v76WithVLLAllMass2/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v76WithVLLAllMass/mc/",
+    TString inputBase = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/UL2018/v76WithVLLAllMassOfficial/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/", 
 
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/2022postEE/v0for2022NoHLT/mc/",
@@ -115,7 +115,7 @@ void run_objectSelection(
     // TString inputDir = "VLL_EE_M600",
     // TString inputDir = "VLL_EE_M800",
     // TString inputDir = "ttbar_0l",
-    TString inputDir = "ttbar_1l",
+    TString inputDir = "VLL_EE_M600",
     // TString inputDir = "jetHT_2017f",
     // TString inputDir = "BTagCSV_2017c",
     // TString inputDir = "JetMET2022D",
@@ -126,7 +126,7 @@ void run_objectSelection(
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/Prompt2022/v0Testing/data/",
     // TString inputDir = "JetMET_G",
     // TString inputDir = "output",
-    TString outputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/",
+    TString outputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/",
     // Int_t numEntries = 100000)
     // Int_t numEntries = 3000)
     // Int_t numEntries = 10000)

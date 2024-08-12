@@ -105,7 +105,7 @@ def main():
     print('version: ', jobVersionName)
 
     #inputDirMC = inputDir #+ 'mc/'
-    inputDirMC = inputDir + 'mc/'
+    inputDirMC = inputDir #+ 'mc/'
     makeJobsInDir( inputDirMC, outputDir , False, '',  eraOut, isRun3 )
     if not onlyMC:
         for idata in dataList:
@@ -128,10 +128,10 @@ def getInputOutDir( jobVersionName, era):
         '2022_13p6/crabNanoPost_2022postEE_v3': '2022postEE',
         '2022_13p6/crabNanoPost_2022preEE_v3': '2022preEE',
     }
-    #inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
-    inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
+    inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
+    #inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
     outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/'
-    inputDir = inputBase + era +'/'
+    inputDir = inputBase + era + '/mc' + '/'
     outputDir = outputBase + eraDic[era] + '/' +jobVersionName  
     uf.checkMakeDir( outputDir) 
     return inputDir, outputDir, eraDic[era]

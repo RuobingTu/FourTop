@@ -41,7 +41,7 @@ void run_treeAnalyzer(
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v77HadroPresel/mc/", 
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v77HadroPresel/data/", 
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79forHLT/mc/", //!for HLT
-    TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79HadroPresel/mc/", 
+    TString inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/", 
 
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v1TauSFNew_v9addTauTT/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0baseline_v10addBjetPTT/mc/",
@@ -49,37 +49,79 @@ void run_treeAnalyzer(
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0NoSel_v13BetterHLTSel/mc/",
 
     TString process = "tttt",
+    std::vector<TString> allProcesses = {
+        "VLL_EE_M600",
+        "VLL_EN_M600",
+        "VLL_NN_M600",
+        // "VLL_EE_M600",
+        // "VLL_EN_M600",
+        // "VLL_NN_M600",
+        // "VLL_EE_M800",
+        // "VLL_EN_M800",
+        // "VLL_NN_M800",
+        // "VLL_EE_M700",
+        // "VLL_EN_M700",
+        // "VLL_NN_M700",
+        "tttt",
+        "ttbar_0l",
+        "ttbar_2l",
+        "ttbar_1l",
+        "ttG",
+        "ttZ",  
+        "ttW",
+        "ttH_bb", 
+        "ttH_nonbb", 
+
+        "st_tZq",
+        "st_tW_antitop",
+        "st_tW_top",
+
+        "WJetsToLNu_HT-200To400",
+        "WJetsToLNu_HT-400To600",
+        "WJetsToLNu_HT-600To800",
+        "WJetsToLNu_HT-800To1200",
+        "WJetsToLNu_HT-1200To2500",
+        "WJetsToLNu_HT-2500ToInf",
+
+        // "fakeTau_tauF",
+        // "fakeTau_tauT",
+        // "fakeTau_tauFGen",
+        // "fakeTau_tauTGen",
+    },
     // TString process = "VLL_EN_M600",
     // TString process = "fakeTau_tauF",
     // TString process = "jetHT_2018d",
     // TString process = "BTagCSV_2017f",
     // TString process = "ttbar_0l",
     // TString process = "ttbar_1l",
-    TString histVersion = "v0_test",
-    Bool_t isTest = kTRUE)
+    TString histVersion = "plot_VLL_M600",
+    Bool_t isTest = kFALSE)
 // Bool_t isTest = kFALSE)
 {
-    TStopwatch t;
-    t.Start();
+    for(std::vector<TString>::size_type i=0; i<allProcesses.size();i++){
+        process = allProcesses[i];
+        TStopwatch t;
+        t.Start();
 
-    WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);//
-    // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau
-    // WriteHist_btagEff writeHist(inputDir, process, histVersion, isTest);
-    // WriteHist_btagShapeR writeHist(inputDir, process, histVersion, isTest);
-    // WH_fakeRate writeHist(inputDir, process, histVersion, isTest);
-    // WH_HLTeff writeHist(inputDir, process, histVersion, isTest);
+        WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);//
+        // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau
+        // WriteHist_btagEff writeHist(inputDir, process, histVersion, isTest);
+        // WriteHist_btagShapeR writeHist(inputDir, process, histVersion, isTest);
+        // WH_fakeRate writeHist(inputDir, process, histVersion, isTest);
+        // WH_HLTeff writeHist(inputDir, process, histVersion, isTest);
 
-    writeHist.Init();
-    UInt_t entry = 0;
-    if (isTest)
-    {
-        entry = 5000;
+        writeHist.Init();
+        UInt_t entry = 0;
+        if (isTest)
+        {
+            entry = 5000;
+        }
+        writeHist.LoopTree(entry); //!!!maybe provide cut and weight as parameter here
+        writeHist.Terminate();
+
+        t.Stop();
+        t.Print();
     }
-    writeHist.LoopTree(entry); //!!!maybe provide cut and weight as parameter here
-    writeHist.Terminate();
-
-    t.Stop();
-    t.Print();
 }
 
 int main(int argc, char const *argv[])
@@ -100,7 +142,7 @@ int main(int argc, char const *argv[])
         inputProcess = boost::lexical_cast<std::string>(argv[2]);
         version = boost::lexical_cast<std::string>(argv[3]);
         isTest = boost::lexical_cast<Bool_t>(argv[4]);
-        run_treeAnalyzer(inputDir, inputProcess, version, isTest);
+        //run_treeAnalyzer(inputDir, inputProcess, version, isTest);
     }
 
     return 0;

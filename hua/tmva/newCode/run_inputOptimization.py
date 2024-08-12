@@ -128,7 +128,7 @@ def submitTrainingJobs(vListDir, inputRoot):
     subScript = jobDir + 'submitJobs.sh'
 
     inputDir = inputRoot.split('/mc/')[0] + '/mc/'
-    inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/"
+    inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/"
     outDir = vListDir + 'BDTTrain/'
     uf.checkMakeDir(outDir)
     g_weight = 'global_weight*EVENT_genWeight*EVENT_prefireWeight*PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight*musTopMVAT_weight*btagWPMedium_weight'
@@ -145,7 +145,7 @@ def submitTrainingJobs(vListDir, inputRoot):
             command = './my_program {} {} 0 {} {} {} {}'.format(inputDir, outDir, iListPath, g_weight, channel, ifVLL)
             makeIjob(command, exeDir, jobDir + iList + '.sh')
 
-            sub_script.write('hep_sub {} -o {} -e {}\n'.format(jobDir + iList + '.sh', logDir+iList+'.log', logDir+iList+'.err'))
+            sub_script.write('hep_sub -os CentOS7 {} -o {} -e {}\n'.format(jobDir + iList + '.sh', logDir+iList+'.log', logDir+iList+'.err'))
 
     os.system('chmod 777 {}'.format(subScript))
     print('subjobs: ', subScript)

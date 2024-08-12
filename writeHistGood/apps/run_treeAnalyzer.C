@@ -33,7 +33,7 @@ void run_treeAnalyzer(
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau0l_v75OverlapRemovalFTau/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v76For1tau2l/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v75OverlapRemovalFTau/mc/",
-    TString inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/",
+    TString inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v76WithVLLSample/mc/",
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/",
@@ -45,9 +45,9 @@ void run_treeAnalyzer(
     // TString process = "jetHT_2016E",
     TString process = "ttZ",
     std::vector<TString> allProcesses = {
-        "VLL_EE_M1000",
-        "VLL_EN_M1000",
-        "VLL_NN_M1000",
+        "VLL_EE_M500",
+        "VLL_EN_M500",
+        "VLL_NN_M500",
         // "VLL_EE_M600",
         // "VLL_EN_M600",
         // "VLL_NN_M600",
@@ -85,7 +85,7 @@ void run_treeAnalyzer(
     },
     // TString process = "TTto4Q",
     // TString process = "TTto2L2Nu",
-    TString histVersion = "v0Basictraining1tau1l_VLLm1000",
+    TString histVersion = "v0Basictraining1tau1l_VLLm500",
     // Int_t channel = 0,//0: 1tau1l
     TString channel = "1tau1l",//0: 1tau1l
     // TString channel = "1tau0l",//

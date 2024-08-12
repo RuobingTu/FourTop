@@ -2,7 +2,7 @@
 #include "../include/variablesFunctions.h"
 
 void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t numEntries)
-{
+{   
     ULong_t entryCount = 0;
     if (numEntries <= 0)
     {
@@ -13,10 +13,10 @@ void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t
     while (m_reader.Next() && entryCount < numEntries)
     {
         entryCount++;
-        m_cutflow->Fill(0);
         if(entryCount==1){
             std::cout << "baselineSel=" << baselineSel << "  tau1e1Sel=" << tau1e1Sel << "\n";
         }
+        m_cutflow->Fill(0);
         // if (entryCount % (numEntries / 10) == 0)//!causing running time issue in jobs
         // {
         //     std::cout << "Processing: " << (100 * entryCount / numEntries) << "%\r" << std::flush;
@@ -56,9 +56,9 @@ void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t
         Int_t bjetM_num = m_isRun3? bjetPTMVarMaker.getJet_num(): bjetMVarMaker.getJet_num();
         if (baselineSel)
         {
-            if (!(jetVarMaker.getHT() > 200. && jetVarMaker.getJet_num() >=4 && bjetM_num >= 2)) //!1tau2l basleline selection
+            //if (!(jetVarMaker.getHT() > 200. && jetVarMaker.getJet_num() >=4 && bjetM_num >= 2)) //!1tau2l basleline selection
             // if (!(jetVarMaker.getHT() > 550 && jetVarMaker.getJet_6pt() > 40 && jetVarMaker.getJet_num() >=6 )) //!!!for btag-efficiency measurement
-            //if(!(jetVarMaker.getJet_num()>= 6 && bjetM_num>=2 && jetVarMaker.getJet_6pt()>38. && jetVarMaker.getHT()>480.))//!!!1tau1l and 1tau1l baseline selection
+            if(!(jetVarMaker.getJet_num()>= 6 && bjetM_num>=2 && jetVarMaker.getJet_6pt()>38. && jetVarMaker.getHT()>480.))//!!!1tau1l and 1tau1l baseline selection
             {
                 continue;
             }
@@ -72,7 +72,6 @@ void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t
             // if(!(jetVarMaker.getJet_num()>=7 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){
             // if(!(jetVarMaker.getJet_num()>= 6 && bjetM_num >= 3 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1&& jetVarMaker.getJet_6pt()>34. )){//!1tau1l SR
             if(!(jetVarMaker.getJet_num()>= 7 && bjetM_num >= 3 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){//!1tau1l SR
-            // if(! ((eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1) ){//!test!
             // if(!(jetVarMaker.getJet_num()>= 7 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){//!1tau1l SR loosed for more tt events
             // if(!(jetVarMaker.getJet_num()>= 8 && bjetM_num >= 3 && tauFVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==0  )){ //!1tau0lSR, can not add tauT cut, for fake tau estimation later
             // if(!(jetVarMaker.getJet_num()>= 4 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==2 )){ //!1tau2lSR
