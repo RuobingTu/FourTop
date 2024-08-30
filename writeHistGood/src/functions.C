@@ -1,6 +1,5 @@
 #include <fstream>
 #include "../include/functions.h"
-
 namespace WH
 {
 
@@ -33,12 +32,12 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
     SP_d jets_HT_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_HT", "HT(GeV)", m_processName, 10, 480, 1800, regionsForVariables, &(e->jets_HT));
     SP_d jets_MHT_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_MHT", "MHT(GeV)", m_processName, 20, 350, 1800, regionsForVariables, &(e->jets_MHT));
     SP_d jets_transMass_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_transMass", "m_{T}^{jets}", m_processName, 10, 350, 1800, regionsForVariables, &(e->jets_transMass));
-    SP_d jets_minDeltaR_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_minDeltaR", "min(#Delta R_{i,j})", m_processName, 10, 0, 2, regionsForVariables, &(e->jets_minDeltaR));
+    SP_d jets_minDeltaR_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_minDeltaR", "min(#Delta R_{i,j}(jets))", m_processName, 10, 0, 2, regionsForVariables, &(e->jets_minDeltaR));
     SP_d jets_bScore_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_bScore", "#sum_{i=all jets} score_{i}^{b tag}", m_processName, 10, 0, 4.5, regionsForVariables, &(e->jets_bScore));
     SP_d jets_avaregeDeltaR_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_average_deltaR", "average(#Delta R)^{jets}", m_processName, 10, 1.2, 3.2, regionsForVariables, &(e->jets_average_deltaR));
     SP_d jets_4largestBscoreSum_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_4largestBscoreSum", "#sum_{i=4 highest} bscore_{i}^{jet}}", m_processName, 10, 0, 4, regionsForVariables, &(e->jets_4largestBscoreMulti));
     SP_d jets_4largestBscoreMulti_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_4largestBscoreMulti", "#sqrt{#prod_{i=4 highest} bscore_{i}^{jet}}", m_processName, 10, 0, 1, regionsForVariables, &(e->jets_4largestBscoreMulti));
-    SP_d jets_HTDivideMET_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_HTDivideMET", "HT/MET", m_processName, 10, 0, 20, regionsForVariables, &(e->jets_HTDivideMET));
+    SP_d jets_HTDivideMET_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_HTDivideMET", "HT/MET", m_processName, 10, 0, 12, regionsForVariables, &(e->jets_HTDivideMET));
     SP_d jets_METDivideHT_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_METDivideHT", "MET/HT", m_processName, 10, 0, 1, regionsForVariables, &(e->jets_METDivideHT));
     SP_d jets_sphericity_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_sphericity", "sphericity", m_processName, 10, 0, 1, regionsForVariables, &(e->jets_sphericity));
     SP_d jets_aplanarity_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_aplanarity", "aplanarity", m_processName, 10, 0, 0.5, regionsForVariables, &(e->jets_aplanarity));
@@ -61,16 +60,16 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
     SP_d jets_6btag_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_6btag", "6th jet btag",m_processName, 40, 0, 1, regionsForVariables, &(e->jets_6btag));
     SP_d jets_7btag_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_7btag", "7th jet btag",m_processName, 40, 0, 1, regionsForVariables, &(e->jets_7btag));
     SP_d jets_8btag_class = std::make_shared<histsForRegionsMap<Double_t>>("jets_8btag", "8th jet btag",m_processName, 40, 0, 1, regionsForVariables, &(e->jets_8btag));
-    SP_d MET_pt_class = std::make_shared<histsForRegionsMap<Double_t>>("MET_pt", "MET", m_processName, 10, 0, 500, regionsForVariables, &(e->MET_pt));
+    SP_d MET_pt_class = std::make_shared<histsForRegionsMap<Double_t>>("MET_pt", "MET", m_processName, 10, 0, 350, regionsForVariables, &(e->MET_pt));
 
     SP_d bjetsM_HT_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_HT", "HT^{b jets}", m_processName, 10, 25, 700, regionsForVariables, &(e->bjetsM_HT));
     SP_d bjetsM_MHT_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_MHT", "MHT^{b jets}", m_processName, 10, 25, 700, regionsForVariables, &(e->bjetsM_HT));
     SP_d bjetsM_invariantMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_invariantMass", "m^{b jets}", m_processName, 10, 0, 1000, regionsForVariables, &(e->bjetsM_invariantMass));
     SP_d bjetsM_transMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_transMass", "m_{T}^{b jets}", m_processName, 10, 0, 1000, regionsForVariables, &(e->bjetsM_transMass));
     SP_d bjetsM_minDeltaR_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_minDeltaR", "min(#Delta R_{b jets})", m_processName, 6, 0, 5, regionsForVariables, &(e->bjetsM_minDeltaR));
-    SP_d bjetsM_2leptons2_stransMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2leptons2_stransMass", "m_{T2}^{2 leptons and 2 b jets}", m_processName, 10, 0, 1000, regionsForVariables, &(e->bjetsM_2leptons2_stransMass));
-    SP_d bjetsM_2tau1lep1_stransMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2tauT1lep1_stransMass", "m_{T2}^{#tau and lep and 2 b jets}", m_processName, 10, 0, 1000, regionsForVariables, &(e->bjetsM_2tauT1lep1_stransMass));
-    SP_d bjetsM_2MET_stransMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2MET_stransMass", "m_{T2}^{MET and 2 b jets}", m_processName, 10, 0, 1000, regionsForVariables, &(e->bjetsM_2MET_stransMass));
+    SP_d bjetsM_2leptons2_stransMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2leptons2_stransMass", "m_{T2}^{2 leptons and 2 b jets}", m_processName, 10, 0, 400, regionsForVariables, &(e->bjetsM_2leptons2_stransMass));
+    SP_d bjetsM_2tau1lep1_stransMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2tauT1lep1_stransMass", "m_{T2}^{#tau and lep and 2 b jets}", m_processName, 10, 0, 400, regionsForVariables, &(e->bjetsM_2tauT1lep1_stransMass));
+    SP_d bjetsM_2MET_stransMass_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2MET_stransMass", "m_{T2}^{MET and 2 b jets}", m_processName, 10, 0, 400, regionsForVariables, &(e->bjetsM_2MET_stransMass));
     SP_d bjetsM_leptons_minDeltaR_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_leptons_minDeltaR", "min(#Delta R_{b jets and lep})", m_processName, 10, 0, 5, regionsForVariables, &(e->bjetsM_leptons_minDeltaR));
     SP_d bjetsM_1pt_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_1pt", "p_{T}^{1st bjet}", m_processName, 10, 25, 600, regionsForVariables, &(e->bjetsM_1pt));
     SP_d bjetsM_2pt_class = std::make_shared<histsForRegionsMap<Double_t>>("bjetsM_2pt", "p_{T}^{2nd bjet}", m_processName, 10, 25, 500, regionsForVariables, &(e->bjetsM_2pt)); 
@@ -107,8 +106,12 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
     SP_d tausF_1pt_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_1pt", "p_{T}^{1st fakeble#tau}", m_processName, 10, 20, 200, regionsForVariables, &(e->tausF_1pt));
     SP_d tausF_1jetEtaAbs_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_1jetEtaAbs", "#eta^{tau's mother jet}", m_processName, 10, -2.4, 2.4, regionsForVariables, &(e->tausF_1jetEtaAbs));
     SP_d tausF_1jetPt_class = std::make_shared<histsForRegionsMap<Double_t>>( "tausF_1jetPt", "p_{T}^{F#tau's mother jet}", m_processName, 10, 20, 200, regionsForVariables, &(e->tausF_1jetPt));
-    SP_d tausF_1Met_transMass_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_1Met_transMass", "m_{T}^{F#tau and MET}", m_processName, 10, 0, 500, regionsForVariables, &(e->tausF_1Met_transMass));
-    SP_d tausF_invariantMass_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_invariantMass", "m^{F#tau}", m_processName, 10, 0, 300, regionsForVariables, &(e->tausF_invariantMass));
+    SP_d tausF_1Met_transMass_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_1Met_transMass", "m_{T}^{F#tau and MET}", m_processName, 10, 0, 250, regionsForVariables, &(e->tausF_1Met_transMass));
+    SP_d tausF_invariantMass_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_invariantMass", "m^{F#tau}", m_processName, 10, 0, 50, regionsForVariables, &(e->tausF_invariantMass));
+    SP_d tausF_jet1_Met_transMass_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_jet1_Met_transMass", "m_{T}^{F#tau's mother jet and MET}", m_processName, 10, 0, 250, regionsForVariables, &(e->tausF_jet1_Met_transMass));
+    SP_d tausF_jet_invariantMass_class = std::make_shared<histsForRegionsMap<Double_t>>("tausF_jet_invariantMass", "m^{F#tau's mother jet}", m_processName, 10, 0, 50, regionsForVariables, &(e->tausF_jet_invariantMass));
+
+
 
     SP_d tausTT_1pt_class = std::make_shared<histsForRegionsMap<Double_t>>("tausTT_1pt", "p_{T}^{1st TT#tau}", m_processName, 10, 20, 200, regionsForVariables, &(e->tausTT_1pt));
 
@@ -223,6 +226,8 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
     histsForRegion_vec.push_back(tausF_1jetPt_class);
     histsForRegion_vec.push_back(tausF_1Met_transMass_class);
     histsForRegion_vec.push_back(tausF_invariantMass_class);
+    histsForRegion_vec.push_back(tausF_jet1_Met_transMass_class);
+    histsForRegion_vec.push_back(tausF_jet_invariantMass_class);
 
 
     histsForRegion_vec.push_back(tausTT_1pt_class);
@@ -260,30 +265,34 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
 void readVariableList(TString variableListCsv, std::vector<TString> &variablesName, std::vector<Float_t> &variablesForReader, std::map<TString, Float_t> &varForReaderMap, std::vector<std::variant<Int_t, Double_t>> &variablesOriginAll)
 {
     std::cout << "reading varibleList: " << variableListCsv << "\n";
-    std::ifstream fin(variableListCsv);
+    // std::ifstream fin(variableListCsv);
+    std::ifstream fin(variableListCsv.Data());
     std::string line;
     TString ivariable;
     variablesName.clear();
     variablesOriginAll.clear();
     variablesForReader.clear();
+    varForReaderMap.clear();
     while (getline(fin, line))
     {
+        line.erase(line.find_last_not_of(" \n\r\t")+1);
+        if (line.empty()) {
+            continue; // Skip empty lines
+        }
+
         ivariable = line;
-        if (line.size() > 0)
+        std::cout << "ivariable =" << ivariable << "\n";
+        variablesName.push_back(ivariable);
+        variablesForReader.push_back(0.0); // tree reader can only read float
+        varForReaderMap[ivariable] = 0.0;
+        if (ivariable.Contains("number") || ivariable.Contains("num") || ivariable.Contains("charge"))
         {
-            std::cout << "ivariable =" << ivariable << "\n";
-            variablesName.push_back(ivariable);
-            variablesForReader.push_back(0.0); // tree reader can only read float
-            varForReaderMap[ivariable] = 0.0;
-            if (ivariable.Contains("number") || ivariable.Contains("num") || ivariable.Contains("charge"))
-            {
-                std::cout << "int ivariable =" << ivariable << "\n";
-                variablesOriginAll.push_back(0);
-            }
-            else
-            {
-                variablesOriginAll.push_back(0.0);
-            }
+            std::cout << "int ivariable =" << ivariable << "\n";
+            variablesOriginAll.push_back(0);
+        }
+        else
+        {
+            variablesOriginAll.push_back(0.0);
         }
     }
     fin.close();
@@ -373,4 +382,55 @@ TString getProcessName(const TString processName, Bool_t isRun3){
     "QCD_PT-470to600",
     "QCD_PT-600to800",
 };
+
+void getChannelSys(std::vector<TString>& sysRegions, TString region, TString era){
+    sysRegions.push_back(region);
+    sysRegions.push_back(region + "_CMS_pileup_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_pileup_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_prefiring_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_prefiring_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_eff_t_vsJet_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_eff_t_vsJet_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_eff_t_vsMu_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_eff_t_vsMu_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_eff_t_vsEle_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_eff_t_vsEle_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_tttt_eff_e_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_tttt_eff_e_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_tttt_eff_m_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_tttt_eff_m_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_jes_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_jes_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_hf_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_hf_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_lf_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_lf_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_hfstats1_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_hfstats1_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_hfstats2_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_hfstats2_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_lfstats1_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_lfstats1_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_lfstats2_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_lfstats2_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_cferr1_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_cferr1_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_btag_shape_cferr2_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_btag_shape_cferr2_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_tttt_eff_hlt_stats_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_tttt_eff_hlt_stats_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_eff_bWPM_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_eff_bWPM_" + era + "Down");
+    sysRegions.push_back(region + "_CMS_tau_FR_" + era + "Up");
+    sysRegions.push_back(region + "_CMS_tau_FR_" + era + "Down");
+    sysRegions.push_back(region + "_pdf_" + era + "Up");
+    sysRegions.push_back(region + "_pdf_" + era + "Down");
+    sysRegions.push_back(region + "_pdfAlphaS_" + era + "Up");
+    sysRegions.push_back(region + "_pdfAlphaS_" + era + "Down");
+    sysRegions.push_back(region + "_QCDscale_Re_" + era + "Up");
+    sysRegions.push_back(region + "_QCDscale_Re_" + era + "Down");
+    sysRegions.push_back(region + "_QCDscale_Fa_" + era + "Up");
+    sysRegions.push_back(region + "_QCDscale_Fa_" + era + "Down");
 }
+
+};

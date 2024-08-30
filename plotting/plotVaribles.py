@@ -1,14 +1,10 @@
-
 import math
 from array import array
-import numpy as np
 import csv
 
 import usefulFunc as uf
 from ROOT import *
 import setTDRStyle as st
-
-
 
 def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1fixedTauProng_v64noHLTSel/mc/variableHists_v0dataMC_jets6pt42/'
@@ -67,7 +63,7 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/'
-    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_plot_VLL_M600/'
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/mc/variableHists_v0BasicBDTtraining1tau1lCR1_VLLm600/'
     
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baseline_v3HLTPre/mc/variableHists_v3dataMC_pileupBtagHLTSFNewTTBR/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baselineBtagWeightFix_v3HLTPre/mc/variableHists_v0dataMC_noCorrectionNewTTBR/'
@@ -98,57 +94,60 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0NoSel_v13BetterHLTSel/mc/variableHists_v5_looseBaselineBtag2TTauHT500Jet6_pileupSF/'
 
     # variables = ['jets_num']
-    # variables = ['jets_num', 'jets_HT', 'jets_5pt', 'jets_4pt', 'jets_6pt', 'jets_7pt', 'bjetsM_num', 'bjetsM_HT', 'tausT_1decayMode', 'tausT_1pt', 'tausT_1lepton1_charge', 'tausT_1genFlavour']
-    # variables = ['jets_HT', 'jets_6pt',  'jets_5pt','jets_4pt', 'jets_num', 'bjetsM_num', 'bjetsT_num', 'tausT_num', 'tausTT_num', 'tausTTT_num','tausM_num', 'tausTT_1lepton1_charge', 'tausTTT_1lepton1_charge', 'tausT_1lepton1_charge', 'tausM_1lepton1_charge', 'tausM_1genFlavour', 'tausT_1genFlavour', 'tausTT_1genFlavour']#1tau1l SR, basic variables
-    # variables = ['tausT_1lepton1_deltaR', 'jets_sphericity', 'jets_centrality' , 'jets_rationHT_4toRest', 'jets_minDeltaR', 'jets_METDivideHT', 'jets_average_deltaR', 'jets_aplanarity', 'bjetsM_tausT_minDeltaR', 'bjetsM_leptons_minDeltaR', 'bjetsM_minDeltaR', 'bjetsM_2tauT1lep1_stransMass', 'tausT_1lepton1_deltaR', 'tausT_1lepton1Met1_stransMass', 'tausT_1Met_transMass'] #BDT input
+    # variables = ['jets_num', 'jets_HT', 'jets_5pt', 'jets_4pt', 'jets_6pt', 'jets_7pt', 'bjetsM_num', 'bjetsT_num', 'bjetsM_HT', 'tausT_1decayMode', 'tausT_1pt', 'tausT_1lepton1_charge', 'tausT_1genFlavour']
     # variables = ['jets_HT', 'jets_6pt',  'jets_5pt','jets_num',  'bjetsM_num', 'bjetsT_num', 'tausT_num', 'tausTT_num', 'tausTTT_num','tausT_1genFlavour', 'tausTT_1genFlavour', 'tausTTT_1genFlavour']#1tau0l region 
     # variables = ['jets_HT', 'jets_6pt',  'jets_5pt','jets_num', 'bjetsPTM_num', 'bjetsPTT_num', 'bjetsM_num', 'bjetsT_num', 'tausT_num', 'tausTT_num', 'tausM_num', 'tausTT_1lepton1_charge', 'tausTTT_1lepton1_charge', 'tausT_1lepton1_charge', 'tausM_1lepton1_charge', 'tausM_1genFlavour', 'tausT_1genFlavour', 'tausTT_1genFlavour']
-    # variables = ['jets_HT', 'jets_6pt',  'jets_5pt','jets_num', 'bjetsPTM_num', 'bjetsPTT_num', 'bjetsM_num', 'bjetsT_num', 'tausT_num', 'tausTT_num', 'tausM_num',  'tausM_1genFlavour', 'tausT_1genFlavour', 'tausTT_1genFlavour', 'tausT_leptons_charge']#1tau2l
-    # variables = [ 'bjetsM_HT', 'bjetsM_MHT', 'bjetsM_minDeltaR', 'bjetsM_invariantMass', 'bjetsM_2pt', 'bjetsM_num', 'bjetsM_1pt', 'muonsTopMVAT_1pt', 'elesTopMVAT_1pt', 'bjetsPTM_num', 'bjetsPTT_num'] #for 1tau1l BDT input
-    # variables = ['tausT_num', 'tausF_num', 'tausTT_num', 'tausT_1pt', 'tausF_1pt', 'tausTT_1pt', 'tausT_1decayMode', 'tausF_1decayMode', 'tausTT_1decayMode', 'tausT_1genFlavour', 'tausTT_1genFlavour', 'tausF_1genFlavour', 'tausT_leptonsTopMVA_chargeMulti','tausT_leptonsT_invariantMass', 'tausT_1eta', 'tausTT_1lepton1_charge', 'tausTTT_1lepton1_charge']
 
     input1tau1l = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final29.csv'
     #variables = read_csv_as_lines(input1tau1l)
     #print(variables)
     
-    regionList = ['1tau1lSR']
+    #regionList = ['1tau1lCR1']
     #regionList = ['newtree']
-    # regionList = ['1tau1lSR']
+    regionList = ['1tau1lCR1']
     # regionList = ['1tau2lSR']
     variables = ['BDT']
-    variables = [
-    "jets_centrality",
-    "tausT_1pt",
-    "bjetsT_MHT",
-    "jets_4largestBscoreMulti",
-    "bjetsT_2pt",
-    "bjetsT_invariantMass",
-    "bjetsT_1pt",
-    "jets_1btag",
-    "bjetsM_num",
-    "jets_sphericity",
-    "MET_pt",
-    "jets_2btag",
-    "bjetsM_minDeltaR",
-    "jets_METDivideHT",
-    "bjetsM_2MET_stransMass",
-    "jets_1pt",
-    "jets_3btag",
-    "jets_5pt",
-    "jets_5btag",
-    "bjetsM_leptons_minDeltaR",
-    "jets_rationHT_4toRest",
-    "jets_7pt",
-    "tausT_invariantMass"
-    ]
-    # regionList = ['1tau0lSR', '1tau0lMR', '1tau0lVR', '1tau0lCR']
-    plotName = 'dataVsMC_v726'
+    # variables = [
+    # "jets_centrality",
+    # "tausT_1pt",
+    # "bjetsT_MHT",
+    # "jets_4largestBscoreMulti",
+    # "bjetsT_2pt",
+    # "bjetsT_invariantMass",
+    # "bjetsT_1pt",
+    # "jets_1btag",
+    # "bjetsM_num",
+    # "jets_sphericity",
+    # "MET_pt",
+    # "jets_2btag",
+    # "bjetsM_minDeltaR",
+    # "jets_METDivideHT",
+    # "bjetsM_2MET_stransMass",
+    # "jets_1pt",
+    # "jets_3btag",
+    # "jets_5pt",
+    # "jets_5btag",
+    # "bjetsM_leptons_minDeltaR",
+    # "jets_rationHT_4toRest",
+    # "jets_7pt",
+    # "tausT_invariantMass"
+    # ]
+    #regionList = ['1tau0lSR', '1tau0lMR', '1tau0lVR', '1tau0lCR']
+    plotName = 'dataVsMC_v823CR1'
     ifFTau = False
     ifVLL = 'VLLm600'
     # ifVLL = 'VLLm800'
     # ifVLL = 'VLLm700'
     is1tau0l = True
     # is1tau0l = False
+    ifLogy = True
+    # ifLogy = False
+    ifStackSignal = True
+    # ifStackSignal = False
+    # ifPrintSB = True
+    ifPrintSB = True
+    ifSystematic = True #!Only for BDT
+    # ifSystematic = False  
 
   
     #1tau0l
@@ -156,6 +155,8 @@ def main():
     # variables = [  'jets_MHT', 'jets_centrality', 'MET_pt', 'jets_aplanarity',  'jets_4largestBscoreSum', 'jets_bScore', 'jets_5pt', 'jets_7pt' , 'bjetsM_HT', 'bjetsT_num', 'bjetsT_MHT',  'bjetsM_minDeltaR', 'bjetsM_invariantMass', 'bjetsM_2MET_stransMass' ] #!1tau0l BDT inputs
     # variables = ['jets_num', 'jets_HT',  'jets_6pt', 'bjetsM_num','jets_bScore', 'tausF_1decayMode',  'tausF_1jetPt', 'tausF_1jetEtaAbs', 'tausF_1prongNum', 'tausF_num']#!fake rate validation
     # variables = [ 'tausF_prongNum', 'tausF_charge', 'tausF_1decayMode', 'tausL_1ptFRWeight', 'tausL_1etaAbsFRWeight' , 'tausF_1jetPtFRWeight', 'tausF_1eta', 'PV_npvs', 'tausF_1pt', 'jets_HT', 'jets_bScore', 'jets_bScoreMultiply', 'jets_4largestBscoreSum', 'jets_4largestBscoreMulti', 'bjetsM_invariantMass', 'jets_1pt', 'jets_2pt','jets_3pt', 'jets_4pt', 'jets_5pt', 'jets_6pt', 'jets_num', 'bjetsM_num']  
+    # variables = ['tausF_1jetPt', 'tausF_jet_invariantMass', 'tausF_jet1_Met_transMass']
+    # variables = ['tausF_1pt', 'tausF_invarianMass', 'tausF_1Met_transMass']
     # regionList = ['1tau0lCR', '1tau0lCRGen', '1tau0lCRLTauNotT_Weighted', '1tau0lCRLTauNotTGen_Weighted']
     # regionList = ['1tau0lVR', '1tau0lVRGen', '1tau0lVRLTauNotT_Weighted', '1tau0lVRLTauNotTGen_Weighted'] # new MR
     # regionList = ['1tau0lCRb', '1tau0lCRbGen', '1tau0lCRbLTauNotT_Weighted', '1tau0lCRbLTauNotTGen_Weighted'] # new CR
@@ -174,7 +175,7 @@ def main():
     inputDirDic = uf.getInputDicNew( inputDir)
     uf.checkMakeDir( inputDirDic['mc']+'results/')
     
-    plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFTau, ifVLL, is1tau0l)
+    plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFTau, ifVLL, is1tau0l, ifLogy, ifPrintSB, ifStackSignal, ifSystematic)
 
     # plotFakeTau(inputDirDic, variables, regionList, plotName, era, isRun3, ifFTau) # for using fakeTau 2 hists application 
    
@@ -195,11 +196,11 @@ def read_csv_as_lines(file_path, delimiter=','):
     return lines
 
 
-def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFakeTau=False, ifVLL='', is1tau0l=False):
+def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFakeTau=False, ifVLL='', is1tau0l=False,  ifLogy=False, ifPrintSB=False, ifStackSignal=False, ifDoSystmatic=False):
     # sigPro = 'tttt' if not ifVLL else 'VLLm600'
     # sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
-    sumProList = ['tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
-    # sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'VLLm600'] #1tau1l
+    # sumProList = ['tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
+    sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'VLLm600'] #1tau1l
     # sumProList = ['jetHT','qcd','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] 
     # sumProList = ['jetHT','tt', 'tttt'] # run3 1tau1l for now 
     # sumProList = ['jetHT','tt',  'qcd', 'tttt'] # run3 1tau1l for now 
@@ -211,23 +212,38 @@ def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFake
             # sumProList.append('qcd')
             pass
     if ifVLL:
-        # sumProList.append('VLLm600')
-        # sumProList.append('VLLm800')
         sumProList.append(ifVLL)
     
-        
-    sumProcessPerVar = uf.getSumHist(inputDirDic, regionList, sumProList, variables, era, isRun3 )#sumProcessPerVar[ivar][region][sumPro]
-
+    sumProSys = getSysDic(ifDoSystmatic)    
+    # sumProcessPerVar = uf.getSumHist(inputDirDic, regionList, sumProList, variables, era, isRun3 )#sumProcessPerVar[ivar][region][sumPro]
+    # sumProcessPerVar = uf.getSumHist(inputDirDic, regionList, sumProList,sumProSys, variables, era, isRun3 )#sumProcessPerVar[ivar][region][sumPro]
+    sumProcessPerVar, sumProcessPerVarSys = uf.getSumHist(inputDirDic, regionList, sumProList,sumProSys, variables, era, isRun3 )#sumProcessPerVar[ivar][region][sumPro]
+    # print(sumProcessPerVarSys)
+   
     plotDir = inputDirDic['mc']+'results/'
     uf.checkMakeDir( plotDir)
     for variable in variables:
         for iRegion in regionList:       
             # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 500 ) 
-            makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, False, False, ifVLL) 
+            # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, False, False, ifVLL) 
             # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, True, True) 
-            # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, True, True, ifVLL) 
+            makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, False, False, ifVLL) 
     
-   
+def getSysDic(ifSys=False, channel='1tau1l'):
+    #!!!1tau1l and 1tau1l systematics to be added
+    #todo: add funcionality of getting systematics from datacard
+    if not ifSys:
+        return {}
+    sumProSys = {
+        'tt': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'ttX': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'WJets': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'singleTop': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'tttt': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'fakeTau': ['CMS_tau_FR'],
+    }
+    return sumProSys
+       
        
 def plotFakeTau(inputDirDic, variables, regions, plotName, era, isRun3, ifFTau=False):
     if not ifFTau:
@@ -301,14 +317,6 @@ def checkRegionGen(regionList):
     return hasFakeTau
                 
 
-#moved to 1tau0l plotting
-# def appendSYSRegions( ifFR_sys, regionList) :
-#     if ifFR_sys:
-#         regionList.append(regionList[2]+'_up')
-#         regionList.append(regionList[2]+'_down')
-#         regionList.append(regionList[3]+'_up')
-#         regionList.append(regionList[3]+'_down')
-#     return regionList 
  
  
         
@@ -318,7 +326,7 @@ def checkHists( histsDict ):
         histsDict[ikey].Print()
 
 
-def makeStackPlotNew(nominal, legendOrder, name, region, outDir, ifFakeTau, savePost = "", era='2016', includeDataInStack=True, signalScale = 1000, ifStackSignal = False, ifLogy=False, ifPrint=False, ifVLL=False):
+def makeStackPlotNew(nominal, legendOrder, name, region, outDir, ifFakeTau, savePost = "", era='2016', includeDataInStack=True, signalScale = 100, ifStackSignal = False, ifLogy=False, ifPrint=False, ifVLL=False, sysHists={}, ifSystematic=False):
     '''
     nominal is a dic of distribution for all processes including data
     nominal: nominal[iprocess]
@@ -352,7 +360,7 @@ def makeStackPlotNew(nominal, legendOrder, name, region, outDir, ifFakeTau, save
         name = name + '_VLL'
 
     ifBlind = True if 'SR' in region else False #!!!
-    dataHist, systsUp, systsDown, sumHist, stack, signal = getHists(nominal, legendOrder, ifBlind, False, ifStackSignal, ifVLL)
+    dataHist, systsUp, systsDown, sumHist, stack, signal = getHists(nominal, legendOrder, ifBlind, False, ifStackSignal, ifVLL, sysHists)
 
     setUpStack(canvy, stack, sumHist.GetMaximum(), signal.GetMaximum()*signalScale, ifLogy) 
     stack.Draw("hist")
@@ -392,7 +400,7 @@ def makeStackPlotNew(nominal, legendOrder, name, region, outDir, ifFakeTau, save
     assymErrorPlotRatio.Draw("e2 same")
 
     #legend
-    leggy = addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, signalScale, ifLogy, ifVLL)
+    leggy = addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, signalScale, ifLogy, ifVLL, ifStackSignal, sysHists)
     leggy.Draw()
     
     #text above the plot
@@ -414,7 +422,7 @@ def printSBLastBin(sumHist, signal, canvas, ifPrint=False):
     latex.SetTextAlign(22)  # 
     
     sig = signal.GetBinContent(signal.GetNbinsX())
-    bg = sumHist.GetBinContent(sumHist.GetNbinsX())
+    bg = sumHist.GetBinContent(sumHist.GetNbinsX()) - sig
     
     latex.DrawLatex(signal.GetBinCenter(signal.GetNbinsX()), sig+bg+0.05, f"S={sig:.2f}, B={bg-sig:.2f}")
     
@@ -422,7 +430,7 @@ def printSBLastBin(sumHist, signal, canvas, ifPrint=False):
     canvas.Draw()
 
  
-def addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, signalScale, ifLogy=False, ifVLL=''):
+def addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, signalScale, ifLogy=False, ifVLL='', ifStackSignal=False, sysHists={}):
     # x1,y1,x2,y2 are the coordinates of the Legend in the current pad (in normalised coordinates by default)
     canvy.cd()
     leggy = st.getMyLegend(0.18,0.75,0.89,0.90)
@@ -431,21 +439,21 @@ def addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, sig
         if ipro == 'jetHT' :
             if dataHist:
                 leggy.AddEntry(dataHist,"Data[{:.1f}]".format(getIntegral(dataHist)),"epl")
-        # elif ipro == 'tttt' or ipro=='VLLm600':
-        # elif ipro == 'tttt' or 'VLL' in ipro:
         elif  uf.isBG(ipro, ifVLL)==1:
             sigPro = 'tttt' if ipro == 'tttt' else ifVLL
-            # if (ifVLL and  not ipro == 'tttt'): 
             signalEntry = '{}*{}[{:.1f}*{}]'.format(sigPro,signalScale, getIntegral(nominal[sigPro]), signalScale)
             leggy.AddEntry( signal, signalEntry, 'l')
-            if ifLogy:
+            # if ifLogy:
+            if ifStackSignal:
                 legText = '{}[{:.1f}]'.format(ipro, getIntegral(nominal[ipro]))
                 leggy.AddEntry(nominal[ipro], legText,"f")
         else:
             legText = '{}[{:.1f}]'.format(ipro, getIntegral(nominal[ipro]))
             leggy.AddEntry(nominal[ipro], legText,"f")
-        
-    leggy.AddEntry(assymErrorPlot,"Stat. unc","f")
+    
+    sysLeggy = 'Stat.+ Syst. unc' if sysHists else 'Stat. unc'
+    leggy.AddEntry(assymErrorPlot, sysLeggy,"f")    
+    # leggy.AddEntry(assymErrorPlot,"Stat. unc","f")
     
     leggy.SetNColumns(2) 
     leggy.Draw()
@@ -530,8 +538,7 @@ def ifDoSystmatic(systHists):
     print( 'doSystmatic: ', doSystmatic )
     return doSystmatic
     
-# def getHists(nominal,  legendOrder, ifBlind, doSystmatic, ifStackSignal = False, ifVLL = False):
-def getHists(nominal,  legendOrder, ifBlind, doSystmatic, ifStackSignal = False, ifVLL = ''):
+def getHists(nominal,  legendOrder, ifBlind, doSystmatic=False, ifStackSignal = False, ifVLL = '', sysHists={}):
     #here we get dataHist and add all MC for sumHist    
     keyList = list(nominal.keys()) #process list; nominal[iprocess]=hist
     colourPerSample = {
@@ -574,15 +581,6 @@ def getHists(nominal,  legendOrder, ifBlind, doSystmatic, ifStackSignal = False,
                 dataHist.SetLineColor(kBlack)
                 dataHist.SetTitleSize(0.0)
             continue
-        # if i == 'singleMu':
-        #     continue
-        # # if i == 'tttt' and (not ifStackSignal):
-        # # if (i == 'tttt' or i=='VLLm600') and (not ifStackSignal):
-        # if (i == 'tttt' and not ifVLL) and (not ifStackSignal):
-        #     continue
-        # if (i == 'VLLm600') and not ifStackSignal:
-        #     continue
-        # if not uf.isBG(i, ifVLL)==2: continue
         if uf.isBG(i, ifVLL)==3: continue
         if uf.isBG(i, ifVLL)==1 and (not ifStackSignal): continue
         
@@ -595,15 +593,15 @@ def getHists(nominal,  legendOrder, ifBlind, doSystmatic, ifStackSignal = False,
         sumHist.Add(nominal[i]) #!sumHist is all bg
         stack.Add(nominal[i])
         # if doSystmatic and  systHists[i]:
-        #     print('cal sys for: ', i)
-        #     tempUp,tempDown = getSystVariation(nominal[i],systHists[i] )
-        #     systsUp.Add(tempUp) #adding various processes, 
-        #     systsDown.Add(tempDown)
+        if sysHists:
+            print('cal sys for: ', i)
+            tempUp,tempDown = getSystVariation(nominal[i],sysHists[i] ) # get the qaudrature sum of the systematic uncertainty for each process
+            systsUp.Add(tempUp) #adding various processes, 
+            systsDown.Add(tempDown)
             
     legendOrder.reverse()
     
     #scale tttt
-    # if 'tttt' in nominal.keys() or 'VLLm600' in nominal.keys():
     if 'tttt' in nominal.keys() or ifVLL:
         if not ifVLL:
             signal = nominal['tttt'].Clone()
@@ -672,20 +670,14 @@ def getSystVariation(nominalHist,systHists):
     #systHi is 'up' or 'down' for varias sources
     #so this is to sum the sytstmatic variation for sources of systematic uncertainty
         print( 'doing sytematic calculation for: ',systHi )
-        # if "bTag" in systHi: continue
         syst = systHists[systHi].Clone()
+        print( 'sytHistUp: ', syst.GetName() )
         syst.Add(nominalHist,-1)
-        # syst.Divide(nominalHist)
         for i in range(1,syst.GetXaxis().GetNbins()+1):
-            if "up" in syst.GetName():
-                # print( 'sytHistUp: ', systHistUp.GetBinContent() )
+            if "Up" in syst.GetName():
                 systHistUp.SetBinContent(i,systHistUp.GetBinContent(i)+(syst.GetBinContent(i) * syst.GetBinContent(i)))
             else:
                 systHistDown.SetBinContent(i,systHistDown.GetBinContent(i)+(syst.GetBinContent(i) * syst.GetBinContent(i)))
-    # for i in range(1,systHistUp.GetXaxis().GetNbins()+1):
-        # systHistUp.SetBinContent(i,(math.sqrt(systHistUp.GetBinContent(i)))*nominalHist.GetBinContent(i))
-        # systHistDown.SetBinContent(i,(math.sqrt(systHistDown.GetBinContent(i)))*nominalHist.GetBinContent(i))
-        #no need to divide and multiply
 
     return systHistUp,systHistDown
 

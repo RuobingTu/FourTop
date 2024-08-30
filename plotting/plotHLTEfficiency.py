@@ -42,7 +42,10 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v77ForHLT/mc/variableHists_v1HLT_varyingCutOnBjetBinD/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v77ForHLT/mc/variableHists_v0HLTMeasure/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v77ForHLT/mc/variableHists_v0HLTMeasure/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79forHLT/mc/variableHists_v0HLTMeasure/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79forHLT/mc/variableHists_v0HLTMeasure/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v0baselineHardro_v79forHLT/mc/variableHists_v0HLTMeasure/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v0baselineHardro_v79forHLT/mc/variableHists_v0HLTMeasureBinB/'
+    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016preVFP/v0baselineHardro_v79forHLT/mc/variableHists_v0HLTMeasureBinB/'
 
    
     
@@ -51,12 +54,13 @@ def main():
     plotDir = inputDirDic['mc'] + 'results/'
     uf.checkMakeDir(plotDir)
     era = uf.getEraFromDir(inputDir)
+    print('era=', era)
     
     #overlay of MC truth efficiency, MC reference efficiency and data reference efficiency
     # plotEfficiencyHLT(inputDirDic, '', isRun3)
-    # plotEfficiencyHLT(inputDirDic, '2b', isRun3)
-    # plotEfficiencyHLT(inputDirDic, '3b', isRun3)
-    # plotEfficiencyHLT(inputDirDic, '4b', isRun3)
+    plotEfficiencyHLT(inputDirDic, '2b', isRun3)
+    plotEfficiencyHLT(inputDirDic, '3b', isRun3)
+    plotEfficiencyHLT(inputDirDic, '4b', isRun3)
     
     #plotSF
     plotSF(inputDirDic, False, isRun3)
@@ -139,7 +143,6 @@ def plotSFSingle(de_2D, nu_2D, plotName, canTitle, ifOnlyDraw=False):
     
     
 def plotEfficiencyHLT(inputDirDic, bjet = '', isRun3 = False):
-    # regionList = ['baseline1Muon', 'baseline1Muon_HLT', 'baseline', 'baseline_HLT']
     regionList = [f"baseline1Muon{bjet}", f"baseline1Muon{bjet}_HLT", f"baseline{bjet}", f"baseline{bjet}_HLT"]
     # regionList = [f"baseline1Muon{bjet}", f"baseline1Muon{bjet}_HLT", f"baseline{bjet}", f"baseline{bjet}_HLT", f"baselineMuTri{bjet}", f"baselineMuTri{bjet}_HLT"]
     

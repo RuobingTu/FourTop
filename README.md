@@ -105,7 +105,7 @@ cd $CMSSW_BASE/src
 
 # Run the sparse checkout script and build
 curl -s https://raw.githubusercontent.com/cms-analysis/CombineHarvester/master/CombineTools/scripts/sparse-checkout-https.sh | bash
-scramv1 b clean; scramv1 b
+scramv1  clean; scramv1 bb
 ```
 
 This markdown guide provides a structured approach to conducting the analysis workflow, from setting up the environment to processing data and utilizing the Combine tool. 
@@ -113,3 +113,9 @@ This markdown guide provides a structured approach to conducting the analysis wo
 
 ## Kind reminders 
 # Important to check the job results with ```checkJobResult.pu```, as jobs may fail
+
+
+## Run 7 in IHEP
+
+# export PATH=/cvmfs/container.ihep.ac.cn/bin:$PATH
+#  hep_container shell CentOS7

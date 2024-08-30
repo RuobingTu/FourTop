@@ -29,9 +29,9 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
 {
     // TString signal = ifVLL ? "VLLm600" : "tttt";
     std::vector<TString> allProcesses = {
-        "VLL_EE_M600",
-        "VLL_EN_M600",
-        "VLL_NN_M600",
+        "VLL_EE_M550",
+        "VLL_EN_M550",
+        "VLL_NN_M550",
         // "VLL_EE_M600",
         // "VLL_EN_M600",
         // "VLL_NN_M600",
@@ -69,9 +69,6 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
 
     };
 
-    // if(!ifVLL.IsNull()){
-    //     allProcesses.push_back(ifVLL);
-    // }
 
     processVec.clear();
     for(UInt_t i=0; i<allProcesses.size(); i++){
@@ -200,7 +197,7 @@ int tmvaBDT_training(
                             // "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");
                             // "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30");
                             // "!H:!V:NTrees=850:MinNodeSize=5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20");//trainA: increase MinNodeSize
-                            "!H:!V:NTrees=1000:MinNodeSize=5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30:Shrinkage=0.1");//trainB: increase MinNodeSize
+                            "!H:!V:NTrees=1000:MinNodeSize=5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=30:Shrinkage=0.1");//trainB: increase MinNodeSize
     
     // BDT Hyperparameter tuning
 

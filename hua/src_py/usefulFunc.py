@@ -435,6 +435,7 @@ def getHistFromFile(fileName, histNames):
     for name in histNames:
         # Get the histogram from the file
         histogram = file.Get(name)
+        print(name)
         histogram.Print()
         if not histogram:
             print("Error: Unable to find the histogram", name, "in the file.")
@@ -449,35 +450,44 @@ def getHistFromFile(fileName, histNames):
 
     return histograms
     
-def getHistFromFileDic(fileName, regionList, varList, subPro):
-    print(fileName, regionList, varList, subPro)
+# def getHistFromFileDic(fileName, regionList, varList, subPro):
+def getHistFromFileDic(fileName, regionList, varList, subPro, sumProSys, era):
     file = ROOT.TFile.Open(fileName)
     if not file or file.IsZombie():
         print("Error: Unable to open the file.")
         return []
     subProHist = {} 
-    histNames =  getHistName(regionList, varList, subPro)
+    subProHistSys = {}
+    # histNames =  getHistName(regionList, varList, subPro)
     for ivar in varList:
         subProHist[ivar] = {}
+        subProHistSys[ivar] = {}
         for ire in regionList:
             histName = subPro + '_' + ire + '_' + ivar 
             subProHist[ivar][ire] = {}
-            print(fileName, [histName])
+            subProHist[ivar][ire][subPro] = {}
             subProHist[ivar][ire][subPro] = getHistFromFile(fileName, [histName])[0]
-
-    return subProHist
+            # subProHist[ivar][ire][subPro]['nom'] = getHistFromFile(fileName, [histName])[0]
+            # sysHistNames = getSysHistNames(sumProSys, subPro, ire, ivar, era, subProHist, fileName)
+            subProHistSys[ivar][ire] = {}
+            subProHistSys[ivar][ire][subPro] = {}
+            subProHistSys[ivar][ire][subPro] = getSysHistNames(sumProSys, subPro, ire, ivar, era, fileName)
+            
+    return subProHist, subProHistSys
             
              
-    # for name in histNames:
-    #     histogram = file.Get(name)
-    #     histogram.Print()
-    #     if not histogram:
-    #         print("Error: Unable to find the histogram", name, "in the file.")
-    #         continue
-    #     # Clone the histogram to avoid potential issues when the file is closed
-    #     histogram1 = histogram.Clone()
-    #     histogram1.SetDirectory(0)
-        
+# def getSysHistNames(sumProSys, subPro, region, var, era, subProHist, fileName):
+def getSysHistNames(sumProSys, subPro, region, var, era, fileName):
+    # sysHistNames = []
+    sysDic = {}
+    sumPro = gq.histoGramPerSample[subPro]
+    if sumPro in sumProSys.keys():
+        for isys in sumProSys[sumPro]:
+            isysUp = f"{subPro}_{region}_{isys}_{era}Up_{var}"
+            isysDown = f"{subPro}_{region}_{isys}_{era}Down_{var}"
+            # subProHist[var][region][subPro][isys+'_up'], subProHist[var][region][subPro][isys+'_down']= getHistFromFile(fileName, [isysUp, isysDown])
+            sysDic[isys+'_up'], sysDic[isys+'_down']= getHistFromFile(fileName, [isysUp, isysDown])
+    return sysDic        
     
    
 def getHistName(regionList, varList, isub):
@@ -497,20 +507,20 @@ def print_dict_structure(dictionary, indent=0):
     # print('\n')
 
 #!new and better
-def getSumHist(inputDirDic, regionList, sumProList, varList, era='2018', isRun3=False):
+# def getSumHist(inputDirDic, regionList, sumProList, varList, era='2018', isRun3=False):
+def getSumHist(inputDirDic, regionList, sumProList, sumProSys,varList, era='2018', isRun3=False):
     #return sumProHists[var][region][sumPro]
+    #return sumProHistSys[var][region][sumPro]['sys'] 
     print('start to get hists and add them from root files')
     allDic = gq.histoGramPerSample
     if isRun3: 
         allDic = gq.Run3Samples
-    # allSubPro = list(gq.histoGramPerSample.keys() )
-    # allDic =  gq.histoGramPerSample
     allSubPro = list(allDic.keys())
     toGetSubHist = {} 
+    toGetSubHistSys = {}
     for isub in allSubPro:
         isdata = isData(isub)
         if not allDic[isub] in sumProList: continue # not getting
-        # if not era in isub and (isdata): continue #not getting data from other year
         if checkIfOtherYear(isub, era, isdata): continue
         print('getting: ', isub)
         if isdata:
@@ -518,37 +528,76 @@ def getSumHist(inputDirDic, regionList, sumProList, varList, era='2018', isRun3=
         else:
             rootFile = inputDirDic['mc'] + isub +'.root'
         print('opening file:', rootFile)
-        isubProHist = getHistFromFileDic(rootFile, regionList, varList, isub) #isubProHist[var][region][subPro]
+        # isubProHist = getHistFromFileDic(rootFile, regionList, varList, isub, sumProSys, era) #isubProHist[var][region][subPro]
+        isubProHist, isubProHistSys = getHistFromFileDic(rootFile, regionList, varList, isub, sumProSys, era) #isubProHist[var][region][subPro]
         print_dict_structure(isubProHist)
         toGetSubHist = merge_dicts(toGetSubHist, isubProHist)
+        toGetSubHistSys = merge_dicts(toGetSubHistSys, isubProHistSys)
     print_dict_structure(toGetSubHist)
     print('\n')
     
-    # sumProHists =  group_third_layer(toGetSubHist, allDic)
     sumProHists =  sumProDic(toGetSubHist, allDic)
+    sumProHistsSys = sumProDic(toGetSubHistSys, allDic)
     print_dict_structure(sumProHists)
-    return sumProHists
+    print_dict_structure(sumProHistsSys)
+    return sumProHists, sumProHistsSys
    
 def checkIfOtherYear(isub, era, isData):
     if not isData:
         return False
     else: 
         for isubEra in gq.dataDict[era]:
-            if isubEra in isub:
+            parts = isub.split('_')
+            iera = '_'.join(parts[1:])
+            if iera == isubEra:
                 return False 
         return True
     
 def sumProDic(subProHists, sumProDic):
+    #subProDicSys[var][region][subPro]['sys']
+    #: subProDic[var][region][subPro]
     sumProHists = {}
     for ivar, reDic in subProHists.items():
         sumProHists[ivar] = {}
         for ire, subProDic in reDic.items():
             sumProHists[ivar][ire] = {}
-            for isub, hist in subProDic.items():
-                if sumProDic[isub] not in sumProHists[ivar][ire].keys():
-                    sumProHists[ivar][ire][sumProDic[isub]] = hist.Clone()
+            #!careful here
+            # for isub, hist in subProDic.items():
+            # if isinstance(subProDic, dict):
+            for isub, systs in subProDic.items():
+                if isinstance(systs, dict):
+                    if sumProDic[isub] not in sumProHists[ivar][ire].keys():
+                        sumProHists[ivar][ire][sumProDic[isub]] = {}
+                        for isys, hist in systs.items():
+                            sumProHists[ivar][ire][sumProDic[isub]][isys] = hist.Clone()
+                    else:
+                        for isys, hist in systs.items():
+                            sumProHists[ivar][ire][sumProDic[isub]][isys].Add(hist)
                 else:
-                    sumProHists[ivar][ire][sumProDic[isub]].Add(hist)
+                    if sumProDic[isub] not in sumProHists[ivar][ire].keys():
+                        sumProHists[ivar][ire][sumProDic[isub]] = systs.Clone()
+                    else:
+                        sumProHists[ivar][ire][sumProDic[isub]].Add(systs)
+                            
+            # else:
+                # for isub, hist in subProDic.items():
+                #     if sumProDic[isub] not in sumProHists[ivar][ire].keys():
+                #         sumProHists[ivar][ire][sumProDic[isub]] = hist.Clone()
+                #     else:
+                #         sumProHists[ivar][ire][sumProDic[isub]].Add(hist)
+                
+                # for isys, hist in systs.items():
+                #     if sumProDic[isub] not in sumProHists[ivar][ire].keys():
+                #         sumProHists[ivar][ire][sumProDic[isub]] = {}
+                #         sumProHists[ivar][ire][sumProDic[isub]][isys] = {}
+                #         sumProHists[ivar][ire][sumProDic[isub]][isys] = hist.Clone()
+                #     else: 
+                #         sumProHists[ivar][ire][sumProDic[isub]][isys].Add(hist)
+                
+                # if sumProDic[isub] not in sumProHists[ivar][ire].keys():
+                #     sumProHists[ivar][ire][sumProDic[isub]] = hist.Clone()
+                # else:
+                #     sumProHists[ivar][ire][sumProDic[isub]].Add(hist)
     return sumProHists
                 
 
@@ -683,7 +732,7 @@ def checkIfInputDic(entry, isRun3):
     return ifInDic
 
 
-def getAllSubPro(proList, isRun3):
+def getAllSubPro1(proList, isRun3):
     allSubPro = []
     dic = gq.histoGramPerSample if not isRun3 else gq.Run3Samples
     for isub, isum in dic.items():
@@ -706,5 +755,15 @@ def isBG(sumPro, ifVLL=False):
     return proType
         
         
+def getAllSubPro(era, sumPro, isData=True):
+    all = gq.histoGramPerSample
+    if isData:
+        # era = '2016' if ('2016' in era) else era
+        # return [key for key, value in all.items() if (value == sumPro and era in key)]
+        return [sumPro + '_'+iera for iera in gq.dataDict[era] ]
+        # return [key for key, value in all.items() if (value == sumPro and era in key)]
+        # return [key for key, value in all.items() if (value == sumPro)]
+    else:
+        return [key for key, value in all.items() for _item in sumPro if (value == _item)]
     
     

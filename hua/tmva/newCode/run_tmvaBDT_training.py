@@ -61,12 +61,12 @@ def main():
     #1tau2l
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau2l_v76For1tau2l/mc/'
     #varList = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_Official_1tau1l_M600_25var.csv'
-    varList = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_btag.csv'
+    varList = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final29.csv'
     # varList = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM750/variableListv0/varibleList_25.csv'
     # g_weight = 'global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagWPMedium_weight'
     # outVersion = 'v0allVar'
     # outVersion = 'v1allVar'
-    outVersion = 'v1VLLM600'
+    outVersion = 'v1VLLM550'
     # outVersion = "v1VLLM600_Fullvar"
     # outVersion = 'v1VLLM800'
     # outVersion = 'v1VLLM700'

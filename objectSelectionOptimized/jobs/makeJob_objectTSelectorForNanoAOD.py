@@ -50,30 +50,8 @@ codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
 # jobVersionName = 'v76For1tau2l/'
 # jobVersionName = 'v77ForHLT/'
 # jobVersionName = 'v76WithVLLSample/'
-jobVersionName = 'v76WithVLLAllMassOfficial/'
+jobVersionName = 'v76WithVLLAllMassCROfficial/'
 
-#run3
-# jobVersionName = 'v0Testing/'
-# jobVersionName = 'v1newCrab/'
-# jobVersionName = 'v0preSel/'
-# jobVersionName = 'v0for2022NoHLT/'
-# jobVersionName = 'v0for2022baseline/'
-# jobVersionName = 'v1for2022preSel/'
-# jobVersionName = 'v2leptonsNameChange/'
-# jobVersionName = 'v3EnergyScaleDone/'
-# jobVersionName = 'v3NoHLTNoBtagButTauSel/'
-# jobVersionName = 'v3NotHLTPre/'
-# jobVersionName = 'v3HLTPre/'
-# jobVersionName = 'v4HLTPreNoEnergyScale/'
-# jobVersionName = 'v5HLTPreJetVetoMap/'
-# jobVersionName = 'v6AllEnergyScale/'
-# jobVersionName = 'v7tauSelFix/'
-# jobVersionName = 'v8OldTauIDNoTES/'
-# jobVersionName = 'v9addTauTT/'
-# jobVersionName = 'v10addBjetPTT/'
-# jobVersionName = 'v11overlapRemovalTausT/'
-# jobVersionName = 'v12Add1TauMCutJet5/'
-# jobVersionName = 'v13BetterHLTSel/'
 #!same version numbers means no change in algrithm but only in selection
 
 def main():
@@ -85,13 +63,13 @@ def main():
     # era = '2022_13p6/crabNanoPost_2022preEE_v3'
     # onlyMC = True
     dataList = ['jetHT', 'BTagCSV']
-    # dataList = ['singleMu'] 
+    # dataList = ['singleMu'] #!for HLT
     # dataList = ['JetMET', 'JetHT']
     # dataList = [ 'Muon']
     
 
 
-    onlyMC = True
+    onlyMC = False
 
 
 ###########################################
@@ -103,17 +81,26 @@ def main():
     isRun3 = uf.isRun3(inputDir)
     print( "era: ", era, 'isRun3=', isRun3 )
     print('version: ', jobVersionName)
+    
+    
+    jobScriptsFolder = jobsDir+eraOut+'/'
+    if os.path.exists( jobScriptsFolder ):
+        subprocess.run('rm -fr '+ jobScriptsFolder , shell=True)
+        print('removing old job folder', jobScriptsFolder)
+    uf.checkMakeDir(jobScriptsFolder)
 
     #inputDirMC = inputDir #+ 'mc/'
     inputDirMC = inputDir #+ 'mc/'
-    makeJobsInDir( inputDirMC, outputDir , False, '',  eraOut, isRun3 )
+    #makeJobsInDir( inputDirMC, outputDir , jobScriptsFolder, False, '',  eraOut, isRun3 )
     if not onlyMC:
         for idata in dataList:
             inputDirData = inputDir + 'data/'
-            makeJobsInDir( inputDirData, outputDir, True, idata,  eraOut , isRun3)
+            makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, idata,  eraOut , isRun3)
 
     makeSubAllJobs( jobsDir , eraOut)
-    subprocess.run('chmod 777 '+ jobsDir+ eraOut+ "/*sh", shell=True )
+    subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )
+
+    
 
 
 def getInputOutDir( jobVersionName, era):
@@ -128,10 +115,10 @@ def getInputOutDir( jobVersionName, era):
         '2022_13p6/crabNanoPost_2022postEE_v3': '2022postEE',
         '2022_13p6/crabNanoPost_2022preEE_v3': '2022preEE',
     }
-    inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
-    #inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
+    #inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
+    inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
     outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/'
-    inputDir = inputBase + era + '/mc' + '/'
+    inputDir = inputBase + era  + '/'
     outputDir = outputBase + eraDic[era] + '/' +jobVersionName  
     uf.checkMakeDir( outputDir) 
     return inputDir, outputDir, eraDic[era]
@@ -163,20 +150,13 @@ def makeSubAllJobs( jobsDir , era):
 
 
 
-def makeJobsInDir( inputDir, outputDir, isData, dataSet, era, isRun3):
+def makeJobsInDir( inputDir, outputDir, jobScriptsFolder, isData, dataSet, era, isRun3):
     allProcesses = os.listdir( inputDir )
     if isData:
         outputDir = outputDir + 'data/'
     else:
         outputDir = outputDir + 'mc/'
     uf.checkMakeDir( outputDir )
-
-    jobScriptsFolder = codePath + 'jobs_eachYear/'
-    uf.checkMakeDir( jobScriptsFolder )
-    jobScriptsFolder = jobScriptsFolder+era+'/'
-    # if os.path.exists( jobScriptsFolder ):
-    #     subprocess.run('rm -fr '+ jobScriptsFolder , shell=True)
-    uf.checkMakeDir(jobScriptsFolder)
 
     for k in allProcesses:
         print( 'kProcess: ', k )

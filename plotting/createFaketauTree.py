@@ -12,18 +12,31 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v1baselineHardro_FRweightSys_v79HadroPresel/mc/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v2cut1tau0lSRTauF_v79HadroPresel/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v2cut1tau0lSRTauF_v79HadroPresel/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v1baselineHardro_FRweightSys_v79HadroPresel/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016preVFP/v1baselineHardro_FRweightSys_v79HadroPresel/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baselineHardro_btagMTWeight_v76WithVLLAllMass/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v80addTauJetVar/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v2cut1tau0lSRTauF_v80addTauJetVar/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v80addTauJetVar/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v80addTauJetVar/mc/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016preVFP/v0baselineHardro_v80addTauJetVar/mc/'
+    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v0baselineHardro_v80addTauJetVar/mc/'
+   
+   
+   
+   
+   
+   
     
     inputDirDic = uf.getDirDic(inputDir)  
     era = uf.getEraFromDir(inputDir)
+    print(era)
     
-    # cut1tau0l = 'jets_num>=8 && bjetsM_num>=3 && (elesTopMVAT_num+muonsTopMVAT_num==0) && jets_HT>450 && jets_6pt>32'
     cut1tau0l = 'tausF_num==1' #!no channel specific selection
-    
     tauF = 'tausF_num==1'
     tauT = 'tausT_num!=0'
     branchesToExclude = ['jets_pt_', 'jets_eta_', 'jets_btags_', 'jets_btagsPN_', 'jets_btags_PN_', 'jets_btags_PT_', 'jets_flavour_', 'HLT_PF*']
-    
     
     createDataTree(inputDirDic, era, cut1tau0l, tauF, tauT, branchesToExclude)
     createMCGenTree(inputDirDic, era, cut1tau0l, tauF, tauT)
@@ -34,7 +47,7 @@ def main():
 def makeOtherMCGen(inputDirDic, era):
     MCSum = ['tt', 'ttX', 'WJets', 'singleTop', 'tttt']
     for iPro in MCSum:
-        isubPros = getAllSubPro(era, iPro, False)
+        isubPros = uf.getAllSubPro(era, iPro, False)
         print(isubPros)
         for isubPro in isubPros:
             ifile = inputDirDic['mc']+ isubPro + '.root'
@@ -58,7 +71,7 @@ def createMCGenTree(inputDirDic, era, cut1tau0l, tauF, tauT):
     MCSum = ['tt', 'ttX', 'WJets', 'singleTop', 'tttt']
     allMC = []
     for iMC in MCSum:
-        allMC += getAllSubPro(era, iMC, False)
+        allMC += uf.getAllSubPro(era, iMC, False)
     allMCFiles = [inputDirDic['mc']+ ipro + '.root' for ipro in allMC]
     print(allMCFiles)
     
@@ -90,9 +103,10 @@ def createMCGenTree(inputDirDic, era, cut1tau0l, tauF, tauT):
 
     
 def createDataTree(inputDirDic, era, cut1tau0l, tauF, tauT, branchesToExclude = []): 
-    allDataFiles = getAllSubPro(era, 'jetHT') 
+    allDataFiles = uf.getAllSubPro(era, 'jetHT') 
+    #!for 2017 must consider BtagCSV too
     allDataFiles = [inputDirDic['data']+ ipro + '.root' for ipro in allDataFiles]
-    print(allDataFiles)
+    print('all data files: ', allDataFiles)
     dataDF = ROOT.RDataFrame('newtree', allDataFiles) 
     basicCut = dataDF.Filter(cut1tau0l)
     tauF_data = basicCut.Filter(tauF)
@@ -108,21 +122,18 @@ def createDataTree(inputDirDic, era, cut1tau0l, tauF, tauT, branchesToExclude = 
     
     tauF_data = tauF_data.Define('event_allWeight_1tau0l', 'FR_weight_final')#for later BDT training
     tauT_data = tauT_data.Define('event_allWeight_1tau0l', 'FR_weight_final')
-    # print(tauF_data.GetColumnNames())
-    # print(tauT_data.GetColumnNames())
+    
     tauF_data.Snapshot('newtree', inputDirDic['mc']+ 'fakeTau_tauF.root')
     print(inputDirDic['mc']+ 'fakeTau_tauF.root' + ' done')
     tauT_data.Snapshot('newtree', inputDirDic['mc']+ 'fakeTau_tauT.root')
     print(inputDirDic['mc']+ 'fakeTau_tauT.root' + ' done')
+    
+    print('initial entries in data: ', dataDF.Count().GetValue())
+    print('tauF_data entries: ', tauF_data.Count().GetValue())
+    print('tauT_data entries: ', tauT_data.Count().GetValue())
     print('\n')
     
     
-def getAllSubPro(era, sumPro, isData=True):
-    all = gq.histoGramPerSample
-    if isData:
-        return [key for key, value in all.items() if (value == sumPro and era in key)]
-    else:
-        return [key for key, value in all.items() if (value == sumPro)]
     
     
 def countFR(tauF_data):    

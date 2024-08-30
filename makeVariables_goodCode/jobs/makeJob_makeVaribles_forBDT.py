@@ -10,8 +10,7 @@ import usefulFunc as uf
 #todo add git co after job submission for version control
 
 def main():
-    # year = '2022'
-    # year = '2016'
+    year = '2016'
     # year = '2018'
     year = '2018'
     # inVersion = 'v67TheoryWeightAdded'
@@ -29,9 +28,11 @@ def main():
     # inVersion = 'v77forBtagMeasurement'
     # inVersion = 'v77HadroPresel'
     # inVersion = 'v79forHLT'
-    inVersion = 'v76WithVLLAllMassOfficial'
+    # inVersion = 'v76WithVLLAllMassOfficial'
+    inVersion = 'v76WithVLLAllMassOfficial/'
     # outVersion = 'v0baselineHardro'
     # outVersion = 'v1baselineHardro_FRweightSys'
+    # outVersion = 'v2cut1tau0lSRTauF'
     # outVersion = 'v1cut1tau1lSR'
     outVersion = 'v2cut1tau1lSRTauF'
     # outVersion = 'v4cut1tau2l'
@@ -67,7 +68,7 @@ def main():
     
     
     isRun3 = uf.isRun3Era(year)
-    justMC = True
+    justMC = False
     
     
     print('jobVersion:', outVersion + '_'+ inVersion) 
