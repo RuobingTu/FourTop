@@ -6,30 +6,6 @@ import usefulFunc as uf
 
 
 codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
-#
-# jobVersionName = 'v51TESNoJER/'
-# jobVersionName = 'v51TESNewLepObjectRemovalCorrected/'
-# jobVersionName = 'v52noHLTSelection/'
-# jobVersionName = 'v52noHLTButPreSelection/'
-# jobVersionName = 'v53HLTAndPre/'
-# jobVersionName = 'v54noHLTButPre/'
-# jobVersionName = 'v55HLTAndPre/'
-# jobVersionName = 'v54noHLTButPreMetFixed/'
-# jobVersionName = 'v55ojectRemovalwithTight/'
-# jobVersionName = 'v55ojectRemovalwithTightNoHLT/'
-# jobVersionName = 'v56addLepTopHLTSel/'
-# jobVersionName = 'v56NoHLTButPre/'
-# jobVersionName = 'v56preselection/'
-# jobVersionName = 'v57ovelapWithTausF/'
-# jobVersionName = 'v58addGenBranches/'
-# jobVersionName = 'v59newOScode/'
-# jobVersionName = 'v60fixeJetBtagBug/'
-# jobVersionName = 'v61fixesLepRemovalBug/'
-# jobVersionName = 'v62addTauJetVars/'
-# jobVersionName = 'v63smallFixJER/'
-# jobVersionName = 'v64noHLTSel/'
-# jobVersionName = 'v64PreAndHLTSel/'
-# jobVersionName = 'v64PreAndHLTSel_JERUp/'
 # jobVersionName = 'v64PreAndHLTSel_JERDown/'
 # jobVersionName = 'v64PreAndHLTSel_JESUp/'
 # jobVersionName = 'v64PreAndHLTSel_JESDown/'
@@ -64,6 +40,7 @@ def main():
     # onlyMC = True
     dataList = ['jetHT', 'BTagCSV']
     # dataList = ['singleMu'] #!for HLT
+    # dataList = ['singleMu'] #!for HLT
     # dataList = ['JetMET', 'JetHT']
     # dataList = [ 'Muon']
     
@@ -96,8 +73,12 @@ def main():
         for idata in dataList:
             inputDirData = inputDir + 'data/'
             makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, idata,  eraOut , isRun3)
+            makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, idata,  eraOut , isRun3)
 
     makeSubAllJobs( jobsDir , eraOut)
+    subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )
+
+    
     subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )
 
     

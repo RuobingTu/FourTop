@@ -13,7 +13,7 @@ def main():
 
     # inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/inputList_1tau0l.csv.root'
     # inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/training.log'
-    inputRoot = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/inputList_1tau1l_btag.csv.root'
+    inputRoot = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/inputList_1tau1l.csv.root'
     inputLog = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/training.log'
 
     outDir = os.path.dirname(inputRoot)
@@ -50,7 +50,8 @@ def get_auc_and_num_variables(root_file):
         file.Close()
         return None, None
 
-    num_variables = input_variables.GetListOfBranches().GetEntries()
+    # num_variables = input_variables.GetListOfBranches().GetEntries()
+    num_variables = input_variables.GetListOfBranches().GetEntries()-4 #!remove the weight and event branches
 
     file.Close()
     return auc, num_variables
@@ -64,6 +65,7 @@ def plot_auc_vs_num_variables(input_dir):
         if root_file.endswith(".root"):
             full_path = os.path.join(input_dir, root_file)
             auc, num_variables = get_auc_and_num_variables(full_path)
+            print(f"File: {root_file}, AUC: {auc}, Num. Variables: {num_variables}")
             if auc is not None and num_variables is not None:
                 aucs.append(auc)
                 num_vars.append(num_variables)
@@ -128,7 +130,7 @@ def submitTrainingJobs(vListDir, inputRoot):
     subScript = jobDir + 'submitJobs.sh'
 
     inputDir = inputRoot.split('/mc/')[0] + '/mc/'
-    inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/"
+    inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/mc/"
     outDir = vListDir + 'BDTTrain/'
     uf.checkMakeDir(outDir)
     g_weight = 'global_weight*EVENT_genWeight*EVENT_prefireWeight*PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight*musTopMVAT_weight*btagWPMedium_weight'

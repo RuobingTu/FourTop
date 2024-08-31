@@ -63,8 +63,9 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/'
-    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/mc/variableHists_v0BasicBDTtraining1tau1lCR1_VLLm600/'
-    
+    #inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/mc/variableHists_v0Basictraining1tau1l_VLLm600/'
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/mc/variableHists_VariblesInputPlotting/'
+
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baseline_v3HLTPre/mc/variableHists_v3dataMC_pileupBtagHLTSFNewTTBR/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baselineBtagWeightFix_v3HLTPre/mc/variableHists_v0dataMC_noCorrectionNewTTBR/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baselineBtagWeightFix_v3HLTPre/mc/variableHists_v2dataMC_pileupBtagSFNewTTBR/'
@@ -98,15 +99,16 @@ def main():
     # variables = ['jets_HT', 'jets_6pt',  'jets_5pt','jets_num',  'bjetsM_num', 'bjetsT_num', 'tausT_num', 'tausTT_num', 'tausTTT_num','tausT_1genFlavour', 'tausTT_1genFlavour', 'tausTTT_1genFlavour']#1tau0l region 
     # variables = ['jets_HT', 'jets_6pt',  'jets_5pt','jets_num', 'bjetsPTM_num', 'bjetsPTT_num', 'bjetsM_num', 'bjetsT_num', 'tausT_num', 'tausTT_num', 'tausM_num', 'tausTT_1lepton1_charge', 'tausTTT_1lepton1_charge', 'tausT_1lepton1_charge', 'tausM_1lepton1_charge', 'tausM_1genFlavour', 'tausT_1genFlavour', 'tausTT_1genFlavour']
 
-    input1tau1l = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final29.csv'
-    #variables = read_csv_as_lines(input1tau1l)
+    input1tau1l = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final25.csv'
+    variables = read_csv_as_lines(input1tau1l)
     #print(variables)
     
     #regionList = ['1tau1lCR1']
     #regionList = ['newtree']
     regionList = ['1tau1lCR1']
+    #regionList = ['1tau1lSR']
     # regionList = ['1tau2lSR']
-    variables = ['BDT']
+    # variables = ['BDT']
     # variables = [
     # "jets_centrality",
     # "tausT_1pt",
@@ -133,12 +135,12 @@ def main():
     # "tausT_invariantMass"
     # ]
     #regionList = ['1tau0lSR', '1tau0lMR', '1tau0lVR', '1tau0lCR']
-    plotName = 'dataVsMC_v823CR1'
+    plotName = 'dataVsMC_v831S'
     ifFTau = False
     ifVLL = 'VLLm600'
     # ifVLL = 'VLLm800'
     # ifVLL = 'VLLm700'
-    is1tau0l = True
+    is1tau0l = False
     # is1tau0l = False
     ifLogy = True
     # ifLogy = False
@@ -146,15 +148,17 @@ def main():
     # ifStackSignal = False
     # ifPrintSB = True
     ifPrintSB = True
-    ifSystematic = True #!Only for BDT
+    ifSystematic = False #!Only for BDT
     # ifSystematic = False  
 
   
     #1tau0l
-    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v4cut1tau0l_v75OverlapRemovalFTau/mc/variableHists_v0BDT1tau0l_3bins/'
     # variables = [  'jets_MHT', 'jets_centrality', 'MET_pt', 'jets_aplanarity',  'jets_4largestBscoreSum', 'jets_bScore', 'jets_5pt', 'jets_7pt' , 'bjetsM_HT', 'bjetsT_num', 'bjetsT_MHT',  'bjetsM_minDeltaR', 'bjetsM_invariantMass', 'bjetsM_2MET_stransMass' ] #!1tau0l BDT inputs
     # variables = ['jets_num', 'jets_HT',  'jets_6pt', 'bjetsM_num','jets_bScore', 'tausF_1decayMode',  'tausF_1jetPt', 'tausF_1jetEtaAbs', 'tausF_1prongNum', 'tausF_num']#!fake rate validation
+    # variables = ['jets_num', 'jets_HT',  'jets_6pt', 'bjetsM_num','jets_bScore', 'tausF_1decayMode',  'tausF_1jetPt', 'tausF_1jetEtaAbs', 'tausF_1prongNum', 'tausF_num']#!fake rate validation
     # variables = [ 'tausF_prongNum', 'tausF_charge', 'tausF_1decayMode', 'tausL_1ptFRWeight', 'tausL_1etaAbsFRWeight' , 'tausF_1jetPtFRWeight', 'tausF_1eta', 'PV_npvs', 'tausF_1pt', 'jets_HT', 'jets_bScore', 'jets_bScoreMultiply', 'jets_4largestBscoreSum', 'jets_4largestBscoreMulti', 'bjetsM_invariantMass', 'jets_1pt', 'jets_2pt','jets_3pt', 'jets_4pt', 'jets_5pt', 'jets_6pt', 'jets_num', 'bjetsM_num']  
+    # variables = ['tausF_1jetPt', 'tausF_jet_invariantMass', 'tausF_jet1_Met_transMass']
+    # variables = ['tausF_1pt', 'tausF_invarianMass', 'tausF_1Met_transMass']
     # variables = ['tausF_1jetPt', 'tausF_jet_invariantMass', 'tausF_jet1_Met_transMass']
     # variables = ['tausF_1pt', 'tausF_invarianMass', 'tausF_1Met_transMass']
     # regionList = ['1tau0lCR', '1tau0lCRGen', '1tau0lCRLTauNotT_Weighted', '1tau0lCRLTauNotTGen_Weighted']
@@ -201,6 +205,7 @@ def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFake
     # sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
     # sumProList = ['tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
     sumProList = ['jetHT','tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'VLLm600'] #1tau1l
+    # sumProList = ['tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'VLLm600'] #1tau1l
     # sumProList = ['jetHT','qcd','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] 
     # sumProList = ['jetHT','tt', 'tttt'] # run3 1tau1l for now 
     # sumProList = ['jetHT','tt',  'qcd', 'tttt'] # run3 1tau1l for now 
@@ -229,6 +234,21 @@ def plotNormal(inputDirDic, variables, regionList, plotName, era, isRun3, ifFake
             # makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, True, True) 
             makeStackPlotNew(sumProcessPerVar[variable][iRegion], sumProList, variable, iRegion, plotDir, False, plotName, era, True, 10, True, False, False, ifVLL) 
     
+def getSysDic(ifSys=False, channel='1tau1l'):
+    #!!!1tau1l and 1tau1l systematics to be added
+    #todo: add funcionality of getting systematics from datacard
+    if not ifSys:
+        return {}
+    sumProSys = {
+        'tt': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'ttX': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'WJets': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'singleTop': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'tttt': ['CMS_pileup', 'CMS_prefiring', 'CMS_eff_t_vsJet', 'CMS_eff_t_vsMu', 'CMS_eff_t_vsEle', 'CMS_tttt_eff_e', 'CMS_tttt_eff_m', 'pdf', 'QCDscale_Re', 'QCDscale_Fa', 'CMS_btag_shape_jes', 'CMS_btag_shape_lf', 'CMS_btag_shape_hf', 'CMS_btag_shape_hfstats1', 'CMS_btag_shape_hfstats2', 'CMS_btag_shape_lfstats1', 'CMS_btag_shape_lfstats2', 'CMS_btag_shape_cferr1', 'CMS_btag_shape_cferr2'],
+        'fakeTau': ['CMS_tau_FR'],
+    }
+    return sumProSys
+       
 def getSysDic(ifSys=False, channel='1tau1l'):
     #!!!1tau1l and 1tau1l systematics to be added
     #todo: add funcionality of getting systematics from datacard
@@ -360,6 +380,7 @@ def makeStackPlotNew(nominal, legendOrder, name, region, outDir, ifFakeTau, save
         name = name + '_VLL'
 
     ifBlind = True if 'SR' in region else False #!!!
+    dataHist, systsUp, systsDown, sumHist, stack, signal = getHists(nominal, legendOrder, ifBlind, False, ifStackSignal, ifVLL, sysHists)
     dataHist, systsUp, systsDown, sumHist, stack, signal = getHists(nominal, legendOrder, ifBlind, False, ifStackSignal, ifVLL, sysHists)
 
     setUpStack(canvy, stack, sumHist.GetMaximum(), signal.GetMaximum()*signalScale, ifLogy) 
@@ -543,11 +564,15 @@ def getHists(nominal,  legendOrder, ifBlind, doSystmatic=False, ifStackSignal = 
     keyList = list(nominal.keys()) #process list; nominal[iprocess]=hist
     colourPerSample = {
         'tttt':kBlue,
+        'VLLm500':TColor.GetColor("#D10363"),
+        'VLLm550':TColor.GetColor("#D10363"),
         'VLLm600':TColor.GetColor("#D10363"),
         'VLLm650':TColor.GetColor("#D10363"),
         'VLLm750':TColor.GetColor("#D10363"),
         'VLLm850':TColor.GetColor("#D10363"),
         'VLLm900':TColor.GetColor("#D10363"),
+        'VLLm950':TColor.GetColor("#D10363"),
+        'VLLm1000':TColor.GetColor("#D10363"),
         # 'VLLm600':kMagenta,
         'VLLm800': TColor.GetColor("#D10363"),
         'VLLm700': TColor.GetColor("#D10363"),
@@ -671,6 +696,7 @@ def getSystVariation(nominalHist,systHists):
     #so this is to sum the sytstmatic variation for sources of systematic uncertainty
         print( 'doing sytematic calculation for: ',systHi )
         syst = systHists[systHi].Clone()
+        print( 'sytHistUp: ', syst.GetName() )
         print( 'sytHistUp: ', syst.GetName() )
         syst.Add(nominalHist,-1)
         for i in range(1,syst.GetXaxis().GetNbins()+1):

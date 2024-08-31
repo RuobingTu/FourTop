@@ -11,7 +11,7 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/variableHists_v0BDT1tau0l_3bins/' 
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/'
-    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm500/'#!1tau1l TTTT
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/mc/variableHists_v0Basictraining1tau1l_VLLm600/'#!1tau1l TTTT
     #run3 
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baseline_v2leptonsNameChange/mc/variableHists_v0NoSystematic/' 
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0baseline_v2leptonsNameChange/mc/variableHists_v0NoSystematic/' 
@@ -41,7 +41,7 @@ def main():
     # proList = ['tttt', 'tt', 'fakeTau', 'ttX', 'singleTop', 'WJets'] #!1tau0l
     # proList = ['tttt', 'tt', 'ttX', 'singleTop', 'WJets', 'VLLm700'] #!1tau0l
     # proList = ['tttt', 'tt', 'ttX', 'singleTop', 'WJets', 'VLLm800'] #!1tau0l
-    proList = ['VLLm500','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
+    proList = ['VLLm600','tt', 'ttX', 'singleTop', 'WJets', 'tttt'] #1tau1l
     allSubPro = uf.getAllSubPro1(proList, isRun3)
     #allSubPro = uf.getAllSubPro("2018", proList, False)
     print(allSubPro)

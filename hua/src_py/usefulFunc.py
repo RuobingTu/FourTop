@@ -459,12 +459,16 @@ def getHistFromFileDic(fileName, regionList, varList, subPro, sumProSys, era):
     subProHist = {} 
     subProHistSys = {}
     # histNames =  getHistName(regionList, varList, subPro)
+    subProHistSys = {}
+    # histNames =  getHistName(regionList, varList, subPro)
     for ivar in varList:
         subProHist[ivar] = {}
+        subProHistSys[ivar] = {}
         subProHistSys[ivar] = {}
         for ire in regionList:
             histName = subPro + '_' + ire + '_' + ivar 
             subProHist[ivar][ire] = {}
+            subProHist[ivar][ire][subPro] = {}
             subProHist[ivar][ire][subPro] = {}
             subProHist[ivar][ire][subPro] = getHistFromFile(fileName, [histName])[0]
             # subProHist[ivar][ire][subPro]['nom'] = getHistFromFile(fileName, [histName])[0]
@@ -476,6 +480,18 @@ def getHistFromFileDic(fileName, regionList, varList, subPro, sumProSys, era):
     return subProHist, subProHistSys
             
              
+# def getSysHistNames(sumProSys, subPro, region, var, era, subProHist, fileName):
+def getSysHistNames(sumProSys, subPro, region, var, era, fileName):
+    # sysHistNames = []
+    sysDic = {}
+    sumPro = gq.histoGramPerSample[subPro]
+    if sumPro in sumProSys.keys():
+        for isys in sumProSys[sumPro]:
+            isysUp = f"{subPro}_{region}_{isys}_{era}Up_{var}"
+            isysDown = f"{subPro}_{region}_{isys}_{era}Down_{var}"
+            # subProHist[var][region][subPro][isys+'_up'], subProHist[var][region][subPro][isys+'_down']= getHistFromFile(fileName, [isysUp, isysDown])
+            sysDic[isys+'_up'], sysDic[isys+'_down']= getHistFromFile(fileName, [isysUp, isysDown])
+    return sysDic        
 # def getSysHistNames(sumProSys, subPro, region, var, era, subProHist, fileName):
 def getSysHistNames(sumProSys, subPro, region, var, era, fileName):
     # sysHistNames = []
@@ -510,6 +526,7 @@ def print_dict_structure(dictionary, indent=0):
 # def getSumHist(inputDirDic, regionList, sumProList, varList, era='2018', isRun3=False):
 def getSumHist(inputDirDic, regionList, sumProList, sumProSys,varList, era='2018', isRun3=False):
     #return sumProHists[var][region][sumPro]
+    #return sumProHistSys[var][region][sumPro]['sys'] 
     #return sumProHistSys[var][region][sumPro]['sys'] 
     print('start to get hists and add them from root files')
     allDic = gq.histoGramPerSample
@@ -556,6 +573,8 @@ def checkIfOtherYear(isub, era, isData):
 def sumProDic(subProHists, sumProDic):
     #subProDicSys[var][region][subPro]['sys']
     #: subProDic[var][region][subPro]
+    #subProDicSys[var][region][subPro]['sys']
+    #: subProDic[var][region][subPro]
     sumProHists = {}
     for ivar, reDic in subProHists.items():
         sumProHists[ivar] = {}
@@ -579,25 +598,6 @@ def sumProDic(subProHists, sumProDic):
                     else:
                         sumProHists[ivar][ire][sumProDic[isub]].Add(systs)
                             
-            # else:
-                # for isub, hist in subProDic.items():
-                #     if sumProDic[isub] not in sumProHists[ivar][ire].keys():
-                #         sumProHists[ivar][ire][sumProDic[isub]] = hist.Clone()
-                #     else:
-                #         sumProHists[ivar][ire][sumProDic[isub]].Add(hist)
-                
-                # for isys, hist in systs.items():
-                #     if sumProDic[isub] not in sumProHists[ivar][ire].keys():
-                #         sumProHists[ivar][ire][sumProDic[isub]] = {}
-                #         sumProHists[ivar][ire][sumProDic[isub]][isys] = {}
-                #         sumProHists[ivar][ire][sumProDic[isub]][isys] = hist.Clone()
-                #     else: 
-                #         sumProHists[ivar][ire][sumProDic[isub]][isys].Add(hist)
-                
-                # if sumProDic[isub] not in sumProHists[ivar][ire].keys():
-                #     sumProHists[ivar][ire][sumProDic[isub]] = hist.Clone()
-                # else:
-                #     sumProHists[ivar][ire][sumProDic[isub]].Add(hist)
     return sumProHists
                 
 
@@ -731,7 +731,6 @@ def checkIfInputDic(entry, isRun3):
             ifInDic = True
     return ifInDic
 
-
 def getAllSubPro1(proList, isRun3):
     allSubPro = []
     dic = gq.histoGramPerSample if not isRun3 else gq.Run3Samples
@@ -761,9 +760,9 @@ def getAllSubPro(era, sumPro, isData=True):
         # era = '2016' if ('2016' in era) else era
         # return [key for key, value in all.items() if (value == sumPro and era in key)]
         return [sumPro + '_'+iera for iera in gq.dataDict[era] ]
-        # return [key for key, value in all.items() if (value == sumPro and era in key)]
+        # return [key for key, value in all.items() if (value == sumPro and era in key)   ]
         # return [key for key, value in all.items() if (value == sumPro)]
     else:
-        return [key for key, value in all.items() for _item in sumPro if (value == _item)]
+        return [key for key, value in all.items() if (value == sumPro)]
     
     

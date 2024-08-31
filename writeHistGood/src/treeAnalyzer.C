@@ -16,7 +16,7 @@
 void treeAnalyzer::Init()
 {
     std::cout << "Start to initilation....................................................\n";
-    std::cout<<"m_channel: "<<m_channel<<"m_isRun3: "<<m_isRun3<<"\n";
+    std::cout << "m_channel: " << m_channel << "; m_isRun3: " << m_isRun3 << "\n";
     cutFlowHist->SetDirectory(m_outFile);
 
     std::vector<TString> sysRegions;
@@ -33,7 +33,7 @@ void treeAnalyzer::Init()
 
         // std::vector<Double_t> bins = {-0.25, -0.05, 0, 0.05, 0.1, 0.18, 0.4 }; //1tau1l testing
         // std::vector<Double_t> bins = {-0.25, -0.05, 0, 0.04, 0.08, 0.12, 0.16, 0.18, 0.4 }; //1tau1l Bin B
-        std::vector<Double_t> bins = {-0.35, -0.2, -0.16, -0.12, -0.08, -0.04, 0, 0.06, 0.20}; //1tau1l Bin B
+        std::vector<Double_t> bins = {-0.35, -0.2, -0.16, -0.12, -0.08, -0.04, 0, 0.05, 0.20}; //1tau1l Bin B
         // std::vector<Double_t> bins = { -0.4, -0.394, -0.388, -0.382, -0.376, -0.370, -0.364, -0.358, -0.352, -0.346, -0.340, -0.334, -0.328, -0.322, -0.316, -0.310, -0.304, -0.298, -0.292, -0.286, -0.280, -0.274, -0.268, -0.262, -0.256, -0.250, -0.244, -0.238, -0.232, -0.226, -0.220, -0.214, -0.208, -0.202, -0.196, -0.190, -0.184, -0.178, -0.172, -0.166, -0.160, -0.154, -0.148, -0.142, -0.136, -0.130, -0.124, -0.118, -0.112, -0.106, -0.100, -0.094, -0.088, -0.082, -0.076, -0.070, -0.064, -0.058, -0.052, -0.046, -0.040, -0.034, -0.028, -0.022, -0.016, -0.010, -0.004, 0.002, 0.008, 0.014, 0.020, 0.026, 0.032, 0.038, 0.044, 0.050, 0.056, 0.062, 0.068, 0.074, 0.080, 0.086, 0.092, 0.098, 0.104, 0.110, 0.116, 0.122, 0.128, 0.134, 0.140, 0.146, 0.152, 0.158, 0.164, 0.170, 0.176, 0.182, 0.188, 0.194, 0.200 };
         SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, bins, sysRegions);//bin3
         // SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, 4, -0.3, 0.4, sysRegions);//testing
@@ -47,10 +47,10 @@ void treeAnalyzer::Init()
         // TString weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2tau1l1CutHT4006jetpt30_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/
         // TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450Cut1tau1l_v75OverlapRemovalFTau/mc/BDTTrain/v2NoBtag/dataset/weight/TMVAClassification_BDT.weights.xml";
-        variableList = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final29.csv"; 
+        variableList = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final25.csv"; 
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v5cut1tau1lSR_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v3cut1tau1lSR6thJetpt34_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/TMVAClassification_BDT.weights.xml";
-        weightfile = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM500/inputList_1tau1l_final29.csv/dataset/weight/TMVAClassification_BDT.weights.xml";
+        weightfile = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600/inputList_1tau1l_final25.csv/dataset/weight/TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLSample/mc/BDTTrain/v0allVar/dataset/weight/TMVAClassification_BDT.weights.xml";//!weight file for VLL in 1tau1l
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/BDTTrain/v1VLLM800/dataset/weight/TMVAClassification_BDT.weights.xml";//!VLL 800
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/BDTTrain/v1VLLM700/dataset/weight/TMVAClassification_BDT.weights.xml";//!VLL700

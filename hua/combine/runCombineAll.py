@@ -44,13 +44,16 @@ def main():
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v0Basictraining1tau1l/combine/datacards_noSys/'
 
     #1tau0l
+
+    #1tau0l
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLSample/mc/variableHists_v0BDT1tau0l_3bins/combine/datacard_noPdfAlphaS/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/combine/datacard_mainSys/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/combine/datacard_mainSys/'
     # cardDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/combine/datacard_mainSys/'
-    for i in [500, 550, 650,700,750,800,850,900,950,1000]:
-    #for i in [600]:
-        cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm{i}/combine/datacard_mainSys/"
+    #for i in [500, 550, 650,700,750,800,850,900,950,1000]:
+    for i in [600]:
+        #cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm{i}/combine/datacard_mainSys/"
+        cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/mc/variableHists_v0Basictraining1tau1l_VLLm{i}/combine/datacard_mainSys/"
 
         #combination
         # cardDir = 'combinationV6/run2_1tau0l/'
@@ -65,13 +68,13 @@ def main():
         # cardDir = 'combinationV9/2022_1tau1l/'
         # cardDir = 'combinationV9/run2AndRun3/'
 
-            
-        cardToWorkspaces( cardDir )
-        runCombineSig( cardDir, True )
-        runCombineSig( cardDir, False )
-        copyCombineResultsToDir( cardDir )
         
-        runImpact(cardDir+'workspace/datacard_1tau1lSys.root', cardDir+'combineResults/')
+    cardToWorkspaces( cardDir )
+    runCombineSig( cardDir, True )
+    runCombineSig( cardDir, False )
+    copyCombineResultsToDir( cardDir )
+    #runImpact(cardDir )
+    runImpact(cardDir+'workspace/datacard_1tau1lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_1tau0lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_1tau2lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_comb_1tau1l.root', cardDir+'combineResults/')
@@ -81,7 +84,16 @@ def main():
 
 # def runImpact()
     
+# def runImpact()
     
+    
+def runImpact(cardDir):
+    for ifile in os.listdir(cardDir+'workspace/'):
+        if ifile.find('root')>0:
+            print('ifile: ', ifile)
+            # runImpact(cardDir+'workspace/'+ifile, cardDir+'combineResults/') 
+            outFolder = cardDir + 'combineResults/'
+            wf = cardDir + 'workspace/' + ifile
 def runImpact(cardDir):
     for ifile in os.listdir(cardDir+'workspace/'):
         if ifile.find('root')>0:

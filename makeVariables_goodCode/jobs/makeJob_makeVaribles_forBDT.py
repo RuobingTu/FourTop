@@ -31,6 +31,7 @@ def main():
     # inVersion = 'v76WithVLLAllMassOfficial'
     inVersion = 'v76WithVLLAllMassOfficial/'
     # outVersion = 'v0baselineHardro'
+    # outVersion = 'v1baselineHardroHLTSF'
     # outVersion = 'v1baselineHardro_FRweightSys'
     # outVersion = 'v2cut1tau0lSRTauF'
     # outVersion = 'v1cut1tau1lSR'
