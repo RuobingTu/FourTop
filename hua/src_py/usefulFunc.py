@@ -1,11 +1,7 @@
 import os
 import subprocess
-import sys
-
 import pandas as pd
 import ROOT
-
-
                                 
 import ttttGlobleQuantity as gq                                
 import setTDRStyle as st
@@ -33,8 +29,6 @@ def getGenSumDic( inputCsv, era ):
     # print( genSumDic )
     return genSumDic
 
-# def getProcessScale( processName, era ):
-#     scale = lumiMap[era]*samplesCrossSection[processName]/getGenSumDic()
 
 def sumbitJobs(  jobsh):
     print('staring to submit jobs')
@@ -151,89 +145,6 @@ def compare2List( list1, list2):
     print('\n')
     
     
-
-def getSummedHists( inputDir, regionsList, variable='jetsNumber_forYieldCount', ifScale=False, era = '2016postVFP' , ifGetSys=False, isRun3=False):
-#return sum[var][region][summedPro]    
-    if not isRun3:
-        histoGramPerSample = gq.histoGramPerSample
-    else:
-        histoGramPerSample = gq.Run3Samples
-    allSubProcess = histoGramPerSample.keys()
-    sumProcessHistsDict = {}
-    sumProcessHistsDictSys = {}
-    mcFileList = os.listdir( inputDir['mc'] )
-    dataFileList = os.listdir ( inputDir['data'] )
-    #!!!need to be optimized for checking the hists
-    compare2List(mcFileList+dataFileList, list(histoGramPerSample.keys()))
-    
-    for ifile in mcFileList+dataFileList:
-        ifileName = ifile.split('.root')[0]
-        if ('singleMu' in ifileName) or ('jetHT' in ifileName) or ('JetMET' in ifileName) or ('JetHT' in ifileName) or ('Muon' in ifileName):
-            isdata = True
-        else:
-            isdata = False
-        if not ifileName in allSubProcess: continue
-        iProScale = 1.0
-        # if ifScale and (not 'jetHT' in ifileName):
-        if ifScale and (not isdata):
-            iProScale = getProcessScale( ifileName, era )
-        print('ifileName: {}, scale: {}'.format( ifileName , iProScale) )
-        if isdata:
-            iRootFile = ROOT.TFile( inputDir['data']+ifile, 'READ' )
-        else:
-            iRootFile = ROOT.TFile( inputDir['mc']+ifile, 'READ' ) 
-        print('openning file: ', iRootFile.GetName() )
-        
-        if ifGetSys: 
-            sysList = getSysList(iRootFile, variable)  
-            print('systematic in file: ', sysList)
-        else:
-            sysList=[]
-        
-        for iRegion in regionsList:
-            # if 'SR' in iRegion and isdata: continue
-            if (iRegion=='1tau1lSR' or iRegion=='1tau0lSR') and isdata: continue #so that fake tau background can be get
-            if not isRun3:
-                # iHistName = iRegion + '_' + ifileName + '_' + variable  #!!!old WH code
-                iHistName = ifileName +'_' +iRegion+ '_' + variable
-            else:
-                iHistName = ifileName +'_' +iRegion+ '_' + variable#!!!new WH code
-            
-            if iRegion not in sumProcessHistsDict.keys(): 
-                sumProcessHistsDict[iRegion]={}
-                sumProcessHistsDictSys[iRegion]={}
-            print('iHistName: ', iHistName )
-            
-            if histoGramPerSample[ifileName] not in sumProcessHistsDict[iRegion].keys():
-                sumProcessHistsDictSys[iRegion][histoGramPerSample[ifileName]] = {}
-                sumProcessHistsDict[iRegion][histoGramPerSample[ifileName]] = iRootFile.Get( iHistName)
-                sumProcessHistsDict[iRegion][histoGramPerSample[ifileName]].Sumw2()
-                sumProcessHistsDict[iRegion][histoGramPerSample[ifileName]].SetDirectory(0)
-                print('sumProcessHistDic[{}][{}] get hist: {}'.format( iRegion, histoGramPerSample[ifileName], iHistName ))
-                if ifScale or not isdata: 
-                    sumProcessHistsDict[iRegion][histoGramPerSample[ifileName]].Scale(iProScale)
-                #get systematic hist
-                if ifGetSys:
-                    for isys in sysList:
-                        sumProcessHistsDictSys[iRegion][histoGramPerSample[ifileName]][isys] = iRootFile.Get( iHistName+'_'+isys)
-                        sumProcessHistsDictSys[iRegion][histoGramPerSample[ifileName]][isys].Sumw2()
-                        sumProcessHistsDictSys[iRegion][histoGramPerSample[ifileName]][isys].SetDirectory(0)
-            else:
-                itemp = iRootFile.Get( iHistName)
-                if ifScale or not isdata: 
-                    itemp.Scale(iProScale)
-                sumProcessHistsDict[iRegion][histoGramPerSample[ifileName]].Add( itemp)
-                print('sumProcessHistDic[{}][{}] add hist: {}'.format( iRegion, histoGramPerSample[ifileName], iHistName ))
-                if ifGetSys:
-                    for isys in sysList:
-                        sumProcessHistsDictSys[iRegion][histoGramPerSample[ifileName]][isys].Add( iRootFile.Get( iHistName+'_'+ isys))
-                        
-        iRootFile.Close()
-        print( '\n')
-
-    return sumProcessHistsDict, sumProcessHistsDictSys
-
-
 def getProcessScale( processName, era ):
     # genWeight = uf.getGenSumDic( '../objectSelection/genWeightCSV/genSum_2016postVFP.csv' )[processName]
     genWeight = uf.getGenSumDic( '../objectSelection/genWeightCSV/genSum_'+era+'.csv', era )[processName]
@@ -241,93 +152,6 @@ def getProcessScale( processName, era ):
     print( processName, ': ', 'genWeight= ', genWeight, ' lumi=', lumiMap[era], ' cross=', samplesCrossSection[processName],  ' scale= ', scale)
     return scale
 
-
-def addBGHist(sumProcessIVar,  region, includeQCD=False):
-    summedProcessList = list(sumProcessIVar[region].keys())
-    sumHist = sumProcessIVar[region][summedProcessList[0]].Clone()
-    sumHist.Reset()
-    sumHist.Sumw2()
-    sumHist.SetName(region)
-    for ipro in summedProcessList:
-        if not includeQCD:
-            # if ipro=='data' or ipro=='qcd' or ipro=='tttt': continue
-            if ipro=='jetHT' or ipro=='singleMu' or ipro=='qcd' or ipro=='tttt': continue
-        else:
-            if ipro=='jetHT' or ipro=='singleMu' or ipro=='tttt': continue
-        sumHist.Add( sumProcessIVar[region][ipro])
-    return sumHist
-
-
-
-def plotEfficiency(h_numeritor, h_dinominator, h_eff, plotName, era = '2016', ifFixMax=True, rightTitle='efficiency'):
-    print('start to plot efficiency')
-    mySty =  st.setMyStyle()
-    mySty.cd()
-    
-    can = ROOT.TCanvas('efficiency', 'efficiency', 1000, 800)
-    ROOT.gStyle.SetOptStat(ROOT.kFALSE)
-    ROOT.gStyle.SetOptTitle(0)
-
-    # h_dinominator.SetLineColor(ROOT.kOrange)
-    h_dinominator.GetYaxis().SetRangeUser(h_numeritor.GetMinimum()*0.9, h_dinominator.GetMaximum()*1.5)
-    h_dinominator.GetYaxis().SetTitle('Events')
-    h_dinominator.GetYaxis().SetTitleSize(0.05)
-    h_dinominator.GetYaxis().SetLabelSize(0.03)
-    h_dinominator.GetYaxis().SetTitleOffset(1.1)
-    h_dinominator.GetXaxis().SetTitle(h_dinominator.GetTitle())
-    h_dinominator.GetXaxis().SetTitleSize(0.05)
-    h_dinominator.SetLineWidth(3)
-    h_dinominator.SetLineColorAlpha(ROOT.kOrange+1, 0.8)
-    
-    h_dinominator.Draw()
-    h_numeritor.SetLineColorAlpha(ROOT.kGreen, 0.5)
-    h_numeritor.SetLineWidth(3)
-    # h_numeritor.SetLineStyle(8)
-    h_numeritor.Draw('same')
-    can.Update()
-
-    h_efficiency = h_eff.Clone()
-    if ifFixMax:
-        rightmax = .35
-        # rightmax = .2
-    else:
-        rightmax = 1.7*h_efficiency.GetMaximum()
-    scale = ROOT.gPad.GetUymax()/rightmax
-    h_efficiency.SetLineColor(ROOT.kRed)
-    h_efficiency.SetLineWidth(4)
-    # h_efficiency.SetMarkerStyle(3)
-    h_efficiency.SetLineStyle(1)
-    h_efficiency.Scale(scale) #!!!need to consider this scaling effect on uncertainty
-    # h_efficiency.Scale(4000) #!!!need to consider this scaling effect on uncertainty
-    h_efficiency.Draw("same")
-    
-    #print
-    # for i in range(1,h_efficiency.GetNbinsX()+1):
-    #     print( i, 'bin: ', h_dinominator.GetBinContent(), h_dinominator.GetBinError(), h_numeritor.GetBinContent(), h_numeritor.GetBinContent())
-    
-    axis = ROOT.TGaxis(ROOT.gPad.GetUxmax(),ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax(),0,rightmax,510,"+L")
-    # axis.SetRangeUser(0, rightmax*1.4)
-    axis.SetLineColor(ROOT.kRed)
-    axis.SetLabelColor(ROOT.kRed)
-    # axis.SetTitle('fake rate')
-    # axis.SetTitle('efficiency')
-    axis.SetTitle(rightTitle)
-    axis.SetTitleSize(0.05)
-    axis.SetTitleColor(ROOT.kRed)
-    # axis.SetRangeUser(0, 0.4)
-    axis.Draw()
-
-
-    # legend = ROOT.TLegend(0.4,0.7,0.9,0.9)
-    legend = ROOT.TLegend(0.35,0.68,0.9,0.9)
-    legend.AddEntry(h_dinominator, "denominator: "+ h_dinominator.GetName())
-    legend.AddEntry(h_numeritor, "numeritor: "+ h_numeritor.GetName())
-    legend.AddEntry(h_efficiency, h_efficiency.GetName())
-    legend.Draw()
-    
-    # addCMSTextToCan(can, 0.21, 0.33, 0.91, era)     
-
-    can.SaveAs(plotName)
 
 
 def getSameValues(diction, value):
@@ -337,92 +161,6 @@ def getSameValues(diction, value):
             subList.append(ikey)
     return subList
             
-
-#!!!to be done    
-# def getSumnedPro(inputDir, sumList, regionList, ivar):
-    # if not sumBG in gq.histoGramPerSample: 
-    #     print(sumBG, ' not exist!!!')
-        # sys.exit()
-    # subprocesses = getSameValues(gq.histoGramPerSample, sumBG)
-    # for ifile in os.listdir(inputDir):
-    
-def getEff(h_de, h_nu):    
-    eff = ROOT.TGraphAsymmErrors()
-    eff.Divide(h_nu, h_de, "cp") #cp : Clopper-Pearson interval; #https://root.cern.ch/doc/master/classTGraphAsymmErrors.html#ac9a2403d1297546c603f5cf1511a5ca5
-    # eff.Draw("AP")
-    eff.SetTitle(h_de.GetTitle())
-    eff.SetName(h_de.GetName())
-    return eff
-    
-def plotEffTEff(h_nu, h_de, plotName, era, legendName, yRange=[0, 1.2], rightTitle='Efficiency'):
-    '''
-    to do: add the plotting of denominator and numerator too
-    '''
-   #plot efficiency with TEfficiency, might not work with MC with event weights ;https://root-forum.cern.ch/t/tefficiency-with-weighted-events/18067
-    print('start to plot efficiency')
-    mySty =  st.setMyStyle()
-    mySty.cd()
-    
-    can = ROOT.TCanvas('efficiency', 'efficiency', 1000, 800)
-    ROOT.gStyle.SetOptStat(ROOT.kFALSE)
-    ROOT.gStyle.SetOptTitle(0)
-    
-    eff = ROOT.TGraphAsymmErrors()
-    eff.Divide(h_nu, h_de, "cp") #cp : Clopper-Pearson interval; #https://root.cern.ch/doc/master/classTGraphAsymmErrors.html#ac9a2403d1297546c603f5cf1511a5ca5
-    eff.Draw("AP")
-    eff.SetTitle(h_de.GetTitle())
-    eff.SetName(h_de.GetName())
-    
-    # eff.GetYaxis().SetRangeUser(0, 1.2)
-    eff.GetYaxis().SetRangeUser(yRange[0], yRange[1])
-    eff.GetYaxis().SetTitle(rightTitle)
-    eff.GetXaxis().SetTitle(h_de.GetTitle())
-    
-    eff.SetMarkerSize(0.8)
-    eff.SetMarkerColor(ROOT.kRed)
-    eff.SetLineWidth(3)
-    eff.SetLineColor(ROOT.kRed)
-   
-    # #draw the denominator and numerator hists 
-    #  # Create a transparent pad for the second histogram
-    # pad = ROOT.TPad("pad", "pad", 0, 0, 1, 1)
-    # pad.SetFillStyle(4000)  # will be transparent
-    # pad.SetFillColor(0)
-    # pad.Draw()
-    # pad.cd()
-
-    # # Draw the second histogram using the right Y axis
-    # h_de.SetLineColor(ROOT.kRed+1)
-    # h_de.Draw("same")
-
-    # # Create a new Y axis for the second histogram
-    # # The range should be set according to h_de's scale
-    # ymax = h_de.GetMaximum()
-    # ymin = h_de.GetMinimum()
-    # axis = ROOT.TGaxis(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax(),  ymin, ymax, 510, "+L")
-    # axis.SetLineColor(h_de.GetLineColor())
-    # axis.SetLabelColor(h_de.GetLineColor())
-    # axis.SetTitle("Right Axis Title")
-    # axis.Draw()
-    # # Go back to the main pad and draw
-    # can.cd()
-    # can.Draw()
-    # can.Update()
-
-    legend = st.getMyLegend(0.6,0.25,0.9,0.4)
-    legend.AddEntry(eff, 'tttt', 'lep')
-    legend.SetTextSize(0.06)
-    legend.Draw()
-    
-    st.addCMSTextToPad(can, era) 
-    
-    can.SaveAs(plotName+'.png')
-    can.SaveAs(plotName+'.pdf')
-    print('done plot efficiency \n\n')
-    
-    return eff
-    
-    
 def getHistFromFile(fileName, histNames):
     file = ROOT.TFile.Open(fileName)
 
@@ -459,16 +197,12 @@ def getHistFromFileDic(fileName, regionList, varList, subPro, sumProSys, era):
     subProHist = {} 
     subProHistSys = {}
     # histNames =  getHistName(regionList, varList, subPro)
-    subProHistSys = {}
-    # histNames =  getHistName(regionList, varList, subPro)
     for ivar in varList:
         subProHist[ivar] = {}
-        subProHistSys[ivar] = {}
         subProHistSys[ivar] = {}
         for ire in regionList:
             histName = subPro + '_' + ire + '_' + ivar 
             subProHist[ivar][ire] = {}
-            subProHist[ivar][ire][subPro] = {}
             subProHist[ivar][ire][subPro] = {}
             subProHist[ivar][ire][subPro] = getHistFromFile(fileName, [histName])[0]
             # subProHist[ivar][ire][subPro]['nom'] = getHistFromFile(fileName, [histName])[0]
@@ -479,6 +213,7 @@ def getHistFromFileDic(fileName, regionList, varList, subPro, sumProSys, era):
             
     return subProHist, subProHistSys
             
+    return subProHist, subProHistSys
              
 # def getSysHistNames(sumProSys, subPro, region, var, era, subProHist, fileName):
 def getSysHistNames(sumProSys, subPro, region, var, era, fileName):
@@ -522,6 +257,7 @@ def print_dict_structure(dictionary, indent=0):
             print_dict_structure(value, indent + 1)
     # print('\n')
 
+def getSumHist(inputDirDic, regionList, sumProList, sumProSys,varList, era='2018', isRun3=False):
 #!new and better
 # def getSumHist(inputDirDic, regionList, sumProList, varList, era='2018', isRun3=False):
 def getSumHist(inputDirDic, regionList, sumProList, sumProSys,varList, era='2018', isRun3=False):
@@ -635,6 +371,82 @@ def getYmax(histograms):
 
     return max_y    
 
+def drop_last_one(input_string):
+    # Find the last occurrence of '1' in the string
+    last_one_index = input_string.rfind('1')
+    
+    # Check if '1' was found in the string
+    if last_one_index != -1:
+        # If '1' was found, create a new string by removing the last occurrence of '1'
+        new_string = input_string[:last_one_index] + input_string[last_one_index+1:]
+        return new_string
+    else:
+        # If '1' was not found, return the original string
+        return input_string
+    
+def remove_last_char_if_1(s):
+    # Check if the last character of the string is '1'
+    if s.endswith('1'):
+        # Remove the last character
+        return s[:-1]
+    # Return the original string if the last character is not '1'
+    return s
+    
+    
+def checkIfInputDic(entry, isRun3):
+    ifInDic = False
+    entryName = remove_last_char_if_1(entry)
+    # print('entryName=', entryName)
+    if not isRun3:
+        if  entryName in gq.histoGramPerSample.keys(): 
+            ifInDic = True
+    else:
+        if  entryName in gq.Run3Samples.keys(): 
+            ifInDic = True
+    return ifInDic
+
+
+
+def isBG(sumPro, ifVLL=False):
+    #protype 1: signal; 2: background; 3: data
+    proType = 0
+    if 'jetHT' in sumPro or 'singleMu' in sumPro:
+        proType = 3
+    elif 'tttt' in sumPro:
+        proType = 1 if not ifVLL else 2
+    elif 'VLL' in sumPro:
+        proType = 1
+    else: 
+        proType = 2
+        
+    return proType
+        
+        
+def getAllSubPro(era, sumPro, isData=True):
+    all = gq.histoGramPerSample
+    if isData:
+        # era = '2016' if ('2016' in era) else era
+        # return [key for key, value in all.items() if (value == sumPro and era in key)]
+        return [sumPro + '_'+iera for iera in gq.dataDict[era] ]
+        # return [key for key, value in all.items() if (value == sumPro and era in key)   ]
+        # return [key for key, value in all.items() if (value == sumPro)]
+    else:
+        return [key for key, value in all.items() if (value == sumPro)]
+   
+def getAllSubPro1(proList, isRun3):
+    allSubPro = []
+    dic = gq.histoGramPerSample if not isRun3 else gq.Run3Samples
+    for isub, isum in dic.items():
+        if isum in proList:
+            allSubPro.append(isub)
+    return allSubPro
+   
+   
+   
+    
+    
+############################################################################################################
+#!functions to plot histograms
 def plotOverlay(histList, legenList, era, yTitle, plotName, drawOp='', legendPos=[0.65, 0.8, 0.9,0.93], yRange=[]):
     print('start to plot overlay plot')
     mySty =  st.setMyStyle()
@@ -695,74 +507,169 @@ def plotOverlay(histList, legenList, era, yTitle, plotName, drawOp='', legendPos
     print('Done overlay plotting\n\n')
     
     
+def getEff(h_de, h_nu):    
+    eff = ROOT.TGraphAsymmErrors()
+    eff.Divide(h_nu, h_de, "cp") #cp : Clopper-Pearson interval; #https://root.cern.ch/doc/master/classTGraphAsymmErrors.html#ac9a2403d1297546c603f5cf1511a5ca5
+    # eff.Draw("AP")
+    eff.SetTitle(h_de.GetTitle())
+    eff.SetName(h_de.GetName())
+    return eff
     
+def plotEffTEff(h_nu, h_de, plotName, era, legendName, yRange=[0, 1.2], rightTitle='Efficiency'):
+    '''
+    to do: add the plotting of denominator and numerator too
+    '''
+   #plot efficiency with TEfficiency, might not work with MC with event weights ;https://root-forum.cern.ch/t/tefficiency-with-weighted-events/18067
+    print('start to plot efficiency')
+    mySty =  st.setMyStyle()
+    mySty.cd()
     
-def drop_last_one(input_string):
-    # Find the last occurrence of '1' in the string
-    last_one_index = input_string.rfind('1')
+    can = ROOT.TCanvas('efficiency', 'efficiency', 1000, 800)
+    ROOT.gStyle.SetOptStat(ROOT.kFALSE)
+    ROOT.gStyle.SetOptTitle(0)
     
-    # Check if '1' was found in the string
-    if last_one_index != -1:
-        # If '1' was found, create a new string by removing the last occurrence of '1'
-        new_string = input_string[:last_one_index] + input_string[last_one_index+1:]
-        return new_string
-    else:
-        # If '1' was not found, return the original string
-        return input_string
+    eff = ROOT.TGraphAsymmErrors()
+    eff.Divide(h_nu, h_de, "cp") #cp : Clopper-Pearson interval; #https://root.cern.ch/doc/master/classTGraphAsymmErrors.html#ac9a2403d1297546c603f5cf1511a5ca5
+    eff.Draw("AP")
+    eff.SetTitle(h_de.GetTitle())
+    eff.SetName(h_de.GetName())
     
-def remove_last_char_if_1(s):
-    # Check if the last character of the string is '1'
-    if s.endswith('1'):
-        # Remove the last character
-        return s[:-1]
-    # Return the original string if the last character is not '1'
-    return s
+    # eff.GetYaxis().SetRangeUser(0, 1.2)
+    eff.GetYaxis().SetRangeUser(yRange[0], yRange[1])
+    eff.GetYaxis().SetTitle(rightTitle)
+    eff.GetXaxis().SetTitle(h_de.GetTitle())
     
-    
-def checkIfInputDic(entry, isRun3):
-    ifInDic = False
-    entryName = remove_last_char_if_1(entry)
-    # print('entryName=', entryName)
-    if not isRun3:
-        if  entryName in gq.histoGramPerSample.keys(): 
-            ifInDic = True
-    else:
-        if  entryName in gq.Run3Samples.keys(): 
-            ifInDic = True
-    return ifInDic
+    eff.SetMarkerSize(0.8)
+    eff.SetMarkerColor(ROOT.kRed)
+    eff.SetLineWidth(3)
+    eff.SetLineColor(ROOT.kRed)
+   
+    # #draw the denominator and numerator hists 
+    #  # Create a transparent pad for the second histogram
+    # pad = ROOT.TPad("pad", "pad", 0, 0, 1, 1)
+    # pad.SetFillStyle(4000)  # will be transparent
+    # pad.SetFillColor(0)
+    # pad.Draw()
+    # pad.cd()
 
-def getAllSubPro1(proList, isRun3):
-    allSubPro = []
-    dic = gq.histoGramPerSample if not isRun3 else gq.Run3Samples
-    for isub, isum in dic.items():
-        if isum in proList:
-            allSubPro.append(isub)
-    return allSubPro
+    # # Draw the second histogram using the right Y axis
+    # h_de.SetLineColor(ROOT.kRed+1)
+    # h_de.Draw("same")
 
-def isBG(sumPro, ifVLL=False):
-    #protype 1: signal; 2: background; 3: data
-    proType = 0
-    if 'jetHT' in sumPro or 'singleMu' in sumPro:
-        proType = 3
-    elif 'tttt' in sumPro:
-        proType = 1 if not ifVLL else 2
-    elif 'VLL' in sumPro:
-        proType = 1
-    else: 
-        proType = 2
-        
-    return proType
-        
-        
-def getAllSubPro(era, sumPro, isData=True):
-    all = gq.histoGramPerSample
-    if isData:
-        # era = '2016' if ('2016' in era) else era
-        # return [key for key, value in all.items() if (value == sumPro and era in key)]
-        return [sumPro + '_'+iera for iera in gq.dataDict[era] ]
-        # return [key for key, value in all.items() if (value == sumPro and era in key)   ]
-        # return [key for key, value in all.items() if (value == sumPro)]
+    # # Create a new Y axis for the second histogram
+    # # The range should be set according to h_de's scale
+    # ymax = h_de.GetMaximum()
+    # ymin = h_de.GetMinimum()
+    # axis = ROOT.TGaxis(ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax(),  ymin, ymax, 510, "+L")
+    # axis.SetLineColor(h_de.GetLineColor())
+    # axis.SetLabelColor(h_de.GetLineColor())
+    # axis.SetTitle("Right Axis Title")
+    # axis.Draw()
+    # # Go back to the main pad and draw
+    # can.cd()
+    # can.Draw()
+    # can.Update()
+
+    legend = st.getMyLegend(0.6,0.25,0.9,0.4)
+    legend.AddEntry(eff, 'tttt', 'lep')
+    legend.SetTextSize(0.06)
+    legend.Draw()
+    
+    st.addCMSTextToPad(can, era) 
+    
+    can.SaveAs(plotName+'.png')
+    can.SaveAs(plotName+'.pdf')
+    print('done plot efficiency \n\n')
+    
+    return eff
+    
+def plotEfficiency(h_numeritor, h_dinominator, h_eff, plotName, era = '2016', ifFixMax=True, rightTitle='efficiency'):
+    print('start to plot efficiency')
+    mySty =  st.setMyStyle()
+    mySty.cd()
+    
+    can = ROOT.TCanvas('efficiency', 'efficiency', 1000, 800)
+    ROOT.gStyle.SetOptStat(ROOT.kFALSE)
+    ROOT.gStyle.SetOptTitle(0)
+
+    # h_dinominator.SetLineColor(ROOT.kOrange)
+    h_dinominator.GetYaxis().SetRangeUser(h_numeritor.GetMinimum()*0.9, h_dinominator.GetMaximum()*1.5)
+    h_dinominator.GetYaxis().SetTitle('Events')
+    h_dinominator.GetYaxis().SetTitleSize(0.05)
+    h_dinominator.GetYaxis().SetLabelSize(0.03)
+    h_dinominator.GetYaxis().SetTitleOffset(1.1)
+    h_dinominator.GetXaxis().SetTitle(h_dinominator.GetTitle())
+    h_dinominator.GetXaxis().SetTitleSize(0.05)
+    h_dinominator.SetLineWidth(3)
+    h_dinominator.SetLineColorAlpha(ROOT.kOrange+1, 0.8)
+    
+    h_dinominator.Draw()
+    h_numeritor.SetLineColorAlpha(ROOT.kGreen, 0.5)
+    h_numeritor.SetLineWidth(3)
+    # h_numeritor.SetLineStyle(8)
+    h_numeritor.Draw('same')
+    can.Update()
+
+    h_efficiency = h_eff.Clone()
+    if ifFixMax:
+        rightmax = .35
+        # rightmax = .2
     else:
-        return [key for key, value in all.items() if (value == sumPro)]
+        rightmax = 1.7*h_efficiency.GetMaximum()
+    scale = ROOT.gPad.GetUymax()/rightmax
+    h_efficiency.SetLineColor(ROOT.kRed)
+    h_efficiency.SetLineWidth(4)
+    # h_efficiency.SetMarkerStyle(3)
+    h_efficiency.SetLineStyle(1)
+    h_efficiency.Scale(scale) #!!!need to consider this scaling effect on uncertainty
+    # h_efficiency.Scale(4000) #!!!need to consider this scaling effect on uncertainty
+    h_efficiency.Draw("same")
+    
+    #print
+    # for i in range(1,h_efficiency.GetNbinsX()+1):
+    #     print( i, 'bin: ', h_dinominator.GetBinContent(), h_dinominator.GetBinError(), h_numeritor.GetBinContent(), h_numeritor.GetBinContent())
+    
+    axis = ROOT.TGaxis(ROOT.gPad.GetUxmax(),ROOT.gPad.GetUymin(), ROOT.gPad.GetUxmax(), ROOT.gPad.GetUymax(),0,rightmax,510,"+L")
+    # axis.SetRangeUser(0, rightmax*1.4)
+    axis.SetLineColor(ROOT.kRed)
+    axis.SetLabelColor(ROOT.kRed)
+    # axis.SetTitle('fake rate')
+    # axis.SetTitle('efficiency')
+    axis.SetTitle(rightTitle)
+    axis.SetTitleSize(0.05)
+    axis.SetTitleColor(ROOT.kRed)
+    # axis.SetRangeUser(0, 0.4)
+    axis.Draw()
+
+
+    # legend = ROOT.TLegend(0.4,0.7,0.9,0.9)
+    legend = ROOT.TLegend(0.35,0.68,0.9,0.9)
+    legend.AddEntry(h_dinominator, "denominator: "+ h_dinominator.GetName())
+    legend.AddEntry(h_numeritor, "numeritor: "+ h_numeritor.GetName())
+    legend.AddEntry(h_efficiency, h_efficiency.GetName())
+    legend.Draw()
+    
+    # addCMSTextToCan(can, 0.21, 0.33, 0.91, era)     
+
+    can.SaveAs(plotName)
+    
+
+  
+############################################################################################################
+#!functions to manipulate histograms
+def addBGHist(sumProcessIVar,  region, includeQCD=False):
+    summedProcessList = list(sumProcessIVar[region].keys())
+    sumHist = sumProcessIVar[region][summedProcessList[0]].Clone()
+    sumHist.Reset()
+    sumHist.Sumw2()
+    sumHist.SetName(region)
+    for ipro in summedProcessList:
+        if not includeQCD:
+            # if ipro=='data' or ipro=='qcd' or ipro=='tttt': continue
+            if ipro=='jetHT' or ipro=='singleMu' or ipro=='qcd' or ipro=='tttt': continue
+        else:
+            if ipro=='jetHT' or ipro=='singleMu' or ipro=='tttt': continue
+        sumHist.Add( sumProcessIVar[region][ipro])
+    return sumHist
     
     

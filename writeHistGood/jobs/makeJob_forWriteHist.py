@@ -3,7 +3,6 @@ import subprocess
 
 import usefulFunc as uf
 
-
 def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79HadroPresel/'
     # inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/'
@@ -38,7 +37,11 @@ def main():
     # version = 'v0Basictraining1tau1l_VLLm800'
     # version = 'v0Basictraining1tau1l_VLLm700'
     # version = 'v0Basictraining1tau1l_VLLm700_DifBin2'
-    # version = 'v0BasicSystematic'
+    # version = 'v0BDT1tau1l'
+    # version = 'v0BDT1tau1l_binC'
+    # version = 'v1BDT1tau1l_evenBin'
+    # version = 'v2BDT1tau1l_binD'
+    version = 'v2BDT1tau1l_binE'
     # version = 'v0trainingWithBtagShape' #for btagWP or shape
     
     #1tau0l systematic

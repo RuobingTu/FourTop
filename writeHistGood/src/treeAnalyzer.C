@@ -42,10 +42,6 @@ void treeAnalyzer::Init()
         // SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, 3, -0.3, 0.3, sysRegions);//VLL
         // SR1tau1lSys = histForRegionsBase("BDT", "BDT score", m_processName, 3, -0.5, 0.3, sysRegions);//VLLm700
 
-        // variableList = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/newCode/inputList/inputList_noBtagShape.csv"; //! testing
-        // TString weightfile = WH::BDTTrainingMap.at(m_era).at(1) + "TMVAClassification" + TString("_") + "BDT" + TString(".weights.xml");//
-        // TString weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2tau1l1CutHT4006jetpt30_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/
-        // TMVAClassification_BDT.weights.xml";
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHT450Cut1tau1l_v75OverlapRemovalFTau/mc/BDTTrain/v2NoBtag/dataset/weight/TMVAClassification_BDT.weights.xml";
         variableList = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final25.csv"; 
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v5cut1tau1lSR_v75OverlapRemovalFTau/mc/BDTTrain/v0/dataset/weight/TMVAClassification_BDT.weights.xml";
@@ -54,7 +50,9 @@ void treeAnalyzer::Init()
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLSample/mc/BDTTrain/v0allVar/dataset/weight/TMVAClassification_BDT.weights.xml";//!weight file for VLL in 1tau1l
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/BDTTrain/v1VLLM800/dataset/weight/TMVAClassification_BDT.weights.xml";//!VLL 800
         // weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v76WithVLLAllMass/mc/BDTTrain/v1VLLM700/dataset/weight/TMVAClassification_BDT.weights.xml";//!VLL700
-        std::cout<<"training input: "<<weightfile<<"\n";
+        variableList = "/workfs2/cms/huahuil/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final.csv";
+        weightfile = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v80addTTExtra1/mc/BDTTrain/v1finalVar27/inputList_1tau1l_final.csv/dataset/weight/TMVAClassification_BDT.weights.xml";
+        std::cout << "training input: " << weightfile << "\n";
     }else if(m_channel=="1tau0l"){
         std::cout << "1tau0l \n";
         WH::getChannelSys(sysRegions, "1tau0lSR", m_era);
@@ -190,7 +188,6 @@ void treeAnalyzer::LoopTree()
     std::cout << "\n";
 };
 
-// void treeAnalyzer::sysRegionsFill(Double_t bdtScore, Double_t basicWeight, Bool_t SR1tau1l, Bool_t CR11tau1l, Bool_t CR21tau1l){
 void treeAnalyzer::sysRegionsFill(Double_t bdtScore, Double_t basicWeight, Bool_t SR1tau1l, TString region){
 
         SR1tau1lSys.fillHistVec(region, bdtScore, basicWeight, SR1tau1l, m_isData);
@@ -231,6 +228,9 @@ void treeAnalyzer::sysRegionsFill(Double_t bdtScore, Double_t basicWeight, Bool_
         //!!!temporarily for b WPM
         SR1tau1lSys.fillHistVec(region + "_CMS_eff_bWPM_" + m_era + "Up", bdtScore, (basicWeight / e->btagWPMedium_weight.v()) * e->btagWPMedium_weight_up.v(), SR1tau1l, m_isData);
         SR1tau1lSys.fillHistVec(region + "_CMS_eff_bWPM_" + m_era + "Down", bdtScore, (basicWeight / e->btagWPMedium_weight.v()) * e->btagWPMedium_weight_down.v(), SR1tau1l, m_isData);
+        //Btag WP medium and tight uncertainty
+        SR1tau1lSys.fillHistVec(region + "_CMS_eff_bWPMT_" + m_era + "Up", bdtScore, (basicWeight / e->btagWPMT_weight.v()) * e->btagWPMT_weight_up.v(), SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_CMS_eff_bWPMT_" + m_era + "Down", bdtScore, (basicWeight / e->btagWPMT_weight.v()) * e->btagWPMT_weight_down.v(), SR1tau1l, m_isData);
         
         if( m_processName.Contains("fakeTau")){
             SR1tau1lSys.fillHistVec(region + "_CMS_tau_FR_"+m_era + "Up", bdtScore, e->FR_weight_final_up, SR1tau1l, m_isData);

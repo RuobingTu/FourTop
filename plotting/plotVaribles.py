@@ -381,7 +381,6 @@ def makeStackPlotNew(nominal, legendOrder, name, region, outDir, ifFakeTau, save
 
     ifBlind = True if 'SR' in region else False #!!!
     dataHist, systsUp, systsDown, sumHist, stack, signal = getHists(nominal, legendOrder, ifBlind, False, ifStackSignal, ifVLL, sysHists)
-    dataHist, systsUp, systsDown, sumHist, stack, signal = getHists(nominal, legendOrder, ifBlind, False, ifStackSignal, ifVLL, sysHists)
 
     setUpStack(canvy, stack, sumHist.GetMaximum(), signal.GetMaximum()*signalScale, ifLogy) 
     stack.Draw("hist")
@@ -445,13 +444,13 @@ def printSBLastBin(sumHist, signal, canvas, ifPrint=False):
     sig = signal.GetBinContent(signal.GetNbinsX())
     bg = sumHist.GetBinContent(sumHist.GetNbinsX()) - sig
     
-    latex.DrawLatex(signal.GetBinCenter(signal.GetNbinsX()), sig+bg+0.05, f"S={sig:.2f}, B={bg-sig:.2f}")
+    latex.DrawLatex(signal.GetBinCenter(signal.GetNbinsX()), sig+bg+0.05, f"S={sig:.2f}, B={bg:.2f}")
     
     canvas.Update()
     canvas.Draw()
 
  
-def addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, signalScale, ifLogy=False, ifVLL='', ifStackSignal=False, sysHists={}):
+def addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, signalScale, ifLogy=False, ifVLL='', ifStackSignal=False, ifDoSystmatic=False):
     # x1,y1,x2,y2 are the coordinates of the Legend in the current pad (in normalised coordinates by default)
     canvy.cd()
     leggy = st.getMyLegend(0.18,0.75,0.89,0.90)
@@ -472,7 +471,7 @@ def addLegend(canvy, nominal, legendOrder, dataHist, assymErrorPlot, signal, sig
             legText = '{}[{:.1f}]'.format(ipro, getIntegral(nominal[ipro]))
             leggy.AddEntry(nominal[ipro], legText,"f")
     
-    sysLeggy = 'Stat.+ Syst. unc' if sysHists else 'Stat. unc'
+    sysLeggy = 'Stat.+ Syst. unc' if ifDoSystmatic else 'Stat. unc'
     leggy.AddEntry(assymErrorPlot, sysLeggy,"f")    
     # leggy.AddEntry(assymErrorPlot,"Stat. unc","f")
     
@@ -695,8 +694,8 @@ def getSystVariation(nominalHist,systHists):
     #systHi is 'up' or 'down' for varias sources
     #so this is to sum the sytstmatic variation for sources of systematic uncertainty
         print( 'doing sytematic calculation for: ',systHi )
+        iSys = True
         syst = systHists[systHi].Clone()
-        print( 'sytHistUp: ', syst.GetName() )
         print( 'sytHistUp: ', syst.GetName() )
         syst.Add(nominalHist,-1)
         for i in range(1,syst.GetXaxis().GetNbins()+1):

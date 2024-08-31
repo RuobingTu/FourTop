@@ -73,14 +73,9 @@ def main():
         for idata in dataList:
             inputDirData = inputDir + 'data/'
             makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, idata,  eraOut , isRun3)
-            makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, idata,  eraOut , isRun3)
 
     makeSubAllJobs( jobsDir , eraOut)
     subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )
-
-    
-    subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )
-
     
 
 
@@ -180,7 +175,8 @@ def makeJobsInDir( inputDir, outputDir, jobScriptsFolder, isData, dataSet, era, 
                 
                 logFile = kOutDirLog + smallFile + ".log"
                 errFile = kOutDirLog + smallFile + ".err"
-                sub_oneProcess.write( "hep_sub -os CentOS7 " + iSmallJobName + " -o " + logFile + " -e " + errFile + "\n")
+                # sub_oneProcess.write( "hep_sub -os CentOS7 " + iSmallJobName + " -o " + logFile + " -e " + errFile + "\n")
+                sub_oneProcess.write( "hep_sub -os CentOS7 -mem 8000 " + iSmallJobName + " -o " + logFile + " -e " + errFile + "\n")#!Memory comsuption is too high, need to be understood
 
         os.popen('chmod 777 '+ jobScriptsFolder + sample_k + "/*sh")
         sub_oneProcess.close()

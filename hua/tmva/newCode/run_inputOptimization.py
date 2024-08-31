@@ -240,6 +240,7 @@ def createNextVariableList_correlation( vlist, TMVAroot):
             else:
                 tempList.remove( secondVariable)
                 print( 'removed: ', secondVariable )
+            print( 'creating list lenghth: ', len(tempList) )
     return variableListList 
 
 def takeThird( elem ):

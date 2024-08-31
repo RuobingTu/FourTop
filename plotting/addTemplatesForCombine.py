@@ -28,7 +28,6 @@ def main():
    
     
     isRun3 = uf.isRun3(inputDir)
-    era = uf.getEraFromDir(inputDir)
     print('isRun3=', isRun3)
     
     
@@ -51,14 +50,10 @@ def main():
     
     getSysHist(summedHistDicAllSys, allSubPro, inputDir, outFile, isRun3)
  
-    # if channel=='1tau0l':
-    #     addFakeTauSys(outFile, channel, summedHistDicAllSys, era)#to be updated
-    #     print(summedHistDicAllSys)
-    
     fakeData = addDataHist(summedHistDicAllSys[channel+'SR_BDT'] , outFile, channel, ifVLL)
     
     
-    #only 1tau1l for now 
+    #!Energy scale variation; only 1tau1l for now 
     # jerDic = {
     #     # '2018': ['/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v64PreAndHLTSel_JERUp/mc/variableHists_v1JERup/', '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v64PreAndHLTSel_JERDown/mc/variableHists_v1JERdown/', 'JER'],
     #     '2018': ['/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v64PreAndHLTSel_JERUp/mc/variableHists_v1JERUp_rerun/', '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v64PreAndHLTSel_JERDown/mc/variableHists_v1JERDown_rerun/', 'JER'],
@@ -86,7 +81,7 @@ def main():
     outFile.Close()
   
 def getSysHist(summedHistDicAllSys, allSubPro,inputDir, outFile, isRun3=False):
-    #loop through all subProcess
+    print('start to add sys hists to sumPro')
     for isub in allSubPro:
         if 'jetHT' in isub or 'singleMu' in isub or 'JetMET' in isub or 'JetHT' in isub or 'Muon' in isub or "BTagCSV" in isub: continue
         print(isub)
@@ -95,16 +90,16 @@ def getSysHist(summedHistDicAllSys, allSubPro,inputDir, outFile, isRun3=False):
         if iroot.IsZombie():
             print('BAD!!!', ifile, 'not existing\n')
         for isysHist in summedHistDicAllSys.keys():
-            print(isub+isysHist)
+            # print(isub+isysHist)
             iHist = iroot.Get(isub+'_'+isysHist).Clone()
             addHistToDic(iHist, summedHistDicAllSys[isysHist], isysHist, isub, outFile, isRun3) 
         iroot.Close() 
-    print(summedHistDicAllSys)
+    print('done adding sys hists to sumPro\n\n')
       
    
 def getSumSys(summedHistDicAllSys, inputDir):
+    print('get all sys hists names from tttt.root')
     ttttFile = ROOT.TFile(inputDir+'tttt.root', 'READ' )
-    # ttttFile = ROOT.TFile(inputDir+'TTTT.root', 'READ' )
     for key in ttttFile.GetListOfKeys():
         obj = key.ReadObj()
         histName = obj.GetName()
@@ -115,7 +110,8 @@ def getSumSys(summedHistDicAllSys, inputDir):
         summedHistDicAllSys[sysName] = {}
         obj.Delete()
     ttttFile.Close()
-    print(summedHistDicAllSys)
+    # print(summedHistDicAllSys)
+    print('done getting all sys hists names\n\n')
 
 def addJERSys(outFile, summedHistDicAllSys, allSubPro, jerDic, era = '2018', isRun3=False):
     print('start to add sys hists') 
@@ -207,7 +203,7 @@ def addDataHist(summedHistSR, outFile, channel, ifVLL=False):
     
     
 def addHistToDic(iHist, summedHistDic, isysHist, isub, outFile, isRun3=False):
-    iHist.Sumw2()
+    # iHist.Sumw2()#!already done 
     iHist.SetDirectory(outFile)
     if not isRun3:
         summedName = gq.histoGramPerSample[isub]    

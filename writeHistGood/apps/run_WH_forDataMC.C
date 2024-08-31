@@ -101,6 +101,8 @@ void run_treeAnalyzer(
 
     WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);
     // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau, for 1tau0l
+    WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);
+    // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau, for 1tau0l
     // WriteHist_btagEff writeHist(inputDir, process, histVersion, isTest);
     // WriteHist_btagShapeR writeHist(inputDir, process, histVersion, isTest);
     // WH_fakeRate writeHist(inputDir, process, histVersion, isTest);
