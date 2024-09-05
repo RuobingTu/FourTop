@@ -4,8 +4,8 @@ import os
 directory = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/variableListv0/'  # 请根据实际情况修改
 
 # 要删除的文件序号
-files_to_remove = [4, 7, 10, 11, 12, 15, 18, 21, 22, 24, 25, 27, 28, 29, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 44, 45, 46, 47, 49, 50, 52, 53, 54, 56, 58, 60, 61, 62, 63, 64, 66, 67, 68, 69]
-N = 69
+files_to_remove = [5, 12, 21, 22, 23, 26, 28, 29, 32, 33, 35, 37, 38, 39]
+N = 40
 
 def read_file(filename):
     with open(filename, 'r') as file:

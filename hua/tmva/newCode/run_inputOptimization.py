@@ -76,6 +76,7 @@ def plot_auc_vs_num_variables(input_dir):
     # Unpack the sorted tuples back into separate lists
     num_vars_sorted, aucs_sorted = zip(*combined_sorted)
     num_vars_array = array.array('d', num_vars_sorted)
+    print(list(num_vars_array))
     aucs_array = array.array('d', aucs_sorted)
     graph = ROOT.TGraph(len(num_vars), num_vars_array, aucs_array)
     tmp_delta = []
@@ -87,7 +88,7 @@ def plot_auc_vs_num_variables(input_dir):
     for i in range(len(tmp_delta)):
         if tmp_delta[i][1] < 0:
             bad_list.append(tmp_delta[i])
-        elif tmp_delta[i][1] < 0.002:
+        elif tmp_delta[i][1] < 0.001:
             notgood_list.append(tmp_delta[i])
     #print(bad_list)
     #print(notgood_list)
@@ -95,7 +96,8 @@ def plot_auc_vs_num_variables(input_dir):
     print(len(total_list))
     num_vars_remove_list = [int(item[0])-4 for item in total_list]
     notgood_var_remove_list = [int(item[0])-4 for item in notgood_list]
-    print(sorted(notgood_var_remove_list))
+    bad_var_remove_list = [int(item[0])-4 for item in bad_list]
+    print(sorted(bad_var_remove_list))
     print(sorted(num_vars_remove_list))
     
     graph.SetTitle("AUC as a Function of Number of Input Variables;Number of Input Variables;AUC")

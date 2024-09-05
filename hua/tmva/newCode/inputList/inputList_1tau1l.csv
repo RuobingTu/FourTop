@@ -59,7 +59,6 @@ bjetsM_transMass
 bjetsM_minDeltaR
 bjetsM_2leptons2_stransMass
 bjetsM_2tauT1lep1_stransMass
-bjetsM_2tauF1lep1_stransMass
 bjetsM_2MET_stransMass
 bjetsM_leptons_minDeltaR
 bjetsM_tausT_minDeltaR
@@ -73,7 +72,6 @@ bjetsT_invariantMass
 bjetsT_transMass
 bjetsT_minDeltaR
 bjetsT_2leptons2_stransMass
-bjetsT_2tauF1lep1_stransMass
 bjetsT_2tauT1lep1_stransMass
 bjetsT_2MET_stransMass
 bjetsT_leptons_minDeltaR

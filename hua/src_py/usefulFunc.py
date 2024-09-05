@@ -258,9 +258,6 @@ def print_dict_structure(dictionary, indent=0):
     # print('\n')
 
 def getSumHist(inputDirDic, regionList, sumProList, sumProSys,varList, era='2018', isRun3=False):
-#!new and better
-# def getSumHist(inputDirDic, regionList, sumProList, varList, era='2018', isRun3=False):
-def getSumHist(inputDirDic, regionList, sumProList, sumProSys,varList, era='2018', isRun3=False):
     #return sumProHists[var][region][sumPro]
     #return sumProHistSys[var][region][sumPro]['sys'] 
     #return sumProHistSys[var][region][sumPro]['sys'] 

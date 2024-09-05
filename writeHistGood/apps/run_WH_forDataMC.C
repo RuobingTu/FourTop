@@ -86,11 +86,10 @@ void run_treeAnalyzer(
     // TString process = "fakeTau_tauF",
     // TString process = "jetHT_2018d",
     // TString process = "singleMu_2016E_v2",
-    // TString process = "singleMu_2016E_v2",
     // TString process = "BTagCSV_2017f",
     // TString process = "ttbar_0l",
     // TString process = "ttbar_1l",
-    TString histVersion = "plot_VLL_M600",
+    TString histVersion = "v0Basictraining1tau1lCR1_VLLm600",
     Bool_t isTest = kFALSE)
 // Bool_t isTest = kFALSE)
 {
@@ -99,10 +98,8 @@ void run_treeAnalyzer(
     TStopwatch t;
     t.Start();
 
-    WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);
-    // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau, for 1tau0l
-    WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);
-    // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau, for 1tau0l
+    WH_forDataMC writeHist(inputDir, process, kFALSE, histVersion, isTest);//
+    // WH_forDataMC writeHist(inputDir, process, kTRUE, histVersion, isTest);//!faketau
     // WriteHist_btagEff writeHist(inputDir, process, histVersion, isTest);
     // WriteHist_btagShapeR writeHist(inputDir, process, histVersion, isTest);
     // WH_fakeRate writeHist(inputDir, process, histVersion, isTest);
