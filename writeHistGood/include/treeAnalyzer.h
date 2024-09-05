@@ -78,6 +78,15 @@ private:
     // hists regions
     // histsForRegionsMap<Double_t> SR1tau1lSys; // calls for default constructor
     histForRegionsBase SR1tau1lSys; // calls for default constructor
+
+    Double_t m_scaleRe_normUp_SF = 1.0;
+    Double_t m_scaleRe_normDown_SF = 1.0;
+    Double_t m_scaleFa_normUp_SF = 1.0;
+    Double_t m_scaleFa_normDown_SF = 1.0;
+    Double_t m_pdf_normUp_SF = 1.0;
+    Double_t m_pdf_normDown_SF = 1.0;
+    Double_t m_pdfAlphaS_normUp_SF = 1.0;
+    Double_t m_pdfAlphaS_normDown_SF = 1.0;
 };
 
-#endif
+#endif      

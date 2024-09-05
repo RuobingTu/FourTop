@@ -1,4 +1,6 @@
 #include <fstream>
+#include <TTreeReader.h>
+#include <TTreeReaderArray.h>
 #include "../include/functions.h"
 namespace WH
 {
@@ -433,6 +435,87 @@ void getChannelSys(std::vector<TString>& sysRegions, TString region, TString era
     sysRegions.push_back(region + "_QCDscale_Re_" + era + "Down");
     sysRegions.push_back(region + "_QCDscale_Fa_" + era + "Up");
     sysRegions.push_back(region + "_QCDscale_Fa_" + era + "Down");
+
+    sysRegions.push_back(region + "_QCDscale_Re_normalised_" + era + "Up");
+    sysRegions.push_back(region + "_QCDscale_Re_normalised_" + era + "Down");
+    sysRegions.push_back(region + "_QCDscale_Fa_normalised_" + era + "Up");
+    sysRegions.push_back(region + "_QCDscale_Fa_normalised_" + era + "Down");
+    // sysRegions.push_back(region + "_pdf_normalised_" + era + "Up");
+    // sysRegions.push_back(region + "_pdf_normalised_" + era + "Down");
+    sysRegions.push_back(region + "_pdfAlphaS_normalised_" + era + "Up");
+    sysRegions.push_back(region + "_pdfAlphaS_normalised_" + era + "Down");
+}
+
+Double_t calQCDScaleNor(const TString inputFile, UInt_t index){
+    //Re_up: 7; Re_down: 1; Fa_up: 5; Fa_down: 3
+    //LHEScaleSumw: sum of genEventWeight * LHESacleWeight[i]/ genEventSumw 
+    //?does the sum of genEventWeight of just one sample or all samples?
+    //I think it's per sample
+    TFile *file = TFile::Open(inputFile);
+    if (!file || file->IsZombie()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return 1;
+    }
+
+    TTreeReader reader("Runs", file); // Replace "tree_name" with the actual name of your TTree
+    TTreeReaderArray<double> LHEScaleSumw(reader, "LHEScaleSumw");
+    TTreeReaderValue<Double_t> genEventSumw(reader, "genEventSumw");
+
+    Double_t sumGen = 0.;
+    Double_t sumGenScale = 0;
+    while (reader.Next())
+    {
+        // for (size_t j = 0; j < LHEScaleSumw.GetSize(); ++j) {
+        //     std::cout << LHEScaleSumw[index] << " ";
+        // }
+        sumGen += *genEventSumw;
+        sumGenScale += LHEScaleSumw[index]*(*genEventSumw);
+    }
+    // std::cout<<"sumGen = "<<sumGen<<" sumGenScale = "<<sumGenScale<<"\n";
+    file->Close();
+    return sumGen/sumGenScale;
+}
+
+Double_t calPDFScaleNor(const TString inputFile, UInt_t index){
+    TFile *file = TFile::Open(inputFile);
+    if (!file || file->IsZombie()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return 1;
+    }
+
+    TTreeReader reader("Runs", file); // Replace "tree_name" with the actual name of your TTree
+    TTreeReaderArray<Double_t> LHEPdfSumw(reader, "LHEPdfSumw");//Sum of genEventWeight * LHEPdfWeight[i], divided by genEventSumw
+    TTreeReaderValue<Double_t> genEventSumw(reader, "genEventSumw");
+
+    Double_t sumGen = 0.;
+    Double_t sumGenScale = 0;
+    while (reader.Next())
+    {
+        sumGen += *genEventSumw;
+        switch (index)
+        {
+        case 0://pdf alpha s up, 101: uncertainty up
+            // sumGenScale += (1.+LHEPdfSumw[101])*(*genEventSumw);
+            sumGenScale += (LHEPdfSumw[101])*(*genEventSumw); //!!!It seems here it's the SF rather than uncertainty as in LHEPdfWeight branch
+            // std::cout<<"LHEPdfSumw[101] = "<<LHEPdfSumw[101]<<"\n";
+            break;
+        case 1://pdf alpha s down, 102: uncertainty down
+            sumGenScale += (LHEPdfSumw[102])*(*genEventSumw);
+            break;
+        case 2: 
+            // pdfUnc = OS::quadraticSum(*(e->LHEPdfWeight), 1., 100); for per event
+            //!might not be possible to get the uncertainty from the sum of genEventWeight 
+            break;
+        
+        default:
+            break;
+        }
+    }
+    // std::cout<<"sumGen = "<<sumGen<<" sumGenScale = "<<sumGenScale<<"\n";4
+    Double_t scale = std::abs(sumGenScale)>1e-10? sumGen/sumGenScale:1;
+
+    file->Close();
+    return scale;
 }
 
 };

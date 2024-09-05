@@ -108,6 +108,19 @@ void treeAnalyzer::Init()
 
     SR1tau1lSys.setDir(m_outFile);
 
+    m_scaleRe_normUp_SF = WH::calQCDScaleNor(m_inputDir + m_processName + ".root", 7);
+    m_scaleRe_normDown_SF = WH::calQCDScaleNor(m_inputDir + m_processName + ".root", 1);
+    m_scaleFa_normUp_SF = WH::calQCDScaleNor(m_inputDir + m_processName + ".root", 5);
+    m_scaleFa_normDown_SF = WH::calQCDScaleNor(m_inputDir + m_processName + ".root", 3);
+    std::cout<<"m_scaleRe_normDown_SF="<<m_scaleRe_normDown_SF<<"\n";
+    std::cout<<"m_scaleRe_normUp_SF="<<m_scaleRe_normUp_SF<<"\n";
+    std::cout<<"m_scaleFa_normDown_SF="<<m_scaleFa_normDown_SF<<"\n";
+    std::cout<<"m_scaleFa_normUp_SF="<<m_scaleFa_normUp_SF<<"\n";
+    m_pdfAlphaS_normUp_SF = WH::calPDFScaleNor(m_inputDir + m_processName + ".root", 0);
+    m_pdfAlphaS_normDown_SF = WH::calPDFScaleNor(m_inputDir + m_processName + ".root", 1);
+    std::cout<<"m_pdfAlphaS_normUp_SF="<<m_pdfAlphaS_normUp_SF<<"\n";//!could be inf for some samples for example st_tZq
+    std::cout<<"m_pdfAlphaS_normDown_SF="<<m_pdfAlphaS_normDown_SF<<"\n";
+
     std::cout << "done initializing\n";
     std::cout << "\n";
 }
@@ -251,6 +264,13 @@ void treeAnalyzer::sysRegionsFill(Double_t bdtScore, Double_t basicWeight, Bool_
         SR1tau1lSys.fillHistVec(region + "_QCDscale_Re_" + m_era + "Down", bdtScore, basicWeight* e->scaleWeightRe_down_.v(), SR1tau1l, m_isData);
         SR1tau1lSys.fillHistVec(region + "_QCDscale_Fa_" + m_era + "Up", bdtScore, basicWeight* e->scaleWeightFa_up_.v(), SR1tau1l, m_isData);
         SR1tau1lSys.fillHistVec(region + "_QCDscale_Fa_" + m_era + "Down", bdtScore, basicWeight* e->scaleWeightFa_down_.v(), SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_QCDscale_Re_normalised_" + m_era + "Up", bdtScore, basicWeight* e->scaleWeightRe_up_.v()*m_scaleRe_normUp_SF, SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_QCDscale_Re_normalised_" + m_era + "Down", bdtScore, basicWeight* e->scaleWeightRe_down_.v()*m_scaleRe_normDown_SF, SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_QCDscale_Fa_normalised_" + m_era + "Up", bdtScore, basicWeight* e->scaleWeightFa_up_.v()*m_scaleFa_normUp_SF, SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_QCDscale_Fa_normalised_" + m_era + "Down", bdtScore, basicWeight* e->scaleWeightFa_down_.v()*m_scaleFa_normDown_SF, SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_pdfAlphaS_normalised_" + m_era + "Up", bdtScore, basicWeight* e->pdfWeightAlphaS_up_.v()*m_pdfAlphaS_normUp_SF, SR1tau1l, m_isData);
+        SR1tau1lSys.fillHistVec(region + "_pdfAlphaS_normalised_" + m_era + "Down", bdtScore, basicWeight* e->pdfWeightAlphaS_down_.v()*m_pdfAlphaS_normDown_SF, SR1tau1l, m_isData);
+
 
 }
 
@@ -281,4 +301,4 @@ treeAnalyzer::~treeAnalyzer()
     // code to free any dynamically allocated resources
     m_file->Close();
     m_outFile->Close();
-}
+}  
