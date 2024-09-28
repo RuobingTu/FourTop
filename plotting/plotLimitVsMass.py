@@ -4,22 +4,49 @@ import setTDRStyle as st
 import usefulFunc as uf
 
 def main():
+    # UL2018
+    #inputFile = {
+    #    500: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm500_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    550: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm550_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    600: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm600_6/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    650: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm650_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    700: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm700_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    750: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm750_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    800: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm800_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    850: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm850_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    900: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm900_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    950: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm950_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    1000: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm1000_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #}
+
+    #inputFile = {
+    #    500: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm500_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    550: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm550_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    600: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm600_6/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    650: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm650_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    700: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm700_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    750: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm750_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    800: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm800_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    850: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm850_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    900: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm900_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    950: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm950_4/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #    1000: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm1000_5/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+    #}
+
     inputFile = {
-        500: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm500/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        550: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm550/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        600: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm600/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        650: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm650/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        700: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm700/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        750: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm750/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        800: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm800/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        850: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm850/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        900: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm900/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        950: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm950/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
-        1000: '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm1000/combine/datacard_mainSys/combineResults/higgsCombine_datacard_1tau1lSys.AsymptoticLimits.mH120.root',
+        500: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm500_4/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        550: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm550_4/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        600: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm600_6/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        650: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm650_4/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        700: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm700_5/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        750: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm750_4/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        800: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm800_5/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        850: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm850_5/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        900: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm900_5/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        950: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm950_4/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
+        1000: '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/combine/combinationV9/run2AndRun3/VLLm1000_5/combineResults/higgsCombine_datacard.AsymptoticLimits.mH120.root',
     }
-    
-    # outDir = 
-   
+
     # Initialize lists to store the limits
     mass_points = []
     observed_limits = []
@@ -140,7 +167,7 @@ def main():
     canvas.Update()
     canvas.Draw()
 
-    canvas.SaveAs("pngout/limits_vs_mass_rtu_v812.png")
+    canvas.SaveAs("pngout/limits_vs_mass_rtu_v906.png")
 
 def getCrossSection(mass_points):
     sumPros = ['VLLm{}'.format(mass) for mass in mass_points]

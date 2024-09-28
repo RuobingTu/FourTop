@@ -11,7 +11,7 @@ void run_objectSelection(
     // TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2017/mc/tttt/",
     TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2016/mc/tttt/",
     // TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/tttt/",
-    TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/TTToHadronic1/",
+    // TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/TTToHadronic1/",
     // TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2017/mc/tttt/",
     // TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2017/data/jetHT_2017c/",
     // TString inputDir = "/publicfs/cms/data/TopQuark/nanoAOD/2017/data/jetHT_2017d/",
@@ -29,7 +29,7 @@ void run_objectSelection(
     // TString singleFileName = "NanoAODv9_10.root",
     // TString singleFileName = "tree_1.root", // run3, output of nanoAOD tool
     TString outputDir = "./output/",
-    Int_t eventNum = 0)
+    Int_t eventNum = 500)
 // Int_t eventNum = 10000)
 // Int_t eventNum = 0)
 {
@@ -38,6 +38,7 @@ void run_objectSelection(
     std::cout<<"input file="<<inputDir<<singleFileName<<"\n";
 
     Bool_t isData = TTTT::getIsData(inputDir);
+    isData = kFALSE;
     TString era = TTTT::getEra(inputDir);
     const Bool_t isRun3 = TTTT::isRun3(era);
     if(eventNum >0) {

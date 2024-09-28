@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import argparse
 
 #import usefulFunc as uf
 
@@ -13,7 +14,7 @@ def checkMakeDir( folder,ifDelete=False) :
         if ifDelete:
             os.system('rm -rf '+folder + '/*')
 
-def main():
+def main(args):
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0NewHLTSFHT550BinF_v64PreAndHLTSel/mc/variableHists_v0systematic1tau0l_bScore/combine/datacardNoSys/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0NewHLTSFHT550BinF_v64PreAndHLTSel/mc/variableHists_v0systematic1tau0lBjet3_bMass/combine/datacard/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0NewHLTSFHT550BinF_v64PreAndHLTSel/mc/variableHists_v0systematic1tau0lBjet3_bMass/combine/datacardNoSys/'
@@ -40,31 +41,33 @@ def main():
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm700_DifBin/combine/datacard_mainSys/'
     # cardDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2baselineHardro_FRweightSys_v76WithVLLAllMass/mc/variableHists_v0Basictraining1tau1l_VLLm800/combine/datacard_mainSys/'
     # cardDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_newTriSFBinD_v75OverlapRemovalFTau/mc/variableHists_v3Basictraining1tau1l_varieBinB/combine/datacard_mainSys/'
-    #for i in [500, 550, 650,700,750,800,850,900,950,1000]:
-    for i in [10]:
-        #cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/mc/variableHists_v0Basictraining1tau1l_VLLm{i}/combine/datacard_mainSys/"
-        cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/mc/variableHists_v0Basictraining1tau1l_VLLm600_{i}/combine/datacard_mainSys/"
+    for mass in [args.mass]:
+        for i in [args.bin]:
+            #cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016preVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{i}/combine/datacard_mainSys/"
+            #cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{i}/combine/datacard_mainSys/"
+            #cardDir = f"/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{i}/combine/datacard_mainSys/"
+            cardDir = f"combinationV9/run2AndRun3/VLLm{mass}_{i}/"
+            #combination
+            # cardDir = 'combinationV6/run2_1tau0l/'
+            # cardDir = 'combinationV6/run2_bothChannels/'
+            # cardDir = 'combinationV6/combinationRun2andRun3/'
+            # cardDir = 'combinationV8/1tau1lCom/'
+            # cardDir = 'combinationV8/run2_1tau1lAnd1tau0l/'
+            # cardDir = 'combinationV8/run2_1tau0l/'
+            # cardDir = 'combinationV9/run2_1tau1l/'
+            # cardDir = 'combinationV9/run2_1tau0l/'
+            # cardDir = 'combinationV9/run2/'
+            # cardDir = 'combinationV9/2022_1tau1l/'
+            # cardDir = 'combinationV9/run2AndRun3/'
 
-        #combination
-        # cardDir = 'combinationV6/run2_1tau0l/'
-        # cardDir = 'combinationV6/run2_bothChannels/'
-        # cardDir = 'combinationV6/combinationRun2andRun3/'
-        # cardDir = 'combinationV8/1tau1lCom/'
-        # cardDir = 'combinationV8/run2_1tau1lAnd1tau0l/'
-        # cardDir = 'combinationV8/run2_1tau0l/'
-        # cardDir = 'combinationV9/run2_1tau1l/'
-        # cardDir = 'combinationV9/run2_1tau0l/'
-        # cardDir = 'combinationV9/run2/'
-        # cardDir = 'combinationV9/2022_1tau1l/'
-        # cardDir = 'combinationV9/run2AndRun3/'
-
-        
-        cardToWorkspaces( cardDir )
-        runCombineSig( cardDir, True )
-        runCombineSig( cardDir, False )
-        copyCombineResultsToDir( cardDir )
-        #runImpact(cardDir )
-        runImpact(cardDir+'workspace/datacard_1tau1lSys.root', cardDir+'combineResults/')
+            
+            cardToWorkspaces( cardDir )
+            runCombineSig( cardDir, True )
+            runCombineSig( cardDir, False )
+            copyCombineResultsToDir( cardDir )
+            #runImpact(cardDir )
+            #runImpact(cardDir+'workspace/datacard_1tau1lSys.root', cardDir+'combineResults/')
+            runImpact(cardDir+'workspace/datacard.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_1tau0lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_1tau2lSys.root', cardDir+'combineResults/')
     # runImpact(cardDir+'workspace/datacard_comb_1tau1l.root', cardDir+'combineResults/')
@@ -170,4 +173,13 @@ def cardToWorkspaces( cardDir):
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Process some integers.')
+
+    parser.add_argument('--mass', type=str, required=True, help='mass point')
+    parser.add_argument('--bin', type=str, required=True, help='last bin range')
+
+    # 解析参数
+    args = parser.parse_args()
+
+    # 调用主函数
+    main(args)

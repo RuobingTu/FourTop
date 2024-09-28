@@ -17,18 +17,17 @@ def query_das(dataset):
 
 def main():
     # Specify the dataset you want to query
-    dataset_list = [f"/VLferm_m{500+mass*50}GeV_{channel}_to_4b_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM" for mass in range(11) for channel in ["EE", "EN" , "NN"]]
-
-    dataset = "/VLferm_m600GeV_EE_to_4b_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
+    dataset_list = [f"/VLferm_m{500+mass*50}GeV_{channel}_to_4b_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM" for mass in range(11) for channel in ["EE", "EN" , "NN"]]
+    #dcjdcsj = f"/VLferm_m{500+mass*50}GeV_{channel}_to_4b_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
     # Query DAS and get the list of files
-    file_list = query_das(dataset)
+    # file_list = query_das(dataset)
     # Print the list of files
     with open('VLL_Charis.py', 'w') as f:
         f.write('''redirector = "root://cmsxrootd.fnal.gov/"''' + '\n')
         f.write('''filesetSignal = {''' + '\n')
         for mass in range(11):
             for channel in ["EE", "EN" , "NN"]:
-                dataset = f"/VLferm_m{500+mass*50}GeV_{channel}_to_4b_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
+                dataset = f"/VLferm_m{500+mass*50}GeV_{channel}_to_4b_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
                 print(dataset)
                 file_list = query_das(dataset)
                 f.write(f'''"VLL_{channel}_M-{500+mass*50}GeV" : [''' + '\n')

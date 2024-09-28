@@ -30,9 +30,9 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
     std::map<TString, std::vector<TString>> allProcesses = {
         {"1tau1l", {
                        // "tttt",
-                        "VLL_EE_M600", //VLLm600
-                        "VLL_EN_M600",
-                        "VLL_NN_M600",
+                        "VLL_EE_M1000", //VLLm600
+                        "VLL_EN_M1000",
+                        "VLL_NN_M1000",
                         "tttt",
                        // "VLL_EE_M800",
                        // "VLL_EN_M800",
@@ -127,8 +127,8 @@ int tmvaBDT_training(
     // const TString channel = "1tau0l",
     const TString channel = "1tau1l",
     // const TString channel = "1tau0l",
-    // const Bool_t ifVLL=kTRUE
-    const TString ifVLL = ""
+    const Bool_t ifVLL=kTRUE
+    //const TString ifVLL = ""
     ) //for btag WP
 {
     std::cout<<"event weight="<<g_weight<<"\n";

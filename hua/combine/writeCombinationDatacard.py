@@ -1,8 +1,12 @@
 import subprocess
+import os
 
 # 1tau1l and 1tau0l combine
 # SR1tau1l = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/TMVAoutput/2016/v3extra1tau1lCut_v41addVertexSelection/1tau1l_v0/AppResults_30bins/datacard/sumDC_10/TMVApp_1tau1l_10var_Sum_datacard.txt'
 # SR1tau0l = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016/v4baseline_v41addVertexSelection/mc/variableHists_v1HT30bins1tau0l/1tau0l_templatesForCombine/datacard/sumDC_10/1tau0ltemplates_Sum_datacard.txt'
+
+mass = 1000
+binning = 5
 
 cardDic_1tau0l = {
     # 'SR1tau0l_2016' : '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016/v4baseline_v42fixedChargeType/mc/variableHists_v0forVariables1tau0l/1tau0l_templatesForCombine/datacard/sumDC_10/1tau0ltemplates_Sum_jets_bScore_datacard.txt',
@@ -28,25 +32,29 @@ cardDic = {
     # 'SR1tau1l_2017': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0NewHLTSFHT550BinF_v64PreAndHLTSel/mc/variableHists_v0BasicSystematic_20bins/combine/datacard/datacard_1tau1lSys.txt',
     # 'SR1tau1l_2018': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0NewHLTSFHT550BinF_v64PreAndHLTSel/mc/variableHists_v0BasicSystematic/combine/datacardJECTESAdded/datacard_1tau1lSys.txt',
 
-    'SR1tau1l_2018': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline_v66TheoryWeightAdded/mc/variableHists_v0theorecticalHistsAdd/combine/datacardSys/datacard_1tau1lSys.txt',
-    'SR1tau1l_2017': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baseline_v67TheoryWeightAdded/mc/variableHists_v0theorecticalHistsAdd/combine/datacardSys/datacard_1tau1lSys.txt',
-    'SR1tau1l_2016': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016/v0baseline_v67TheoryWeightAdded/mc/variableHists_v0theorecticalHistsAdd/combine/datacardSys/datacard_1tau1lSys.txt',
-    
-    'SR1tau1l_2022post': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022postEE/v0baseline_v2leptonsNameChange/mc/variableHists_v0NoSystematic/combine/datacardNoSys/datacard_1tau1l.txt',
-    'SR1tau1l_2022pre': '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0baseline_v2leptonsNameChange/mc/variableHists_v0NoSystematic/combine/datacardNoSys/datacard_1tau1l.txt',
+    'SR1tau1l_2018': f'/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{binning}/combine/datacard_mainSys/datacard_1tau1lSys.txt',
+    'SR1tau1l_2017': f'/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2017/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{binning}/combine/datacard_mainSys/datacard_1tau1lSys.txt',
+    'SR1tau1l_2016preVFP': f'/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016preVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{binning}/combine/datacard_mainSys/datacard_1tau1lSys.txt',
+    'SR1tau1l_2016postVFP': f'/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016postVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}_{binning}/combine/datacard_mainSys/datacard_1tau1lSys.txt',
 }
 
 # outCard = 'combinationV8/run2_1tau1lCombination_datacard.txt'
 # outCard = 'combinationV8/run2_1tau0l/datacard_1tau0lCom.txt'
 
 def main():
-    cardDic.update(cardDic_1tau0l)
+    # cardDic.update(cardDic)
     # outCard = 'combinationV8/run2_1tau0l/datacard_1tau0lCom.txt'
     # outCard = 'combinationV9/run2_1tau0l/datacard_1tau0lCom.txt'
     # outCard = 'combinationV9/run2_1tau1l/datacard_1tau1lCom.txt'
     # outCard = 'combinationV9/run2/datacard.txt'
     # outCard = 'combinationV9/2022_1tau1l/datacard.txt'
-    outCard = 'combinationV9/run2AndRun3/datacard.txt'
+    outCard_dir = f'combinationV9/run2AndRun3/VLLm{mass}_{binning}/'
+    if not os.path.exists(outCard_dir):
+        os.makedirs(outCard_dir)
+        print(f"Directory '{outCard_dir}' created successfully.")
+    else:
+        print(f"Directory '{outCard_dir}' already exists.")
+    outCard = f'{outCard_dir}/datacard.txt'
     comDatacard(cardDic, outCard)
     # comDatacard(cardDic_1tau0l, outCard)
 

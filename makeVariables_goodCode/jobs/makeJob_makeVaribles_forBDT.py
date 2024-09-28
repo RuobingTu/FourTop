@@ -12,7 +12,7 @@ import usefulFunc as uf
 def main():
     year = '2016'
     # year = '2018'
-    year = '2018'
+    # year = '2017'
     # inVersion = 'v67TheoryWeightAdded'
     # inVersion = 'v70BetterHLT'
     # inVersion = 'v71NoHLTNoTau'
@@ -33,7 +33,7 @@ def main():
     # inVersion = 'v80addTTExtra1'
     inVersion = 'v81addSysSum'
 
-    outVersion = 'v0baselineHardro'
+    outVersion = 'v0baselineHardroCR1'
     # outVersion = 'v1baselineHardroHLTSF'
     # outVersion = 'v1baselineHardro_FRweightSys'
     # outVersion = 'v2cut1tau0lSRTauF'

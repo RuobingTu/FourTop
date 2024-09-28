@@ -177,8 +177,10 @@ WeightVarMaker::WeightVarMaker(TTree *outTree, TString era, Bool_t isData, const
             global_weight = TTTT::lumiMap.at(m_era) * TTTT::crossSectionMap.at(processTem) / TTTT::genSumDic.at(m_era).at(processTem);
             std::cout<<"lumi="<<TTTT::lumiMap.at(m_era)<<" crossSection="<<TTTT::crossSectionMap.at(processTem)<<" genSum="<<TTTT::genSumDic.at(m_era).at(processTem)<<"\n";
         }else{
-            global_weight = TTTT::lumiMap.at(m_era) * TTTT::crossSectionMap.at(m_processName) / TTTT::genSumDic.at(m_era).at(m_processName);//!only BDT training uses this
+            std::cout<<"m_processName="<<m_processName<<"\n";
             std::cout<<"lumi="<<TTTT::lumiMap.at(m_era)<<" crossSection="<<TTTT::crossSectionMap.at(m_processName)<<" genSum="<<TTTT::genSumDic.at(m_era).at(m_processName)<<"\n";
+            global_weight = TTTT::lumiMap.at(m_era) * TTTT::crossSectionMap.at(m_processName) / TTTT::genSumDic.at(m_era).at(m_processName);//!only BDT training uses this
+
         }
         std::cout<<"global_weight="<<global_weight<<"\n";
     }

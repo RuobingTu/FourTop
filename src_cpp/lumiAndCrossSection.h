@@ -284,6 +284,39 @@ inline const std::map<TString, std::map<TString, double>> genSumDic = {
             {"WJetsToLNu_HT-800To1200", 5088480.0},
             {"ttZ", 31791100.0},
             //!!!VLL gen sum to be added
+            {"VLL_EE_M600", 201.1},//! to be updated
+            {"VLL_EN_M600", 364.92},//! to be updated
+            {"VLL_NN_M600", 47.6476},//! to be updated
+            {"VLL_EE_M500", 100},//!to be updated
+            {"VLL_EN_M500", 100},//!to be updated
+            {"VLL_NN_M500", 100},//!to be updated
+            {"VLL_EE_M550", 100},//!to be updated
+            {"VLL_EN_M550", 100},//!to be updated
+            {"VLL_NN_M550", 100},//!to be updated
+            {"VLL_EE_M650", 100},//!to be updated
+            {"VLL_EN_M650", 100},//!to be updated
+            {"VLL_NN_M650", 100},//!to be updated
+            {"VLL_EE_M700", 100},//!to be updated
+            {"VLL_EN_M700", 100},//!to be updated
+            {"VLL_NN_M700", 100},//!to be updated
+            {"VLL_EE_M750", 100},//!to be updated
+            {"VLL_EN_M750", 100},//!to be updated
+            {"VLL_NN_M750", 100},//!to be updated
+            {"VLL_EE_M800", 100},//!to be updated
+            {"VLL_EN_M800", 100},//!to be updated
+            {"VLL_NN_M800", 100},//!to be updated
+            {"VLL_EE_M850", 100},//!to be updated
+            {"VLL_EN_M850", 100},//!to be updated
+            {"VLL_NN_M850", 100},//!to be updated
+            {"VLL_EE_M900", 100},//!to be updated
+            {"VLL_EN_M900", 100},//!to be updated
+            {"VLL_NN_M900", 100},//!to be updated
+            {"VLL_EE_M950", 100},//!to be updated
+            {"VLL_EN_M950", 100},//!to be updated
+            {"VLL_NN_M950", 100},//!to be updated
+            {"VLL_EE_M1000", 100},//!to be updated
+            {"VLL_EN_M1000", 100},//!to be updated
+            {"VLL_NN_M1000", 100},//!to be updated
             }
         },
         {"2016postVFP",{//! to be updated
@@ -317,6 +350,39 @@ inline const std::map<TString, std::map<TString, double>> genSumDic = {
             {"WJetsToLNu_HT-800To1200", 5088480.0},
             {"ttZ", 31791100.0},
             //!!!VLL gen sum to be added
+            {"VLL_EE_M600", 201.1},//! to be updated
+            {"VLL_EN_M600", 364.92},//! to be updated
+            {"VLL_NN_M600", 47.6476},//! to be updated
+            {"VLL_EE_M500", 100},//!to be updated
+            {"VLL_EN_M500", 100},//!to be updated
+            {"VLL_NN_M500", 100},//!to be updated
+            {"VLL_EE_M550", 100},//!to be updated
+            {"VLL_EN_M550", 100},//!to be updated
+            {"VLL_NN_M550", 100},//!to be updated
+            {"VLL_EE_M650", 100},//!to be updated
+            {"VLL_EN_M650", 100},//!to be updated
+            {"VLL_NN_M650", 100},//!to be updated
+            {"VLL_EE_M700", 100},//!to be updated
+            {"VLL_EN_M700", 100},//!to be updated
+            {"VLL_NN_M700", 100},//!to be updated
+            {"VLL_EE_M750", 100},//!to be updated
+            {"VLL_EN_M750", 100},//!to be updated
+            {"VLL_NN_M750", 100},//!to be updated
+            {"VLL_EE_M800", 100},//!to be updated
+            {"VLL_EN_M800", 100},//!to be updated
+            {"VLL_NN_M800", 100},//!to be updated
+            {"VLL_EE_M850", 100},//!to be updated
+            {"VLL_EN_M850", 100},//!to be updated
+            {"VLL_NN_M850", 100},//!to be updated
+            {"VLL_EE_M900", 100},//!to be updated
+            {"VLL_EN_M900", 100},//!to be updated
+            {"VLL_NN_M900", 100},//!to be updated
+            {"VLL_EE_M950", 100},//!to be updated
+            {"VLL_EN_M950", 100},//!to be updated
+            {"VLL_NN_M950", 100},//!to be updated
+            {"VLL_EE_M1000", 100},//!to be updated
+            {"VLL_EN_M1000", 100},//!to be updated
+            {"VLL_NN_M1000", 100},//!to be updated
             }
         },
         {"2016preVFP",{//! to be updated
@@ -350,6 +416,39 @@ inline const std::map<TString, std::map<TString, double>> genSumDic = {
             {"WJetsToLNu_HT-800To1200", 5088480.0},
             {"ttZ", 31791100.0},
             //!!!VLL gen sum to be added
+            {"VLL_EE_M600", 201.1},//! to be updated
+            {"VLL_EN_M600", 364.92},//! to be updated
+            {"VLL_NN_M600", 47.6476},//! to be updated
+            {"VLL_EE_M500", 100},//!to be updated
+            {"VLL_EN_M500", 100},//!to be updated
+            {"VLL_NN_M500", 100},//!to be updated
+            {"VLL_EE_M550", 100},//!to be updated
+            {"VLL_EN_M550", 100},//!to be updated
+            {"VLL_NN_M550", 100},//!to be updated
+            {"VLL_EE_M650", 100},//!to be updated
+            {"VLL_EN_M650", 100},//!to be updated
+            {"VLL_NN_M650", 100},//!to be updated
+            {"VLL_EE_M700", 100},//!to be updated
+            {"VLL_EN_M700", 100},//!to be updated
+            {"VLL_NN_M700", 100},//!to be updated
+            {"VLL_EE_M750", 100},//!to be updated
+            {"VLL_EN_M750", 100},//!to be updated
+            {"VLL_NN_M750", 100},//!to be updated
+            {"VLL_EE_M800", 100},//!to be updated
+            {"VLL_EN_M800", 100},//!to be updated
+            {"VLL_NN_M800", 100},//!to be updated
+            {"VLL_EE_M850", 100},//!to be updated
+            {"VLL_EN_M850", 100},//!to be updated
+            {"VLL_NN_M850", 100},//!to be updated
+            {"VLL_EE_M900", 100},//!to be updated
+            {"VLL_EN_M900", 100},//!to be updated
+            {"VLL_NN_M900", 100},//!to be updated
+            {"VLL_EE_M950", 100},//!to be updated
+            {"VLL_EN_M950", 100},//!to be updated
+            {"VLL_NN_M950", 100},//!to be updated
+            {"VLL_EE_M1000", 100},//!to be updated
+            {"VLL_EN_M1000", 100},//!to be updated
+            {"VLL_NN_M1000", 100},//!to be updated
             }
         },
 };

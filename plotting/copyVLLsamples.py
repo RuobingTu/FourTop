@@ -39,7 +39,7 @@ def copyDir():
     VLLfile = 'root://cmsxrootd.hep.wisc.edu///store/user/ckoraka/VLferm_EWcouplings_4321_m500GeV_EE_to_4b/RunIISummer20UL18_NanoAODv9/230718_212434/0000/NanoAODv9_10.root'
 
     # outDir = '/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/VVL_600/' 
-    outDir = '/publicfs/cms/data/TopQuark/Fourtop_VLL/2018/' 
+    outDir = '/publicfs/cms/data/TopQuark/Fourtop_VLL/2017/' 
 
     for isam, ifile in sampleDic.items():
         inputDir = redirector + ifile
@@ -67,9 +67,16 @@ def copySingleFile(number):
         if not f"{number}" in isam: continue
         #if not 'NN' in isam: continue
         print(isam)
-        outName = transform_string(isam) 
+        if "2016APV" in isam:
+            outName = "2016APV"
+        elif "2017" in isam:
+            outName = "2017"
+        elif "2018" in isam:
+            outName = "2018"
+        else:
+            outName = "2016"
         # outDir = '/publicfs/cms/data/TopQuark/nanoAOD/2018/mc/VLL/' + outName + '/'
-        outDir = '/publicfs/cms/data/TopQuark/Fourtop_VLL/2018/' + outName + '/'
+        outDir = f"/publicfs/cms/data/TopQuark/nanoAOD/{outName}/mc/WZTo3LNu/"
         
         if not os.path.exists( outDir ):
             os.mkdir( outDir )
@@ -100,6 +107,7 @@ def copySingleFile(number):
             command = 'xrdcp --verbose ' + inano + ' ' + outDir
             print(command)
             file_name = inano.split('/')[-1]
+            print(outDir+file_name)
             if os.path.exists(outDir+file_name):
                 root_file = ROOT.TFile.Open(outDir+file_name)
                 if root_file.IsZombie():

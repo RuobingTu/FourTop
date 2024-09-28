@@ -36,7 +36,7 @@ void run_objectSelection(
     // TString inputDir = "VLL_EE_M600",
     // TString inputDir = "VLL_EE_M800",
     // TString inputDir = "ttbar_0l",
-    TString inputDir = "ttbar_1l",
+    // TString inputDir = "ttbar_1l",
     // TString inputDir = "TTTo2L2Nu0",
     // TString inputDir = "jetHT_2017f",
     // TString inputDir = "BTagCSV_2017c",

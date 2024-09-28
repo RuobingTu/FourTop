@@ -33,7 +33,7 @@ def getGenSumDic( inputCsv, era ):
 def sumbitJobs(  jobsh):
     print('staring to submit jobs')
     command = 'bash {}'.format(  jobsh )
-    process = subprocess.run( command, shell=True ) 
+    process = subprocess.run( command, shell=True) 
     output = process.stdout
     print(output)
 
@@ -81,7 +81,7 @@ def getEraFromDir(inputDir):
         era = '2017'
     elif '2018' in inputDir:
         era = '2018'
-    elif 'Run2' in inputDir:
+    elif 'Run2' in inputDir or 'run2' in inputDir:
         era = 'Run2'
     elif '2022' in inputDir:
         if '2022preEE' in inputDir:
@@ -688,6 +688,25 @@ def addDataHist(h1, h2):
         h1.SetBinError(i, bin_error)
 
     # return h_result 
+
+def getSubProDic(era, sumPro) :
+    all = gq.histoGramPerSample
+    allSubs = {}
+    for isub, isum in all.items():
+        isdata = isData(isub)
+        if isdata:
+            subEra = isub.split('_')[-1]
+            if subEra in gq.dataDict[era] and isum in sumPro:
+                # allSubs[sum] = []
+                if isum not in allSubs.keys():
+                    allSubs[isum] = []
+                allSubs[isum].append(isub)
+        else:
+            if isum in sumPro:
+                if isum not in allSubs.keys():
+                    allSubs[isum] = []
+                allSubs[isum].append(isub)
+    return allSubs
     
     
     
