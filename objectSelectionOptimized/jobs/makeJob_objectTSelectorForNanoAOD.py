@@ -60,10 +60,10 @@ def main():
     
     # ifSkipTTExtra = True #! only for BDT training in 1tau1l and 1tau2l
     # ifSkipTTExtra = False #! for 1tau0l
-    sumProToSkip = ['jetHT', 'ttExtra'] #! and 1tau2l
+    sumProToSkip = ['ttExtra', 'doubleMu', 'muonEG', 'eGamma', 'singleMu'] #! and 1tau2l
 
 
-    onlyMC = True
+    onlyMC = False
 
 
 ###########################################
@@ -107,8 +107,8 @@ def getInputOutDir( jobVersionName, era):
         '2022_13p6/crabNanoPost_2022postEE_v3': '2022postEE',
         '2022_13p6/crabNanoPost_2022preEE_v3': '2022preEE',
     }
-    inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
-    #inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
+    #inputBase = '/publicfs/cms/data/TopQuark/Fourtop_VLL/'
+    inputBase = '/publicfs/cms/data/TopQuark/nanoAOD/'
     outputBase = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/'
     inputDir = inputBase + era  + '/'
     outputDir = outputBase + eraDic[era] + '/' +jobVersionName  

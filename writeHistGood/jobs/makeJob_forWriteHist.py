@@ -23,7 +23,7 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v84fakeLeptonUpdate/'
     #inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/'
     #inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76WithVLLAllMassOfficial/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v2_v84fakeLeptonUpdateV2/'
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baseline1tau1l_v2_v84fakeLeptonUpdateV2/'
     
 
     #!fakerate
@@ -76,7 +76,7 @@ def main():
     # version = 'v0Basictraining1tau1l_VLLm600'
     version = 'VariblesInputPlotting'
     
-    channel = '1tau2l'
+    #channel = '1tau2l'
     # version = 'v0BDT1tau2l'
    
     # exe = './run_WH_forDataMC.out'
@@ -86,7 +86,7 @@ def main():
     # exe = './run_treeAnalyzer.out' 
     
    
-    justMC = True
+    justMC = False
     # justMC = True
     isTest = 0
     print( inputDir, ' ', version )

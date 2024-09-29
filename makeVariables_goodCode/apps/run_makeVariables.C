@@ -41,7 +41,7 @@ void run_objectSelection(
     // TString inputDir = "ZGToLLG",
     // TString inputDir = "WZTo3LNu",
     // TString inputDir = "VLL_EE_M600",
-    // TString inputDir = "ttbar_0l",
+    TString inputDir = "ttbar_0l",
     // TString inputDir = "ttbar_1l",
     // TString inputDir = "TTTo2L2Nu0",
     // TString inputDir = "jetHT_2017f",

@@ -10,7 +10,7 @@ import usefulFunc as uf
 #todo add git co after job submission for version control
 
 def main():
-    year = '2016'
+    year = '2018'
     # year = '2018'
     # year = '2017'
     # inVersion = 'v67TheoryWeightAdded'
@@ -41,7 +41,7 @@ def main():
 
     # outVersion = 'v0baselineHardro'
     # outVersion = 'v0baseline1tau2l'
-    outVersion = 'v0baseline1tau2l_v2'
+    outVersion = 'v0baseline1tau1l_v2'
     # outVersion = 'v1baseline1tau2l_noTauCut'
     # outVersion = 'v1baseline1tau2l_noLepCut'
     # outVersion = 'v1baselineHardroHLTSF'
@@ -114,7 +114,7 @@ def main():
     subprocess.run( 'chmod 777 '+ subAllofAllName, shell=True )
 
 
-    uf.sumbitJobs(  subAllofAllName )
+    #uf.sumbitJobs(  subAllofAllName )
 
 
 

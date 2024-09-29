@@ -69,7 +69,7 @@ def main():
 
     input1tau1l = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau1l_final25.csv'
     variables = read_csv_as_lines(input1tau1l)
-    variables = ["tausT_1genFlavour"]
+    #variables = ["tausT_1genFlavour"]
     #print(variables)
     
     regionList = ['1tau1lSR']
@@ -110,8 +110,8 @@ def main():
     # ifVLL = 'VLLm800'
     # ifVLL = 'VLLm700'
     is1tau0l = False
-    # ifLogy = True
-    ifLogy = False
+    ifLogy = True
+    #ifLogy = False
     ifStackSignal = True
     # ifStackSignal = False
     # ifPrintSB = True
@@ -126,12 +126,12 @@ def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noTauCut_v82for1tau2l/mc/variableHists_v1dataMC_allbutHLT/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noTauCut_v82for1tau2l/mc/variableHists_v0dataMC_genWeight/'
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noLepCut_v83for1tau2lEleEtaCut/mc/variableHists_v2dataMC_allbutHLTAddTestReg/'
-    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v2_v84fakeLeptonUpdateV2/mc/variableHists_v1dataMC_allbutHLTFakeLepton/'
-    channel = '1tau2l'
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baseline1tau1l_v2_v84fakeLeptonUpdateV2/mc/variableHists_VariblesInputPlotting/'
+    channel = '1tau1l'
     # variables = ['jets_num', 'jets_HT','jets_1pt',  'jets_2pt', 'bjetsM_num',  'tausT_1pt', 'tausT_1genFlavour', 'muonsTopMVAT_1pt', 'elesTopMVAT_1pt', 'elesTopMVAT_1eta', 'lepTopMVAT_1pt', 'lepTopMVAT_2pt' ]
-    variables = ['jets_num']
+    #variables = ['jets_num']
     # regionList = ['1tau2lSR', '1tau2lCR3', '1tau2lCR3NoTau', '1tau2lCR3Mu1', '1tau2lCR3E1']
-    regionList = ['1tau2lSR', '1tau2lCR3']
+    regionList = ['1tau1lSR', '1tau1lCR1', '1tau1lCR2']
 
   
     #1tau0l
