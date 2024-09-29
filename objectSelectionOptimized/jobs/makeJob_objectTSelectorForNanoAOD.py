@@ -34,26 +34,33 @@ codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
 # jobVersionName = 'v79forHLT/'
 # jobVersionName = 'v80addTauJetVar/'
 # jobVersionName = 'v80addTTExtra/'
-#jobVersionName = 'v80addTTExtra1/'
-#jobVersionName = 'v76WithVLLAllMassCROfficial/'
-jobVersionName = 'v81addSysSum/'
+# jobVersionName = 'v80addTTExtra1/'
+# jobVersionName = 'v81addSysSum/'
+# jobVersionName = 'v81for1tau2l/'
+# jobVersionName = 'v82for1tau2l/'
+# jobVersionName = 'v83for1tau2lEleEtaCut/'
+# jobVersionName = 'v84fakeLeptonUpdate/'
+jobVersionName = 'v84fakeLeptonUpdateV2/'
 
 #!same version numbers means no change in algrithm but only in selection
 
 def main():
-    era = '2016'
+    # era = '2016'
     # era = '2016APV'
     # era = '2017'
-    # era = '2018'
+    era = '2018'
     # era = '2022_13p6/crabNanoPost_2022postEE_v3'
     # era = '2022_13p6/crabNanoPost_2022preEE_v3'
     # onlyMC = True
-    dataList = ['jetHT', 'BTagCSV']
-    # dataList = ['singleMu'] #!for HLT
+    # dataList = ['jetHT', 'BTagCSV']#!for 1tau1l and 1tau0l
     # dataList = ['singleMu'] #!for HLT
     # dataList = ['JetMET', 'JetHT']
     # dataList = [ 'Muon']
+    # dataList = ['doubleMu', 'muonEG', 'eGamma', 'singleMu'] #!for 1tau2l  
     
+    # ifSkipTTExtra = True #! only for BDT training in 1tau1l and 1tau2l
+    # ifSkipTTExtra = False #! for 1tau0l
+    sumProToSkip = ['jetHT', 'ttExtra'] #! and 1tau2l
 
 
     onlyMC = True
@@ -76,13 +83,12 @@ def main():
         print('removing old job folder', jobScriptsFolder)
     uf.checkMakeDir(jobScriptsFolder)
 
-    inputDirMC = inputDir #+ 'mc/'
-    #inputDirMC = inputDir + 'mc/'
-    makeJobsInDir( inputDirMC, outputDir , jobScriptsFolder, False, '',  eraOut, isRun3 )
-    if not onlyMC:
-        for idata in dataList:
-            inputDirData = inputDir + 'data/'
-            makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, idata,  eraOut , isRun3)
+    inputDirMC = inputDir + 'mc/'
+    makeJobsInDir( inputDirMC, outputDir , jobScriptsFolder, False,   eraOut, isRun3,  sumProToSkip)
+    # if not onlyMC:
+        # for idata in dataList:
+    inputDirData = inputDir + 'data/'
+    makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, eraOut , isRun3, sumProToSkip)
 
     makeSubAllJobs( jobsDir , eraOut)
     subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )
@@ -136,7 +142,8 @@ def makeSubAllJobs( jobsDir , era):
 
 
 
-def makeJobsInDir( inputDir, outputDir, jobScriptsFolder, isData, dataSet, era, isRun3):
+# def makeJobsInDir( inputDir, outputDir, jobScriptsFolder, isData, dataSet, era, isRun3, ifSkipTTExtra=True):
+def makeJobsInDir( inputDir, outputDir, jobScriptsFolder, isData, era, isRun3,  sumProToSkip=[]):
     allProcesses = os.listdir( inputDir )
     if isData:
         outputDir = outputDir + 'data/'
@@ -151,10 +158,15 @@ def makeJobsInDir( inputDir, outputDir, jobScriptsFolder, isData, dataSet, era, 
         
         print(k)
         sample_k = k
-        if  isData:
-            if dataSet not in k:
-                print( "omitting: ", k )
-                continue
+        # if  isData:
+        #     if dataSet not in k:
+        #         print( "omitting: ", k )
+        #         continue
+        # if ifSkipTTExtra and gq.histoGramPerSample.get(k)=='ttExtra': continue
+        
+        if gq.histoGramPerSample.get(k) in sumProToSkip:
+            print(gq.histoGramPerSample.get(k), ' is in sumProToSkip, skipping')
+            continue
 
         print( 'have made folder neccessary for out put directory' )
 

@@ -52,6 +52,7 @@ public:
                                         Electron_charge(reader, "Electron_charge"),
                                         Electron_r9(reader, "Electron_r9"),
                                         Electron_seedGain(reader, "Electron_seedGain"),
+                                        Electron_mvaFall17V2noIso_WPL(reader, "Electron_mvaFall17V2noIso_WPL"),
                                         // muon
                                         Muon_pt(reader, "Muon_pt"),
                                         Muon_eta(reader, "Muon_eta"),
@@ -144,7 +145,26 @@ public:
         //
         OS::readPointer(HLT_IsoMu24, reader, "HLT_IsoMu24");
         OS::readPointer(HLT_IsoMu27, reader, "HLT_IsoMu27");
+        OS::readPointer(HLT_IsoTkMu24, reader, "HLT_IsoTkMu24");
         OS::readPointer(HLT_Ele32_WPTight_Gsf, reader, "HLT_Ele32_WPTight_Gsf");
+        OS::readPointer(HLT_Ele35_WPTight_Gsf, reader, "HLT_Ele35_WPTight_Gsf");
+        OS::readPointer(HLT_Ele27_WPTight_Gsf, reader, "HLT_Ele27_WPTight_Gsf");
+
+        OS::readPointer(HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8, reader, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8");
+        OS::readPointer(HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL, reader, "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL");
+        OS::readPointer(HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ, reader, "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ");
+        //2016
+        OS::readPointer(HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL, reader, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL");
+        OS::readPointer(HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ, reader, "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ");
+        OS::readPointer(HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ, reader, "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ");
+        OS::readPointer(HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL, reader, "HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL");
+        OS::readPointer(HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ, reader, "HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ");
+        OS::readPointer(HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL, reader, "HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL");
+        OS::readPointer(HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL, reader, "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL");
+        OS::readPointer(HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL, reader, "HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL");
+        OS::readPointer(HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL, reader, "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL");
+
+
 
         OS::readPointer(HLT_Ele24_eta2p1_WPTight_Gsf_LooseDeepTauPFTauHPS30_eta2p1_CrossL1, reader, "HLT_Ele24_eta2p1_WPTight_Gsf_LooseDeepTauPFTauHPS30_eta2p1_CrossL1");
         OS::readPointer(HLT_IsoMu20_eta2p1_LooseDeepTauPFTauHPS27_eta2p1_CrossL1, reader, "HLT_IsoMu20_eta2p1_LooseDeepTauPFTauHPS27_eta2p1_CrossL1");
@@ -160,6 +180,8 @@ public:
         OS::readPointer(genWeight, reader, "genWeight");
         OS::readPointerArray(Tau_genPartFlav, reader, "Tau_genPartFlav");
         OS::readPointer(nGenVisTau, reader, "nGenVisTau");
+        OS::readPointerArray(Electron_genPartFlav, reader, "Electron_genPartFlav");
+        OS::readPointerArray(Muon_genPartFlav, reader, "Muon_genPartFlav");
 
         // other branch not consistent between run2 and run3
         OS::readPointerArray(Electron_mvaFall17V2noIso, reader, "Electron_mvaFall17V2noIso");
@@ -231,6 +253,34 @@ public:
     TTreeReaderValue<Bool_t> *HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ = nullptr;
     TTreeReaderValue<Bool_t> *HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = nullptr;
     TTreeReaderValue<Bool_t> *HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = nullptr;
+    //single lepton triggers
+    TTreeReaderValue<Bool_t> *HLT_IsoMu24 = nullptr;
+    TTreeReaderValue<Bool_t> *HLT_IsoMu27 = nullptr; //only 2017
+    TTreeReaderValue<Bool_t> *HLT_IsoTkMu24 = nullptr;//extra for 2016
+    TTreeReaderValue<Bool_t> *HLT_Ele32_WPTight_Gsf = nullptr;
+    TTreeReaderValue<Bool_t> *HLT_Ele35_WPTight_Gsf = nullptr;//only 2017
+    TTreeReaderValue<Bool_t> *HLT_Ele27_WPTight_Gsf = nullptr;//only 2016
+    //2017
+    TTreeReaderValue<Bool_t> *HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass8 = nullptr;
+    TTreeReaderValue<Bool_t> *HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL = nullptr;
+    TTreeReaderValue<Bool_t> *HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ = nullptr;
+    // TTreeReaderValue<Bool_t> *HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = nullptr;
+    //2016
+    TTreeReaderValue<Bool_t>*    HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_Mu17_TrkIsoVVL_TkMu8_TrkIsoVVL = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL_DZ = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_TkMu17_TrkIsoVVL_TkMu8_TrkIsoVVL = nullptr;
+    // TTreeReaderValue<Bool_t>*    // HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ = nullptr;
+    // TTreeReaderValue<Bool_t>*    // // HLT_Mu8_TrkIsoVVL_Ele17_CaloIdL_TrackIdL_IsoVL_v(24.9 272760 284044 = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_Mu17_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL = nullptr;
+    TTreeReaderValue<Bool_t>*    HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL = nullptr;
+    // HLT_IsoMu24 OR HLT_IsoTkMu24
+    // HLT_Ele27_WPTight_Gsf
+
+
 
 
     // 2017
@@ -249,9 +299,6 @@ public:
     TTreeReaderValue<Bool_t> *HLT_PFHT400_FivePFJet_100_100_60_30_30_DoublePFBTagDeepJet_4p5 = nullptr;
     TTreeReaderValue<Bool_t> *HLT_PFHT400_FivePFJet_120_120_60_30_30_DoublePFBTagDeepJet_4p5 = nullptr;
     //
-    TTreeReaderValue<Bool_t> *HLT_IsoMu24 = nullptr;
-    TTreeReaderValue<Bool_t> *HLT_IsoMu27 = nullptr; //only 2017
-    TTreeReaderValue<Bool_t> *HLT_Ele32_WPTight_Gsf = nullptr;
 
     //tau triggers
     TTreeReaderValue<Bool_t> *HLT_Ele24_eta2p1_WPTight_Gsf_LooseDeepTauPFTauHPS30_eta2p1_CrossL1 = nullptr;
@@ -315,6 +362,8 @@ public:
     TTreeReaderArray<Int_t> Electron_charge;
     TTreeReaderArray<Float_t> Electron_r9;
     TTreeReaderArray<UChar_t> Electron_seedGain;
+    TTreeReaderArray<Bool_t> Electron_mvaFall17V2noIso_WPL;
+    TTreeReaderArray<UChar_t>* Electron_genPartFlav = nullptr; //Flavour of genParticle (DressedLeptons for electrons) for MC matching to status==1 electrons or photons: 1 = prompt electron (including gamma*->mu mu), 15 = electron from prompt tau, 22 = prompt photon (likely conversion), 5 = electron from b, 4 = electron from c, 3 = electron from light or unknown, 0 = unmatched
     // muon
     TTreeReaderArray<Float_t> Muon_pt;
     TTreeReaderArray<Float_t> Muon_eta;
@@ -337,9 +386,8 @@ public:
     TTreeReaderArray<Float_t> Muon_phi;
     TTreeReaderArray<Int_t> Muon_charge;
     TTreeReaderArray<UChar_t> Muon_miniIsoId;
+    TTreeReaderArray<UChar_t>* Muon_genPartFlav = nullptr;
     DynamicBranchReader Muon_tightCharge; //!!!
-    // TTreeReaderArray<Int_t> ;
-    // TTreeReaderArray<Int_t> ;
     // tau
     TTreeReaderArray<Float_t> Tau_pt;
     TTreeReaderArray<Float_t> Tau_mass;

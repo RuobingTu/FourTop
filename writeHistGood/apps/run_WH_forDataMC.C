@@ -33,65 +33,37 @@ void run_treeAnalyzer(
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v77HadroPresel/mc/", 
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v77HadroPresel/data/", 
     // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79forHLT/mc/", //!for HLT
-    TString inputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/data/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v79HadroPresel/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v0baselineHardro_v79forHLT/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v0baselineHardro_v79forHLT/data/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016preVFP/v0baselineHardro_v79forHLT/data/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v1baselineHardroHLTSF_v79HadroPresel/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2016postVFP/v1baselineHardro_FRweightSys_v79HadroPresel/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v1baselineHardro_FRweightSys_v79HadroPresel/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2017/v0baselineHardro_v80addTauJetVar/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baselineHardro_v80addTauJetVar/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1cut1tau1lSR_v80addTTExtra/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v82for1tau2l/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noTauCut_v82for1tau2l/mc/", 
+    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noLepCut_v83for1tau2lEleEtaCut/mc/", 
+    TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v2_v84fakeLeptonUpdateV2/mc/", 
 
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v1TauSFNew_v9addTauTT/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0baseline_v10addBjetPTT/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0baseline6thJet30_v11overlapRemovalTausT/mc/",
-    // TString inputDir = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2022preEE/v0NoSel_v13BetterHLTSel/mc/",
-
-    TString process = "jetHT_2018a",
-    // std::vector<TString> allProcesses = {
-    //     "VLL_EE_M600",
-    //     "VLL_EN_M600",
-    //     "VLL_NN_M600",
-    //     // "VLL_EE_M600",
-    //     // "VLL_EN_M600",
-    //     // "VLL_NN_M600",
-    //     // "VLL_EE_M800",
-    //     // "VLL_EN_M800",
-    //     // "VLL_NN_M800",
-    //     // "VLL_EE_M700",
-    //     // "VLL_EN_M700",
-    //     // "VLL_NN_M700",
-    //     "tttt",
-    //     "ttbar_0l",
-    //     "ttbar_2l",
-    //     "ttbar_1l",
-    //     "ttG",
-    //     "ttZ",  
-    //     "ttW",
-    //     "ttH_bb", 
-    //     "ttH_nonbb", 
-// 
-    //     "st_tZq",
-    //     "st_tW_antitop",
-    //     "st_tW_top",
-// 
-    //     "WJetsToLNu_HT-200To400",
-    //     "WJetsToLNu_HT-400To600",
-    //     "WJetsToLNu_HT-600To800",
-    //     "WJetsToLNu_HT-800To1200",
-    //     "WJetsToLNu_HT-1200To2500",
-    //     "WJetsToLNu_HT-2500ToInf",
-// 
-    //     // "fakeTau_tauF",
-    //     // "fakeTau_tauT",
-    //     // "fakeTau_tauFGen",
-    //     // "fakeTau_tauTGen",
-    // },
-    // std::vector<TString> allProcesses = { "jetHT_2018a", "jetHT_2018b", "jetHT_2018c", "jetHT_2018d" },
-
+    TString process = "tttt",
+    // TString process = "fakeLepton",
+    // TString process = "WZTo3LNu",
+    // TString process = "TTTo2L2Nu",
+    // TString process = "TTToSemiLeptonic",
+    // TString process = "TTToHadronic",
     // TString process = "VLL_EN_M600",
     // TString process = "fakeTau_tauF",
     // TString process = "jetHT_2018d",
     // TString process = "singleMu_2016E_v2",
     // TString process = "BTagCSV_2017f",
     // TString process = "ttbar_0l",
-    // TString process = "ttbar_1l",
-    TString histVersion = "v0Basictraining1tau1lCR1_VLLm600",
-    Bool_t isTest = kFALSE)
-// Bool_t isTest = kFALSE)
+    // TString process = "ttbar_2l",
+    TString histVersion = "v0_test",
+    // Bool_t isTest = kTRUE)
+Bool_t isTest = kFALSE)
 {
     //for(std::vector<TString>::size_type i=0; i<allProcesses.size();i++){
     //process = allProcesses[i];
@@ -109,7 +81,7 @@ void run_treeAnalyzer(
     UInt_t entry = 0;
     if (isTest)
     {
-        entry = 5000;
+        entry = 10000;
     }
     writeHist.LoopTree(entry); //!!!maybe provide cut and weight as parameter here
     writeHist.Terminate();

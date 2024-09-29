@@ -18,7 +18,7 @@ void WH_forDataMC::Init()
     std::cout << "Start to initilation....................................................\n";
 
     // regions for hists
-    std::vector<TString> regionsForVariables = {"1tau0lSR",  "1tau0lVR", "1tau0lCR", "1tau0lMR", "1tau1lCR1", "1tau1lCR2", "1tau1lSR", "baseline", "1tau1lCR3", "1tau1lCR12", "1tau2lSRTest"};
+    std::vector<TString> regionsForVariables = {"1tau0lSR",  "1tau0lVR", "1tau0lCR", "1tau0lMR", "1tau1lCR1", "1tau1lCR2", "1tau1lSR", "baseline", "1tau1lCR3", "1tau1lCR12", "1tau2lSR", "1tau2lCR3", "1tau2lCR3NoTau", "1tau2lCR3Mu1", "1tau2lCR3E1"};
 
     WH::initializeHistVec(regionsForVariables, histsForRegion_vec, m_processName, e);
 
@@ -27,7 +27,6 @@ void WH_forDataMC::Init()
     std::cout << "Done initializing\n";
     std::cout << "\n";
 }
-
 
 void WH_forDataMC::LoopTree(UInt_t entry)
 {
@@ -43,7 +42,8 @@ void WH_forDataMC::LoopTree(UInt_t entry)
     {
         m_tree->GetEntry(i);
 
-        const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kFALSE); //!for 1tau1l and 1tau0l
+        // const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kFALSE); //!for 1tau1l and 1tau0l
+        const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kTRUE); //!for 1tau2l
         if (!ifBaseline)
         {
             continue;
@@ -57,20 +57,19 @@ void WH_forDataMC::LoopTree(UInt_t entry)
             }
         }
 
+        //!to do: handling weight in baseWeightCal
         Double_t basicWeight = m_isFakeTau ? e->FR_weight_final : baseWeightCal(e, i, m_isRun3, m_isData, 0);//!1tau1l
-        Double_t eventWeight_1tau2l = baseWeightCal(e, i, m_isRun3, m_isData, 2);
+        // const Double_t eventWeight_1tau2l = baseWeightCal(e, i, m_isRun3, m_isData, 2);
+        const Double_t eventWeight_1tau2l = m_isFakeLepton? e->lepTopMVAF_FRweight.v(): baseWeightCal(e, i, m_isRun3, m_isData, 2);
         Double_t eventWeight_1tau0l = m_isFakeTau ? e->FR_weight_final : baseWeightCal(e, i, m_isRun3, m_isData, 1);//!1tau0l
 
         if(std::isinf(e->btagWPMT_weight.v()) || std::isnan(e->btagWPMT_weight.v())){
             std::cout<<"btagWPMT_weight="<<e->btagWPMT_weight.v()<<"\n";
-        }
+        }//!!!todo: handle this in MV
 
         // Double_t basicWeight = e->EVENT_genWeight.v() * e->EVENT_prefireWeight.v() * e->PUweight_.v() * e->tauT_IDSF_weight_new.v() * e->elesTopMVAT_weight.v() * e->musTopMVAT_weight.v()* e->btagWPMT_weight.v(); //!!!without HLT weight
-        // Double_t basicWeight = e->EVENT_genWeight.v()* e->PUweight_.v() *e->EVENT_prefireWeight.v() ; //basic weight
 
-        Int_t lepNum = e->elesMVAT_num.v() + e->muonsT_num.v() ;
-        WH::histRegionVectFill(histsForRegion_vec, ifBaseline&&lepNum==1, "baseline", basicWeight, m_isData);
-        // WH::histRegionVectFill(histsForRegion_vec, ifBaseline, "baseline", basicWeight, m_isData);
+        WH::histRegionVectFill(histsForRegion_vec, ifBaseline, "baseline", basicWeight, m_isData);
 
         // SR
         if (!m_isData)
@@ -80,10 +79,8 @@ void WH_forDataMC::LoopTree(UInt_t entry)
             WH::histRegionVectFill(histsForRegion_vec, is1tau0lSR, "1tau0lSR", eventWeight_1tau0l, m_isData);
             WH::histRegionVectFill(histsForRegion_vec, is1tau1lSR, "1tau1lSR", basicWeight, m_isData);
 
-            //testing of 1tau0l SR definition
-            //testing of 1tau0l SR definition
-            Bool_t is1tau2lSRTest = SR1tau1lSel(e, 2, m_isRun3, m_isFakeTau);
-            WH::histRegionVectFill(histsForRegion_vec, is1tau2lSRTest, "1tau2lSRTest", eventWeight_1tau2l, m_isData);
+            Bool_t is1tau2lSRTest = SR1tau1lSel(e, 2, m_isRun3, m_isFakeTau, m_isFakeLepton, !m_isData);
+            WH::histRegionVectFill(histsForRegion_vec, is1tau2lSRTest, "1tau2lSR", eventWeight_1tau2l, m_isData);
         }
         Bool_t is1tau1lSRL = SR1tau1lSel(e, 11, m_isRun3, m_isFakeTau);
         WH::histRegionVectFill(histsForRegion_vec, is1tau1lSRL, "1tau1lCR3", basicWeight, m_isData);
@@ -105,6 +102,17 @@ void WH_forDataMC::LoopTree(UInt_t entry)
         Bool_t is1tau0lSRTest = SR1tau1lSel(e, 3, m_isRun3, m_isFakeTau);
         WH::histRegionVectFill(histsForRegion_vec, is1tau0lSRTest, "1tau1lCR12", basicWeight, m_isData);
 
+        //1tau2l CR3
+        Bool_t is1tau2lCR3 = SR1tau1lSel(e, 12, m_isRun3, m_isFakeTau, m_isFakeLepton, !m_isData);
+        WH::histRegionVectFill(histsForRegion_vec, is1tau2lCR3, "1tau2lCR3", eventWeight_1tau2l, m_isData);
+        //testing
+        Bool_t is1tau2lCR3NoTau = (e->elesTopMVAT_num.v() + e->muonsTopMVAT_num.v()==2)  && e->jets_num.v() < 4 && e->bjetsM_num.v() < 2 ;
+        Bool_t is1tau2lCR3Mu1 = e->tausT_num.v()==1  && e->jets_num.v() < 4 && e->bjetsM_num.v() < 2 && e->muonsTopMVAT_num.v()==1;
+        Bool_t is1tau2lCR2E1 = e->tausT_num.v()==1  && e->jets_num.v() < 4 && e->bjetsM_num.v() < 2 && e->elesTopMVAT_num.v()==1;
+        WH::histRegionVectFill(histsForRegion_vec, is1tau2lCR3NoTau, "1tau2lCR3NoTau", eventWeight_1tau2l, m_isData);
+        WH::histRegionVectFill(histsForRegion_vec, is1tau2lCR3Mu1, "1tau2lCR3Mu1", eventWeight_1tau2l, m_isData);
+        WH::histRegionVectFill(histsForRegion_vec, is1tau2lCR2E1, "1tau2lCR3E1", eventWeight_1tau2l, m_isData);
+
     }
     std::cout << "end of event loop\n";
     std::cout << "\n";
@@ -115,13 +123,12 @@ void WH_forDataMC::Terminate()
     std::cout << "Termintate: ..........................................\n";
     if (!m_isData)
     {
-        //???Problme of summing same process with extra extension!!!
-        if (!m_processName.Contains("fakeTau")){ //no scaling for faketau 
+        // if (!m_processName.Contains("fakeTau")){ //no scaling for faketau 
+        if(!m_ifFakeTau && !m_isFakeLepton){
             Double_t genWeightSum = TTTT::getGenSum(m_inputDir + m_processName + ".root");
             TString processName = WH::getProcessName(m_processName, m_isRun3);
             std::cout<<"newProcessName="<<processName<<"\n";
 
-            //
             if(std::find(WH::processWithExt.begin(), WH::processWithExt.end(), processName) != WH::processWithExt.end()){
                 genWeightSum = TTTT::getGenSum(m_inputDir + processName + "1.root") + TTTT::getGenSum(m_inputDir+processName+".root");
             }

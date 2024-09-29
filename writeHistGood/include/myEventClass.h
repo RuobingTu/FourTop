@@ -122,6 +122,21 @@ public:
     myBranch<Int_t> muonsT_num{"muonsT_num"};
     myBranch<Double_t> muonsT_1pt{"muonsT_1pt"};
     myBranch<Double_t> elesMVAT_1pt{"elesMVAT_1pt"};
+    myBranch<Double_t> lepTopMVAT_1pt{"lepTopMVAT_1pt"};
+    myBranch<Double_t> lepTopMVAT_2pt{"lepTopMVAT_2pt"};
+    myBranch<Int_t> elesTopMVAF_num{"elesTopMVAF_num"};
+    myBranch<Int_t> muonsTopMVAF_num{"muonsTopMVAF_num"};
+    myBranch<Bool_t> elesTopMVAF_1isTightPrompt{"elesTopMVAF_1isTightPrompt"};
+    myBranch<Bool_t> elesTopMVAF_2isTightPrompt{"elesTopMVAF_2isTightPrompt"};
+    myBranch<Bool_t> muonsTopMVAF_1isTightPrompt{"muonsTopMVAF_1isTightPrompt"};
+    myBranch<Bool_t> muonsTopMVAF_2isTightPrompt{"muonsTopMVAF_2isTightPrompt"};
+    myBranch<Bool_t> elesTopMVAF_1isTight{"elesTopMVAF_1isTight"};
+    myBranch<Bool_t> elesTopMVAF_2isTight{"elesTopMVAF_2isTight"};
+    myBranch<Bool_t> muonsTopMVAF_1isTight{"muonsTopMVAF_1isTight"};
+    myBranch<Bool_t> muonsTopMVAF_2isTight{"muonsTopMVAF_2isTight"};
+    myBranch<Bool_t> lepTopMVAF_isAR{"lepTopMVAF_isAR"};
+    myBranch<Int_t> lepTopMVAF_num{"lepTopMVAF_num"};
+    myBranch<Double_t> lepTopMVAF_FRweight{"lepTopMVAF_FRweight"};
 
     myBranch<Double_t> EVENT_genWeight{"EVENT_genWeight"};
     myBranch<Double_t> EVENT_prefireWeight{"EVENT_prefireWeight"};
@@ -278,6 +293,7 @@ public:
 
     myBranch<Double_t> muonsTopMVAT_1pt{"muonsTopMVAT_1pt"};
     myBranch<Double_t> elesTopMVAT_1pt{"elesTopMVAT_1pt"};
+    myBranch<Double_t> elesTopMVAT_1eta{"elesTopMVAT_1eta"};
 
     // branches for fakeTau;
     myBranch<Int_t> tausF_prongNum{"tausF_prongNum"};
@@ -395,6 +411,24 @@ private:
         {muonsT_num.n(), &muonsT_num},
         {muonsT_1pt.n(), &muonsT_1pt},
         {elesMVAT_1pt.n(), &elesMVAT_1pt},
+        {lepTopMVAT_1pt.n(), &lepTopMVAT_1pt},
+        {lepTopMVAT_2pt.n(), &lepTopMVAT_2pt},
+        {elesTopMVAF_num.n(), &elesTopMVAF_num},
+        {muonsTopMVAF_num.n(), &muonsTopMVAF_num},
+        {elesTopMVAF_1isTightPrompt.n(), &elesTopMVAF_1isTightPrompt},
+        {elesTopMVAF_2isTightPrompt.n(), &elesTopMVAF_2isTightPrompt},
+        {muonsTopMVAF_1isTightPrompt.n(), &muonsTopMVAF_1isTightPrompt},
+        {muonsTopMVAF_2isTightPrompt.n(), &muonsTopMVAF_2isTightPrompt},
+        {elesTopMVAF_1isTight.n(), &elesTopMVAF_1isTight},
+        {elesTopMVAF_2isTight.n(), &elesTopMVAF_2isTight},
+        {muonsTopMVAF_1isTight.n(), &muonsTopMVAF_1isTight},
+        {muonsTopMVAF_2isTight.n(), &muonsTopMVAF_2isTight},
+        {lepTopMVAF_isAR.n(), &lepTopMVAF_isAR},
+        {lepTopMVAF_num.n(), &lepTopMVAF_num},
+        {lepTopMVAF_FRweight.n(), &lepTopMVAF_FRweight},
+
+
+
 
         {tausT_leptonsTopMVA_chargeMulti.n(), &tausT_leptonsTopMVA_chargeMulti},
         {EVENT_genWeight.n(), &EVENT_genWeight},
@@ -531,6 +565,7 @@ private:
 
         {muonsTopMVAT_1pt.n(), &muonsTopMVAT_1pt},
         {elesTopMVAT_1pt.n(), &elesTopMVAT_1pt},
+        {elesTopMVAT_1eta.n(), &elesTopMVAT_1eta},
 
         {tausF_num.n(), &tausF_num},
         {tausF_prongNum.n(), &tausF_prongNum},

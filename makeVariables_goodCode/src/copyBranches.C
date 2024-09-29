@@ -9,6 +9,9 @@ CopyBranches::CopyBranches(TTree *outTree)
     std::cout << "Initializing CopyBranches.....\n";
 
     outTree->Branch("PV_npvsGood", &PV_npvsGood);
+    outTree->Branch("run", &run);
+    outTree->Branch("luminosityBlock", &luminosityBlock);
+    outTree->Branch("event", &event);
 
     outTree->Branch("HLT_PFHT450_SixJet40_BTagCSV_p056", &HLT_PFHT450_SixJet40_BTagCSV_p056);
     outTree->Branch("HLT_PFHT400_SixJet30_DoubleBTagCSV_p056", &HLT_PFHT400_SixJet30_DoubleBTagCSV_p056);
@@ -56,6 +59,9 @@ void CopyBranches::makeVariables(EventForMV *e)
 
     clearBranch();
     PV_npvsGood = *e->PV_npvsGood_;
+    run = *e->run_;
+    luminosityBlock = *e->luminosityBlock_;
+    event = *e->event_;
     MET_pt = *e->MET_pt_;
 
     //

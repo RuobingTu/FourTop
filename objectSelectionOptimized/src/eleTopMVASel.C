@@ -1,29 +1,35 @@
 #include "../include/eleTopMVASel.h"
 #include "../myLibrary/commenFunction.h"
 
-EleTopMVASel::EleTopMVASel(TTree *outTree, const TString era, const Bool_t isRun3, const Int_t type) : m_type{type}, m_era{era}, m_isRun3{isRun3}
+EleTopMVASel::EleTopMVASel(TTree *outTree, const TString era, const Bool_t isData, const Bool_t isRun3, const Int_t type) : m_type{type}, m_era{era}, m_isData{isData}, m_isRun3{isRun3}
 { // type for different electrons
     std::cout << "Initializing EleTopMVASel......\n";
-    outTree->Branch("elesTopMVAT_pt", &elesTopMVAT_pt);
-    outTree->Branch("elesTopMVAT_eta", &elesTopMVAT_eta);
-    outTree->Branch("elesTopMVAT_phi", &elesTopMVAT_phi);
-    outTree->Branch("elesTopMVAT_mass", &elesTopMVAT_mass);
-    outTree->Branch("elesTopMVAT_charge", &elesTopMVAT_charge);
-    outTree->Branch("elesTopMVAT_index", &elesTopMVAT_index);
-    outTree->Branch("elesTopMVAT_topMVAScore", &elesTopMVAT_topMVAScore);
-    // outTree->Branch("elesTopMVAT_", &elesTopMVAT_);
-
-    // m_isRun3 = TTTT::isRun3(m_era);
     std::cout << "m_era=" << m_era << "  ;m_isRun3=" << m_isRun3 << "  ;m_type=" << m_type << "\n";
 
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_pt", &elesTopMVAT_pt);
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_eta", &elesTopMVAT_eta);
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_phi", &elesTopMVAT_phi);
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_mass", &elesTopMVAT_mass);
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_charge", &elesTopMVAT_charge);
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_topMVAScore", &elesTopMVAT_topMVAScore);
+    outTree->Branch("elesTopMVA" +WPMap.at(m_type)+ "_genPartFlav", &elesTopMVAT_genPartFlav);
+
+    if(m_type == 1){
+        outTree->Branch("elesTopMVAF_isTight", &elesTopMVAF_isTight);
+        outTree->Branch("elesTopMVAF_jetIdx", &elesTopMVAF_jetIdx);
+        outTree->Branch("elesTopMVAF_ptConeCorreted", &elesTopMVAF_ptConeCorreted);
+    }
+
+
     // set up xgboost booster
-    // TString baseDir = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/objectSelectionOptimized/";
-    TString baseDir = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/objectSelectionOptimized/";
+    TString baseDir = "./";
     TString eleWeight = baseDir+ TopMVALeptonMap[m_era].at(0);
     std::cout << "eleWeight: " << eleWeight << "\n";
     // BoosterHandle booster;
     XGBoosterCreate(NULL, 0, &m_booster[0]);
     XGBoosterLoadModel(m_booster[0], eleWeight.Data());
+
+
     std::cout << "Done EleTopMVASel initialization......\n";
     std::cout << "\n";
 };
@@ -33,52 +39,45 @@ EleTopMVASel::~EleTopMVASel()
     XGBoosterFree(m_booster[0]);
 };
 
-void EleTopMVASel::Select(const eventForNano *e)
+void EleTopMVASel::Select(const eventForNano *e, const std::vector<Double_t>& muEtaVec, const std::vector<Double_t>& muPhiVec)
 {
     clearBranch();
-    // 0: loose, 2: tight;
+    // 0: loose, 2: tight; 1: fake
     // POG: 4: veto; 5:POG loose
-    //
     for (UInt_t j = 0; j < e->Electron_pt.GetSize(); ++j)
     {
         Double_t pt = e->Electron_pt.At(j);
         Double_t eta = e->Electron_eta.At(j);
         Double_t topMVAScore = -99.;
         //branches different between run2 and run3
-        Int_t iE_cutBased = 0;
-        Int_t iE_tightCharge = 0;
-        Int_t iE_jetIdx = 0;
-        Float_t mvaFall17V2noIso = -99; 
-        if (m_isRun3){
-            iE_cutBased = std::any_cast<UChar_t>(e->Electron_cutBased.at(j));//!!!hope for the correct implicit type conversion
-            iE_tightCharge = std::any_cast<UChar_t>(e->Electron_tightCharge.at(j));
-            iE_jetIdx = std::any_cast<Short_t>(e->Electron_jetIdx.at(j));
-            mvaFall17V2noIso = e->Electron_mvaNoIso->At(j);
-        }else{
-            iE_cutBased = std::any_cast<Int_t>(e->Electron_cutBased.at(j));
-            iE_tightCharge = std::any_cast<Int_t>(e->Electron_tightCharge.at(j));
-            iE_jetIdx = std::any_cast<Int_t>(e->Electron_jetIdx.at(j));
-            mvaFall17V2noIso = e->Electron_mvaFall17V2noIso->At(j);
-        }
-        // std::cout<<"iE_cutBased="<<iE_cutBased<<"\n";
+        Int_t iE_cutBased = m_isRun3? std::any_cast<UChar_t>(e->Electron_cutBased.at(j)): std::any_cast<Int_t>(e->Electron_cutBased.at(j));
+        Int_t iE_tightCharge = m_isRun3? std::any_cast<UChar_t>(e->Electron_tightCharge.at(j)): std::any_cast<Int_t>(e->Electron_tightCharge.at(j));
+        Int_t iE_jetIdx = m_isRun3? std::any_cast<Short_t>(e->Electron_jetIdx.at(j)): std::any_cast<Int_t>(e->Electron_jetIdx.at(j));
+        Double_t mvaFall17V2noIso = m_isRun3? e->Electron_mvaNoIso->At(j): e->Electron_mvaFall17V2noIso->At(j);
 
-        if (!(fabs(eta) < 2.5))
+        // if (!(fabs(eta) < 2.5))
+        if (!(fabs(eta) < 2.5 && !(fabs(eta)>1.442&&fabs(eta)<1.566)))// 1.4442 and 1.566 are the transition region between the barrel and the endcap
             continue;
         if (!(pt > 10))
             continue;
+        //Overlap removal with fakeable muons 
+        Bool_t removeMu = OS::overlapRemove(eta, e->Electron_phi.At(j), muEtaVec, muPhiVec, 0.05);// for electrons the cone size is 0.05//???maybe too small the the cone size for muon is 0.3
+        if(removeMu){
+            continue;
+        }
+
+
         if (m_type == 5)
         {
-            // if (!(e->Electron_cutBased[j] >= 2)) // cut-based ID Fall17 V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)
-            if(!(iE_cutBased >= 2))
+            if(!(iE_cutBased >= 2))// cut-based ID Fall17 V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)
                 continue;
         }
         if (m_type == 4)
         {
-            // if (!(e->Electron_cutBased[j] >= 1)) // cut-based ID Fall17 V2 (0:fail, 1:veto, 2:loose, 3:medium, 4:tight)
             if (!(iE_cutBased >= 1))
                 continue;
         }
-        if (m_type == 0 || m_type == 2)
+        if (m_type == 0 || m_type == 2 || m_type == 1)
         {
             // IP
             if (!(fabs(e->Electron_dxy.At(j)) < 0.05))
@@ -94,17 +93,14 @@ void EleTopMVASel::Select(const eventForNano *e)
             if (!(int(e->Electron_lostHits.At(j)) < 1))
                 continue;
         }
-        if (m_type == 2)
+        if (m_type == 2|| m_type == 1)
         {
             if (!e->Electron_convVeto.At(j))
                 continue;                             // the number of missing pixel hits and a conversion veto based on the vertex fit probability. To reject electrons originating from photon conversion
-            // if (!(e->Electron_tightCharge.At(j) > 0)) //??? Tight charge criteria (0:none, 1:isGsfScPixChargeConsistent, 2:isGsfCtfScPixChargeConsistent)
             if (!(iE_tightCharge > 0)) //??? Tight charge criteria (0:none, 1:isGsfScPixChargeConsistent, 2:isGsfCtfScPixChargeConsistent)
                 continue;
             // TOP UL Lepton MVA
             Float_t jetPtRatio = 1. / (e->Electron_jetRelIso[j] + 1.);
-            // Float_t jetBTag = Jet_btagDeepB[e->Electron_jetIdx[j]];
-            // Float_t jetBTag = e->Jet_btagDeepFlavB[e->Electron_jetIdx[j]];
             Float_t jetBTag = e->Jet_btagDeepFlavB[iE_jetIdx];
             std::map<TString, Float_t> inputFeatures = {
                 {"pt", e->Electron_pt[j]},
@@ -112,7 +108,7 @@ void EleTopMVASel::Select(const eventForNano *e)
                 {"jetNDauCharged", e->Electron_jetNDauCharged.At(j)},
                 {"miniPFRelIso_chg", e->Electron_miniPFRelIso_chg[j]},
                 {"miniPFRelIso_all", e->Electron_miniPFRelIso_all[j]},
-                {"jetPtRelv2", e->Electron_jetPtRelv2[j]},
+                {"jetPtRelv2", e->Electron_jetPtRelv2[j]},//Relative momentum of the lepton with respect to the closest jet after subtracting the lepton
                 {"jetPtRatio", jetPtRatio},
                 {"pfRelIso03_all", e->Electron_pfRelIso03_all[j]},
                 {"jetBTag", jetBTag},
@@ -122,8 +118,18 @@ void EleTopMVASel::Select(const eventForNano *e)
                 {"mvaFall17V2noIso", mvaFall17V2noIso},
             }; // only for 2022
             topMVAScore = OS::TopLeptonEvaluate(inputFeatures, m_booster[0]);
-            if (!(topMVAScore > 0.81))
-            continue;
+            Bool_t isTight = topMVAScore > 0.81;
+
+            if(m_type ==2){
+                if (!isTight) continue;
+            }else if(m_type ==1){//Fakeable electron same as SS of 4tops
+                // Bool_t ifFake = e->Electron_mvaFall17V2noIso_WPL[j] && jetBTag<0.1 && jetPtRatio>0.5;
+                Bool_t ifFake = e->Electron_mvaFall17V2noIso_WPL[j] && jetBTag<0.1 && jetPtRatio>m_ptRatioCutF.at(m_era);
+                if (!(isTight || ifFake )) continue;
+                elesTopMVAF_isTight.push_back(isTight);
+                elesTopMVAF_jetIdx.push_back(iE_jetIdx); // Electron_jetIdx
+                elesTopMVAF_ptConeCorreted.push_back(pt*jetPtRatio);
+            }
         }
 
         elesTopMVAT_pt.push_back(e->Electron_pt.At(j));
@@ -131,9 +137,13 @@ void EleTopMVASel::Select(const eventForNano *e)
         elesTopMVAT_phi.push_back(e->Electron_phi.At(j));
         elesTopMVAT_mass.push_back(e->Electron_mass.At(j));
         elesTopMVAT_charge.push_back(e->Electron_charge.At(j));
-        elesTopMVAT_index.push_back(j);
+        // elesTopMVAT_index.push_back(j);
         elesTopMVAT_topMVAScore.push_back(topMVAScore);
+        if(!m_isData){
+            elesTopMVAT_genPartFlav.push_back(e->Electron_genPartFlav->At(j));
+        }
     } //
+
 };
 
 void EleTopMVASel::clearBranch()
@@ -143,8 +153,11 @@ void EleTopMVASel::clearBranch()
     elesTopMVAT_phi.clear();
     elesTopMVAT_mass.clear();
     elesTopMVAT_charge.clear();
-    elesTopMVAT_index.clear();
     elesTopMVAT_topMVAScore.clear();
+    elesTopMVAT_genPartFlav.clear();
+    elesTopMVAF_jetIdx.clear();
+    elesTopMVAF_ptConeCorreted.clear();
+    elesTopMVAF_isTight.clear();
 };
 
 std::vector<Double_t> &EleTopMVASel::getEtaVec()

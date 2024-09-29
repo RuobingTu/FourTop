@@ -47,6 +47,13 @@ public:
                                       muonsTopMVAT_phi(reader, "muonsTopMVAT_phi"),
                                       muonsTopMVAT_mass(reader, "muonsTopMVAT_mass"),
                                       muonsTopMVAT_charge(reader, "muonsTopMVAT_charge"),
+                                        muonsTopMVAF_pt(reader, "muonsTopMVAF_pt"),
+                                        muonsTopMVAF_eta(reader, "muonsTopMVAF_eta"),
+                                        muonsTopMVAF_phi(reader, "muonsTopMVAF_phi"),
+                                        muonsTopMVAF_mass(reader, "muonsTopMVAF_mass"),
+                                        muonsTopMVAF_isTight(reader, "muonsTopMVAF_isTight"),
+                                        muonsTopMVAF_genPartFlav(reader, "muonsTopMVAF_genPartFlav"),
+                                        muonsTopMVAF_ptConeCorreted(reader, "muonsTopMVAF_ptConeCorreted"),
                                       elesMVAT_pt(reader, "elesMVAT_pt"),
                                       elesMVAT_eta(reader, "elesMVAT_eta"),
                                       elesMVAT_phi(reader, "elesMVAT_phi"),
@@ -57,6 +64,13 @@ public:
                                       elesTopMVAT_phi(reader, "elesTopMVAT_phi"),
                                       elesTopMVAT_mass(reader, "elesTopMVAT_mass"),
                                       elesTopMVAT_charge(reader, "elesTopMVAT_charge"),
+                                      elesTopMVAF_pt(reader, "elesTopMVAF_pt"),
+                                        elesTopMVAF_eta(reader, "elesTopMVAF_eta"),
+                                        elesTopMVAF_phi(reader, "elesTopMVAF_phi"),
+                                        elesTopMVAF_mass(reader, "elesTopMVAF_mass"),
+                                        elesTopMVAF_isTight(reader, "elesTopMVAF_isTight"),
+                                        elesTopMVAF_genPartFlav(reader, "elesTopMVAF_genPartFlav"),
+                                        elesTopMVAF_ptConeCorreted(reader, "elesTopMVAF_ptConeCorreted"),
 
                                       tausT_pt(reader, "tausT_pt"),
                                       tausT_eta(reader, "tausT_eta"),
@@ -178,6 +192,9 @@ public:
                                       bjetsPTT_mass(reader, "bjetsPTT_mass"),
 
                                       PV_npvsGood_(reader, "PV_npvsGood_"),
+                                        run_(reader, "run_"),
+                                        luminosityBlock_(reader, "luminosityBlock_"),
+                                        event_(reader, "event_"),
                                       MET_pt_(reader, "MET_pt_"),
                                       MET_phi_(reader, "MET_phi_"),
                                       EVENT_genWeight_(reader, "EVENT_genWeight_"),
@@ -243,7 +260,14 @@ public:
     TTreeReaderArray<Double_t> muonsTopMVAT_phi;
     TTreeReaderArray<Double_t> muonsTopMVAT_mass;
     TTreeReaderArray<Int_t> muonsTopMVAT_charge;
-    // TTreeReaderArray<Int_t> muonsTopMVAT_index;
+    TTreeReaderArray<Double_t> muonsTopMVAF_pt;
+    TTreeReaderArray<Double_t> muonsTopMVAF_eta;
+    TTreeReaderArray<Double_t> muonsTopMVAF_phi;
+    TTreeReaderArray<Double_t> muonsTopMVAF_mass;
+    TTreeReaderArray<Bool_t> muonsTopMVAF_isTight;
+    TTreeReaderArray<UChar_t> muonsTopMVAF_genPartFlav;
+    TTreeReaderArray<Double_t> muonsTopMVAF_ptConeCorreted;
+
     TTreeReaderArray<Double_t> elesMVAT_pt;
     TTreeReaderArray<Double_t> elesMVAT_eta;
     TTreeReaderArray<Double_t> elesMVAT_phi;
@@ -254,6 +278,13 @@ public:
     TTreeReaderArray<Double_t> elesTopMVAT_phi;
     TTreeReaderArray<Double_t> elesTopMVAT_mass;
     TTreeReaderArray<Int_t> elesTopMVAT_charge;
+    TTreeReaderArray<Double_t> elesTopMVAF_pt;
+    TTreeReaderArray<Double_t> elesTopMVAF_eta;
+    TTreeReaderArray<Double_t> elesTopMVAF_phi;
+    TTreeReaderArray<Double_t> elesTopMVAF_mass;
+    TTreeReaderArray<Bool_t> elesTopMVAF_isTight;
+    TTreeReaderArray<UChar_t> elesTopMVAF_genPartFlav;
+    TTreeReaderArray<Double_t> elesTopMVAF_ptConeCorreted;
 
     TTreeReaderArray<Double_t> tausT_pt;
     TTreeReaderArray<Double_t> tausT_eta;
@@ -378,6 +409,9 @@ public:
     TTreeReaderArray<Double_t> bjetsPTT_mass;
 
     TTreeReaderValue<Int_t> PV_npvsGood_;
+    TTreeReaderValue<UInt_t> run_;
+    TTreeReaderValue<UInt_t> luminosityBlock_;
+    TTreeReaderValue<ULong64_t> event_;
     TTreeReaderValue<Double_t> MET_pt_;
     TTreeReaderValue<Double_t> MET_phi_;
 

@@ -41,9 +41,9 @@ void objectSelection::EventLoop(const Bool_t iftauSel, const Bool_t preSelection
 
         // HLT selection and HLT branch filling
         Bool_t passHLT = HLTselection.Select(e,  ifHLT);
-        Bool_t passLepTri = HLTselection.SelectLepTri(e);
-        if(!(OS::ifEventPass(ifHLT, passHLT, m_cutflow, 2))){
-        // if(!(OS::ifEventPass(ifHLT, passLepTri, m_cutflow, 2))){//!for 1tau2l
+        Bool_t passLepTri = HLTselection.SelectLepTri(e);//!!!for 1tau2l
+        Bool_t ifPassHLT = m_if1tau2l? passLepTri: passHLT;
+        if(!(OS::ifEventPass(ifHLT, ifPassHLT, m_cutflow, 2))){
             continue;
         }
 
@@ -53,14 +53,16 @@ void objectSelection::EventLoop(const Bool_t iftauSel, const Bool_t preSelection
         eleMVASel.Select(e);
 
         // TOPMVA lepton selection
-        eleTopMVATSel.Select(e);
         muTopMVATSel.Select(e);
+        muTopMVAFSel.Select(e);
+        eleTopMVATSel.Select(e, muTopMVAFSel.getEtaVec(), muTopMVAFSel.getPhiVec());
+        eleTopMVAFSel.Select(e, muTopMVAFSel.getEtaVec(), muTopMVAFSel.getPhiVec());//!need overlap removal with fakeable muon
 
         //leptons for overlap removal
-        std::vector<Double_t> muEtaVec = m_isRun3 ? muSel.getEtaVec(): muTopMVATSel.getEtaVec();
-        std::vector<Double_t> muPhiVec = m_isRun3 ? muSel.getPhiVec(): muTopMVATSel.getPhiVec();
-        std::vector<Double_t> eleEtaVec = m_isRun3 ? eleMVASel.getEtaVec(): eleTopMVATSel.getEtaVec();
-        std::vector<Double_t> elePhiVec = m_isRun3 ? eleMVASel.getPhiVec(): eleTopMVATSel.getPhiVec();
+        std::vector<Double_t> muEtaVec = m_isRun3 ? muSel.getEtaVec(): muTopMVAFSel.getEtaVec();
+        std::vector<Double_t> muPhiVec = m_isRun3 ? muSel.getPhiVec(): muTopMVAFSel.getPhiVec();
+        std::vector<Double_t> eleEtaVec = m_isRun3 ? eleMVASel.getEtaVec(): eleTopMVAFSel.getEtaVec();
+        std::vector<Double_t> elePhiVec = m_isRun3 ? eleMVASel.getPhiVec(): eleTopMVAFSel.getPhiVec();
 
         // tau selection
         tauSel.Select(e, m_isData, muEtaVec, muPhiVec, eleEtaVec, elePhiVec);
@@ -98,19 +100,20 @@ void objectSelection::EventLoop(const Bool_t iftauSel, const Bool_t preSelection
         systWeightCal.Select(e, m_isData);
 
         // if(!(OS::ifEventPass(iftauSel, tauSel.getSize()>0, m_cutflow, 3))){ //!for b-tag efficiency measurement
-        if(!(OS::ifEventPass(iftauSel, tauSelF.getSize()>0, m_cutflow, 3))){//!use tauF so that fakeTau bg can be estimated later
+        if(!(OS::ifEventPass(iftauSel, tauSelF.getSize()>0 && (eleTopMVAFSel.getSize()+muTopMVAFSel.getSize())==2 , m_cutflow, 3))){//!use tauF so that fakeTau bg can be estimated later
             continue;
         }
 
-        if(!(OS::ifEventPass(preSelection, jetSel.getSize()>5, m_cutflow, 4))){
-        // if(!(OS::ifEventPass(preSelection, jetSel.getSize()>3, m_cutflow, 4))){//!for 1tau2l
+        Bool_t jetCut = m_if1tau2l? jetSel.getSize()>1: jetSel.getSize()>5;
+        if(!(OS::ifEventPass(preSelection, jetCut, m_cutflow, 4))){//!for 1tau2l
             continue;
         }
-        if(!(OS::ifEventPass(preSelection, bjetMSel.getSize()>1, m_cutflow, 5))){//baseline for 1tau1l and 1tau0l
+        Bool_t bjetCut = m_if1tau2l? bjetMSel.getSize()>0: bjetMSel.getSize()>1;
+        if(!(OS::ifEventPass(preSelection, bjetCut, m_cutflow, 5))){//baseline for 1tau2l
             continue;
         }//!No b-tag ,for b-tag efficiency measurement!
-        if(!OS::ifEventPass(preSelection, jetSel.getHT()>480.&& jetSel.get6thPt()>38., m_cutflow, 6)){//!baseline for 1tau1l and 1tau0l
-        // if(!OS::ifEventPass(preSelection, jetSel.getHT()>200. && (eleTopMVATSel.getSize()+muTopMVATSel.getSize())==2, m_cutflow, 6)){//!1tau2l
+        Bool_t HTCut = m_if1tau2l? jetSel.getHT()>200.: (jetSel.getHT()>480.&& jetSel.get6thPt()>38.);
+        if(!OS::ifEventPass(preSelection, HTCut , m_cutflow, 6)){
             continue;
         }
 
@@ -152,5 +155,4 @@ objectSelection::~objectSelection()
 {
     delete m_input;
     delete e;
-    // delete m_output;
 };

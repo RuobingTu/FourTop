@@ -30,11 +30,17 @@ void run_objectSelection(
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v80addTauJetVar/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2016_postVFP/v80addTauJetVar/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v80addTTExtra/mc/",
-    TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v81addSysSum/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v81addSysSum/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v82for1tau2l/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v83for1tau2lEleEtaCut/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdate/mc/",
+    TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdateV2/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdate/data/",
 
-    TString inputDir = "tttt",
+    // TString inputDir = "tttt",
+    // TString inputDir = "ZGToLLG",
+    // TString inputDir = "WZTo3LNu",
     // TString inputDir = "VLL_EE_M600",
-    // TString inputDir = "VLL_EE_M800",
     // TString inputDir = "ttbar_0l",
     // TString inputDir = "ttbar_1l",
     // TString inputDir = "TTTo2L2Nu0",
@@ -51,6 +57,7 @@ void run_objectSelection(
     TString outputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/mc/",
     // Int_t numEntries = 100000)
     // Int_t numEntries = 3000)
+    // Int_t numEntries = 3000)
     // Int_t numEntries = 10000)
     Int_t numEntries = 0)
 {   
@@ -65,12 +72,13 @@ void run_objectSelection(
         Bool_t isRun3 = TTTT::isRun3(era);
         std::cout << "isRun3=" << isRun3 << " era=" << era << "\n";
 
-        MakeVariablesMain mv(inputDir1, outputDir, processName, isData, era, isRun3);
-        Bool_t baseline = kTRUE;
-        // Bool_t baseline = kFALSE;
-        mv.EventLoop(baseline, kTRUE, numEntries); //1tau1l cut 
-        // mv.EventLoop(baseline, kFALSE, numEntries);
-        mv.Terminate();
+    MakeVariablesMain mv(inputDir1, outputDir, processName, isData, era, isRun3);
+    Bool_t baseline = kTRUE;
+    Bool_t if1tau2l = kTRUE;
+    // Bool_t baseline = kFALSE;
+    // mv.EventLoop(baseline, kTRUE, numEntries); //1tau1l cut 
+    mv.EventLoop(baseline, kFALSE, numEntries);
+    mv.Terminate();
 
         t.Stop();
         t.Print();

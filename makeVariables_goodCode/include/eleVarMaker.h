@@ -11,6 +11,8 @@ public:
     void makeVariables(const EventForMV *e);
     void clearBranch();
     void setupLorentzObjs(const EventForMV *e);
+
+private:
 };
 
 #endif

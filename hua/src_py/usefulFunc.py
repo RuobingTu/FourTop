@@ -351,11 +351,10 @@ def merge_dicts(dict1, dict2):
 
 def isData(subPro):
     isdata = False
-    if ('jetHT' in subPro) or ('singleMu' in subPro) or ('BTagCSV' in subPro):
+    if ('jetHT' in subPro) or ('singleMu' in subPro) or ('BTagCSV' in subPro) or ('lepton' in subPro):
         isdata = True
     if('JetHT' in subPro) or ('Muon' in subPro) or ('JetMET' in subPro):
         isdata = True
-    # print(isdata)
     return isdata
 
 def getYmax(histograms):
@@ -421,25 +420,38 @@ def isBG(sumPro, ifVLL=False):
         
 def getAllSubPro(era, sumPro, isData=True):
     all = gq.histoGramPerSample
+    allSubs = []
     if isData:
-        # era = '2016' if ('2016' in era) else era
-        # return [key for key, value in all.items() if (value == sumPro and era in key)]
-        return [sumPro + '_'+iera for iera in gq.dataDict[era] ]
-        # return [key for key, value in all.items() if (value == sumPro and era in key)   ]
-        # return [key for key, value in all.items() if (value == sumPro)]
+        for isub, isum in all.items():
+           subEra = isub.split('_')[-1]
+           if subEra in gq.dataDict[era] and isum in sumPro:
+               allSubs.append(isub) 
+        return allSubs
     else:
-        return [key for key, value in all.items() if (value == sumPro)]
+        return [ isum for isub, isum in all.items() if isum in sumPro]
    
-def getAllSubPro1(proList, isRun3):
-    allSubPro = []
-    dic = gq.histoGramPerSample if not isRun3 else gq.Run3Samples
-    for isub, isum in dic.items():
-        if isum in proList:
-            allSubPro.append(isub)
-    return allSubPro
-   
-   
-   
+def getSubProDic(era, sumPro) :
+    all = gq.histoGramPerSample
+    allSubs = {}
+    for isub, isum in all.items():
+        isdata = isData(isub)
+        if isdata:
+            subEra = isub.split('_')[-1]
+            if subEra in gq.dataDict[era] and isum in sumPro:
+                # allSubs[sum] = []
+                if isum not in allSubs.keys():
+                    allSubs[isum] = []
+                allSubs[isum].append(isub)
+        else:
+            if isum in sumPro:
+                if isum not in allSubs.keys():
+                    allSubs[isum] = []
+                allSubs[isum].append(isub)
+    return allSubs
+  
+############################################################################################################
+#dictionary manipulation
+ 
     
     
 ############################################################################################################

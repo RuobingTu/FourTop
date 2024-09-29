@@ -17,17 +17,50 @@ crossSectionMap = {
     "ttbar_0l": 377.96,
     "ttbar_1l": 365.34,
     "ttbar_2l": 88.29,
-    "ttG": 4.62,
+    
+    "ttG": 15.89, # 4.62,
     "ttZ": 0.783,
     "ttW": 0.611,
     "ttH_bb": 0.2897,
     "ttH_nonbb": 0.209,
-    "wz": 2.343,
-    "ww": 6.430,
-    "zz": 1.016,
+    "ttWW": 0.00698, 
+   
+    #VV cross section to be updated! 
+    "wz": 47.,#2.343, #47
+    "ww": 118.,# 6.430, #118 
+    "zz": 16.5,# 1.016, #16.5
+    
+    "WWW": 0.2086,
+    "WWZ": 0.1651,
+    "WZZ": 0.05565,
+    "ZZZ": 0.01476,
+    
     "st_tZq": 0.07358,
     "st_tW_antitop": 35.85,
     "st_tW_top": 35.85,
+    
+    #GX: ttGamma, ZGamma 
+    'TGJets': 1.02,
+    'ZGToLLG': 55.48,
+    'WGToLNuG': 192 ,
+   
+    #H->ZZ, WW
+    'ggH_bb': 28.3,
+    'ggH_tautau': 3.05,
+    'ggH_WW_2l': 1.10,
+    'ggH_ZZ_2l': 28.87,
+    'ggH_ZZ_4l': 0.01212,
+    'ggH_gg': 0.01,
+    
+    'vbfH_bb': 2.20,
+    # 'vbfH_nonbb': ,
+    'vbfH_tautau': 0.237,
+    'vbfH_WW_2l': 0.0859,
+    'VH_nonbb': 0.942, 
+    
+    "DYJetsToLL_M-10to50": 15810.0,
+    "DYJetsToLL_M-50": 6077.22,
+    
     "qcd_50to100": 2.466e+08,
     "qcd_100to200": 2.801e+07,
     "qcd_200to300": 1.721e+6,
@@ -137,9 +170,11 @@ summedProcessList = [ 'tttt', 'tt', 'qcd', 'ttX', 'VV', 'singleTop', 'WJets', 'j
 
 histoGramPerSample = { 
     'tttt':'tttt',
+    
     'ttbar_0l':'tt',
     'ttbar_1l': 'tt',
     'ttbar_2l': 'tt',
+    
     'qcd_50to100':'qcd',
     # 'qcd_100to200':'qcd',//!!!to be updated
     'qcd_200to300':'qcd',
@@ -155,13 +190,37 @@ histoGramPerSample = {
     "ttW":"ttX",
     "ttH_bb": "ttX", 
     "ttH_nonbb": "ttX", 
-    "wz":"VV",
+    "ttWW": "ttX",
+    
+    # "wz":"VV",
+    "WZTo3LNu":"VV", #!use this instead of wz
     "ww":"VV",
     "zz":"VV",
+    'WWW': "VVV",
+    'WWZ': 'VVV',
+    'WZZ': 'VVV',
+    'ZZZ': 'VVV',
+    
     "st_tZq":"singleTop",
     "st_tW_antitop":"singleTop",
     "st_tW_top":"singleTop",
-
+    
+    "TGJets": "XGamma",
+    "ZGToLLG": "XGamma",
+    "WGToLNuG": "XGamma",
+   
+    
+    "ggH_bb": "Higgs",
+    "ggH_tautau": "Higgs",
+    "ggH_WW_2l": "Higgs",
+    "ggH_ZZ_2l": "Higgs",
+    "ggH_ZZ_4l": "Higgs",
+    "ggH_gg": "Higgs",
+    "vbfH_bb": "Higgs",
+    "vbfH_tautau": "Higgs",
+    "vbfH_WW_2l": "Higgs",
+    # "VH_nonbb": "Higgs", #!not in MV
+    
     "WJetsToLNu_HT-200To400": "WJets",
     "WJetsToLNu_HT-400To600": "WJets",
     "WJetsToLNu_HT-600To800": "WJets",
@@ -169,10 +228,15 @@ histoGramPerSample = {
     "WJetsToLNu_HT-1200To2500": "WJets",
     "WJetsToLNu_HT-2500ToInf": "WJets",
     
-    #"fakeTau_tauF": "fakeTau",
-    #"fakeTau_tauT": "fakeTau",
-    #"fakeTau_tauFGen": "fakeTau",
-    #"fakeTau_tauTGen": "fakeTau",
+    "DYJetsToLL_M-10to50": "DY",
+    "DYJetsToLL_M-50": "DY",
+    
+    "fakeLepton": "fakeLepton",
+    
+    "fakeTau_tauF": "fakeTau",
+    "fakeTau_tauT": "fakeTau",
+    "fakeTau_tauFGen": "fakeTau",
+    "fakeTau_tauTGen": "fakeTau",
     
     "VLL_EE_M500": "VLLm500",
     "VLL_EN_M500": "VLLm500",
@@ -255,7 +319,7 @@ histoGramPerSample = {
     'singleMu_2017d': 'singleMu',
     'singleMu_2017e': 'singleMu',
     'singleMu_2017f': 'singleMu',
-
+    
     #!how to ovoid overlap of data in 1tau2l? 
     #may additonal python code to remove the overlap
     'doubleMu_2018a': 'doubleMu',
@@ -270,6 +334,11 @@ histoGramPerSample = {
     'eGamma_2018b': 'eGamma',
     'eGamma_2018c': 'eGamma',
     'eGamma_2018d': 'eGamma',
+    
+    #overlap removed data for 1tau2l
+    'leptonSum_2018': 'leptonSum',
+    
+    
     
     #extra tt samples for BDT training 
     'TTTo2L2Nu0': 'ttExtra',
@@ -330,88 +399,30 @@ histoGramPerSample = {
     'TTToSemiLeptonic19': 'ttExtra',
     'TTToSemiLeptonic20': 'ttExtra',
     'TTToSemiLeptonic21': 'ttExtra',
-    
-    
 }
-# histoGramPerSampleR = types.MappingProxyType(histoGramPerSample)
 
+#! maybe it's better to keep it in this format?
+subSumProDic ={
+   'tttt': ['tttt'],
+    'tt': ['ttbar_0l', 'ttbar_1l', 'ttbar_2l'],
+    'qcd': ['qcd_50to100', 'qcd_200to300', 'qcd_300to500', 'qcd_500to700', 'qcd_700to1000', 'qcd_1000to1500', 'qcd_1500to2000', 'qcd_2000toInf'],
+    'ttX': ['ttG', 'ttZ', 'ttW', 'ttH_bb', 'ttH_nonbb'],
+    'VV': ['wz', 'ww', 'zz'],
+    'singleTop': ['st_tZq', 'st_tW_antitop', 'st_tW_top'],
+    'WJets': ['WJetsToLNu_HT-200To400', 'WJetsToLNu_HT-400To600', 'WJetsToLNu_HT-600To800', 'WJetsToLNu_HT-800To1200', 'WJetsToLNu_HT-1200To2500', 'WJetsToLNu_HT-2500ToInf'],
+    'fakeTau': ['fakeTau_tauF', 'fakeTau_tauT', 'fakeTau_tauFGen', 'fakeTau_tauTGen'],
+    'VLLm600': ['VLL_EE_M600', 'VLL_EN_M600', 'VLL_NN_M600'],
+    'VLLm650': ['VLL_EE_M650', 'VLL_EN_M650', 'VLL_NN_M650'],
+    'VLLm700': ['VLL_EE_M700', 'VLL_EN_M700', 'VLL_NN_M700'],
+    'VLLm750': ['VLL_EE_M750', 'VLL_EN_M750', 'VLL_NN_M750'],
+    #data
+    'jetHT': ['jetHT_2016F', 'jetHT_2016G', 'jetHT_2016H', 'jetHT_2016B_v1_v2', 'jetHT_2016B_v2_v2', 'jetHT_2016C_v2', 'jetHT_2016D_v2', 'jetHT_2016E_v2', 'jetHT_2016F_hipm_v2', 'jetHT_2018a', 'jetHT_2018b', 'jetHT_2018c', 'jetHT_2018d', 'jetHT_2017b', 'jetHT_2017c', 'jetHT_2017d', 'jetHT_2017e', 'jetHT_2017f', 'BTagCSV_2017b', 'BTagCSV_2017c', 'BTagCSV_2017d', 'BTagCSV_2017e', 'BTagCSV_2017f'],
+    'singleMu': ['singleMu_2016F', 'singleMu_2016G', 'singleMu_2016H', 'singleMu_2016B_v1_v2', 'singleMu_2016B_v2_v2', 'singleMu_2016C_v2', 'singleMu_2016D_v2', 'singleMu_2016E_v2', 'singleMu_2016F_hipm_v2', 'singleMu_2018a', 'singleMu_2018b', 'singleMu_2018c', 'singleMu_2018d', 'singleMu_2017b', 'singleMu_2017c', 'singleMu_2017d', 'singleMu_2017e', 'singleMu_2017f'], 
+    'doubleMu': ['doubleMu_2018a', 'doubleMu_2018b', 'doubleMu_2018c', 'doubleMu_2018d'],
+    'muonEG': ['MuonEG_2018a', 'MuonEG_2018b', 'MuonEG_2018c', 'MuonEG_2018d'],
+    'eGamma': ['eGamma_2018a', 'eGamma_2018b', 'eGamma_2018c', 'eGamma_2018d'],
+}
 
-samples = [
-    'tttt', 
-    'ttbar_0l','ttbar_2l', 'ttbar_1l',
-    'qcd_50to100',
-    'qcd_100to200',
-    'qcd_200to300',
-    'qcd_300to500',
-    'qcd_500to700',
-    'qcd_700to1000',
-    'qcd_1000to1500',
-    'qcd_1500to2000',
-    'qcd_2000toInf',
-    "ttG",
-    "ttZ",  
-    "ttW",
-    "ttH_bb", 
-    "ttH_nonbb", 
-    "wz",
-    "ww",
-    "zz",
-    "st_tZq",
-    "st_tW_antitop",
-    "st_tW_top",
-    # "WJetsToLNu",
-    # "WJetsToLNu_HT-100To200",
-    "WJetsToLNu_HT-200To400",
-    "WJetsToLNu_HT-400To600",
-    "WJetsToLNu_HT-600To800",
-    "WJetsToLNu_HT-800To1200",
-    "WJetsToLNu_HT-1200To2500",
-    "WJetsToLNu_HT-2500ToInf",
-
-#2016
-    'jetHT_2016F',
-    'jetHT_2016G',
-    'jetHT_2016H',
-    'jetHT_2016B_v1_v2',
-    'jetHT_2016B_v2_v2',
-    'jetHT_2016C_v2',
-    'jetHT_2016D_v2',
-    'jetHT_2016E_v2',
-    'jetHT_2016F_hipm_v2',
-    #2018
-    'jetHT_2018a',
-    'jetHT_2018b',
-    'jetHT_2018c',
-    'jetHT_2018d',
-    #2017
-    'jetHT_2017b',
-    'jetHT_2017c',
-    'jetHT_2017d',
-    'jetHT_2017e',
-    'jetHT_2017f',
-    
-#2016
-    'singleMu_2016F',
-    'singleMu_2016G',
-    'singleMu_2016H',
-    'singleMu_2016B_v1_v2',
-    'singleMu_2016B_v2_v2',
-    'singleMu_2016C_v2',
-    'singleMu_2016D_v2',
-    'singleMu_2016E_v2',
-    'singleMu_2016F_hipm_v2',
-    #2018
-    'singleMu_2018a',
-    'singleMu_2018b',
-    'singleMu_2018c',
-    'singleMu_2018d',
-    #2017
-    'singleMu_2017b',
-    'singleMu_2017c',
-    'singleMu_2017d',
-    'singleMu_2017e',
-    'singleMu_2017f',
-]
 
 
 
@@ -462,12 +473,13 @@ dataDict = {
     '2022postEE': ['2022E', '2022F', '2022G'],
     '2016': ['2016B', '2016C', '2016D', '2016E', '2016F'],
     '2017': ['2017b', '2017c', '2017d', '2017e', '2017f'],
-    '2018': ['2018a', '2018b', '2018c', '2018d'],
+    '2018': ['2018a', '2018b', '2018c', '2018d', '2018'], #add 2018 for leptonSum_2018
     '2016postVFP': ['2016F', '2016G', '2016H'],
     '2016preVFP': ['2016B_v1_v2', '2016B_v2_v2',  '2016C_v2', '2016D_v2', '2016E_v2', '2016F_hipm_v2'],
 }
 
 proChannelDic = {
-    '1tau1l':  ['tt', 'ttX', 'singleTop', 'WJets', 'tttt'], #! 1tau1l, for now not considering data
-    '1tau0l':  ['tttt', 'tt', 'fakeTau', 'ttX', 'singleTop', 'WJets'] #!1tau0l
+    '1tau1l':  ['tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'jetHT'], #! 1tau1l, for now not considering data
+    '1tau0l':  ['tttt', 'tt', 'fakeTau', 'ttX', 'singleTop', 'WJets', 'jetHT'], #!1tau0l
+    '1tau2l':  ['tt', 'ttX', 'singleTop', 'WJets',  'VV','VVV','Higgs', 'XGamma', 'fakeLepton', 'tttt', 'leptonSum'], 
 }

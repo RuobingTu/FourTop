@@ -1,8 +1,6 @@
 import ROOT
 import pandas as pd
 # from root_pandas import to_root
-import uproot
-import awkward as ak
 
 import usefulFunc as uf
 
@@ -12,20 +10,26 @@ ROOT.gInterpreter.Declare("""
 
 std::unordered_set<ULong64_t> seen_events;
 
-bool mark_duplicates(ULong64_t event) {
+Bool_t mark_duplicates(ULong64_t event) {
     if (seen_events.find(event) == seen_events.end()) {
         seen_events.insert(event);
-        return false;
+        return 0;
     } else {
-        return true;
+        return 1;
     }
 }
 """)
 
 
+
 def main():
     # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v81for1tau2l_v2/data/'
-    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baseline1tau2l_v82for1tau2l/data/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v82for1tau2l/data/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noTauCut_v82for1tau2l/data/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v1baseline1tau2l_noLepCut_v83for1tau2lEleEtaCut/data/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v84fakeLeptonUpdate/data/'
+    # inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v2_v84fakeLeptonUpdate/data/'
+    inputDir = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v0baseline1tau2l_v2_v84fakeLeptonUpdateV2/data/'
 
     dataPDs = ['doubleMu', 'muonEG', 'eGamma', 'singleMu'] #for 2018
     
@@ -38,40 +42,31 @@ def main():
             print(i)
         print('\n')
         
-    # df_doubleMu = getROOTDF(inputDir, dic, dataPD='doubleMu')
-    # df_muonEG = getROOTDF(inputDir, dic, dataPD='muonEG')
-    # df_eGamma = getROOTDF(inputDir, dic, dataPD='eGamma')
-    # df_singleMu = getROOTDF(inputDir, dic, dataPD='singleMu')
     
-    # df = ROOT.RDF.MakeCsvDataFrame([df_doubleMu, df_muonEG, df_eGamma, df_singleMu]) 
     df = ROOT.RDataFrame("newtree", [f"{inputDir}{sub}.root" for sub in dic['doubleMu'] + dic['muonEG'] + dic['eGamma'] + dic['singleMu']])
     print('combined df entries: ', df.Count().GetValue())
     
     # Use Define to create the 'is_duplicate' column
-    df = df.Define("is_duplicate", "mark_duplicates(event)")
-    # # Filter out the duplicates
-    df_filtered = df.Filter("1")
-    column_names = df_filtered.GetColumnNames()
-    print("Columns in the RDataFrame:")
-    for column in column_names:
-        column_type = df_filtered.GetColumnType(column)
-        print(f"{column}: {column_type}")
-    exclude_columns = ['is_duplicate', 'jets_pt_', 'jets_eta_', 'jets_btags_', 'jets_btagsPN_', 'jets_btagsPT_', 'jets_flavour_']
-    include_columns = [col for col in column_names if col not in exclude_columns]
-    #count_before = df_cached.Count().GetValue()
-    #print('Filtered df entries before display: ', count_before)
-
-    display = df_filtered.Display(exclude_columns, 10)
-    display.Print()
-
-    #count_after_display = df_cached.Count().GetValue()
-    #print('Filtered df entries after display: ', count_after_display)
-    #print('filtered df entries: ', df_filtered.Count().GetValue())
-
+    df = df.Define("unique_id", "run*1000000000000 + luminosityBlock*1000000 + event")
+    # df = df.Define("is_duplicate", "mark_duplicates(event)") #!can only go through event loop once! 
+    df = df.Define("is_duplicate", "mark_duplicates(unique_id)") #!use unique id instead
+    print('is_duplicate type in df: ', df.GetColumnType('is_duplicate'))
+    df.Snapshot('newtree', inputDir + 'leptonSumAll.root')#!triggers event loop once
+    print(f'Output file: {inputDir}leptonSumAll.root\n\n')#!!!have to save it to prevent multiple event loop evaluating mark_duplicates()
     
-    df.Snapshot('newtree', inputDir + 'leptonSum.root')#!somehow not working with vector branches?
-    #df_filtered.Snapshot('newtree', inputDir + 'leptonSum.root', include_columns)#!somehow not working with vector branches?
-    print(f'Output file: {inputDir}leptonSum.root')
+    
+    # # Filter out the duplicates
+    df_new = ROOT.RDataFrame('newtree', inputDir+'leptonSumAll.root')
+    df_filtered = df_new.Filter("!is_duplicate")
+    report = df_filtered.Report()
+    print('filtered df entries: ', df_filtered.Count().GetValue())#! triggers event loop twice
+    # print('is_duplicate type in df_filtered: ', df_filtered.GetColumnType('is_duplicate'))
+    
+    
+    era = uf.getEraFromDir(inputDir)
+    df_filtered.Snapshot('newtree', f'{inputDir}leptonSum_{era}.root')#!triggers event loop third time
+    print(f'Output file: {inputDir}leptonSum_{era}.root')
+    report.Print()
 
 def getROOTDF(inputDir, dic, dataPD='singleMu'):
     df_singleMu =  ROOT.RDataFrame("newtree", [f"{inputDir}{sub}.root" for sub in dic[dataPD]])
@@ -166,4 +161,5 @@ def getPandasDF(inputDir, dic, dataPD='singleMu'):
     
 if __name__ == "__main__":
     main()
+    
     

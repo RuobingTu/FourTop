@@ -119,9 +119,13 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
 
     SP_d muonsTopMVAT_1t_class = std::make_shared<histsForRegionsMap<Double_t>>("muonsTopMVAT_1pt", "p_{T}^{#mu}(GeV)", m_processName, 10, 0, 200, regionsForVariables, &(e->muonsTopMVAT_1pt));
     SP_d elesTopMVAT_1pt_class = std::make_shared<histsForRegionsMap<Double_t>>("elesTopMVAT_1pt", "p_{T}^{e}(GeV)", m_processName, 10, 0, 200, regionsForVariables, &(e->elesTopMVAT_1pt));
+    SP_d elesTopMVAT_1eta_class = std::make_shared<histsForRegionsMap<Double_t>>("elesTopMVAT_1eta", "#eta^{e}", m_processName, 10, -2.5, 2.5, regionsForVariables, &(e->elesTopMVAT_1eta));
+    SP_d lepTopMVAT_1pt_class = std::make_shared<histsForRegionsMap<Double_t>>("lepTopMVAT_1pt", "p_{T}^{1st l}(GeV)", m_processName, 10, 0, 200, regionsForVariables, &(e->lepTopMVAT_1pt));
+    SP_d lepTopMVAT_2pt_class = std::make_shared<histsForRegionsMap<Double_t>>("lepTopMVAT_2pt", "p_{T}^{2nd l}(GeV)", m_processName, 10, 0, 200, regionsForVariables, &(e->lepTopMVAT_2pt));
 
 
-    SP_i jets_num_class = std::make_shared<histsForRegionsMap<Int_t>>("jets_num", "n^{jet}", m_processName, 10, 3.5, 13.5, regionsForVariables, &(e->jets_num));
+
+    SP_i jets_num_class = std::make_shared<histsForRegionsMap<Int_t>>("jets_num", "n^{jet}", m_processName, 12, 1.5, 13.5, regionsForVariables, &(e->jets_num));
     SP_i bjetsM_num_class = std::make_shared<histsForRegionsMap<Int_t>>("bjetsM_num", "n^{b-jet}", m_processName, 8, -0.5, 7.5, regionsForVariables, &(e->bjetsM_num));
     SP_i bjetsT_num_class = std::make_shared<histsForRegionsMap<Int_t>>("bjetsT_num", "n^{T b-jet}", m_processName, 8, -0.5, 7.5, regionsForVariables, &(e->bjetsT_num));
     SP_i bjetsPTM_num_class = std::make_shared<histsForRegionsMap<Int_t>>("bjetsPTM_num", "n^{b-jet}", m_processName, 8, -0.5, 7.5, regionsForVariables, &(e->bjetsPTM_num));
@@ -236,6 +240,9 @@ void initializeHistVec(const std::vector<TString>& regionsForVariables, std::vec
 
     histsForRegion_vec.push_back(muonsTopMVAT_1t_class);
     histsForRegion_vec.push_back(elesTopMVAT_1pt_class);
+    histsForRegion_vec.push_back(elesTopMVAT_1eta_class);
+    histsForRegion_vec.push_back(lepTopMVAT_1pt_class);
+    histsForRegion_vec.push_back(lepTopMVAT_2pt_class);
 
     histsForRegion_vec.push_back(bjetsM_num_class);
     histsForRegion_vec.push_back(bjetsT_num_class);
