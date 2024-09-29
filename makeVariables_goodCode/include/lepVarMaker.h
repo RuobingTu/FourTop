@@ -11,7 +11,9 @@ public:
     ~LepVarMaker();
     void makeVariables(const EventForMV* e);
     void clearBranch();
-    // void setupLorentzObjs(std::vector<ROOT::Math::PtEtaPhiMVector>& leptonsMVAT);
+
+    void processSingleLep(const EventForMV* e, const UInt_t muonSize, const UInt_t eleSize);
+    void processingDoubleLep(const EventForMV* e, const UInt_t muonSize, const UInt_t eleSize);
     void setupLorentzObjs(const EventForMV *e);
 
 private:

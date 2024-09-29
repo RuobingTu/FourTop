@@ -13,8 +13,7 @@ Bool_t baselineSelection(event *event, const Bool_t isRun3, Bool_t is1tau2l)
                 pass = event->jets_num.v() >= 6 && event->bjetsM_num.v() >= 2 && event->jets_HT.v() > 480. && event->jets_6pt.v()>38.;//
             }
         }else{
-            pass = event->jets_num.v() >= 2 && event->bjetsM_num.v() >= 1 && event->jets_HT.v() > 200. && event->lepTopMVAT_1pt.v()>25. && event->lepTopMVAT_2pt.v()>13. ;//!leptonPt selection should be weighed lepton cone corrected pt for fakeLepton
-            //!r
+            pass = event->jets_num.v() >= 2 && event->bjetsM_num.v() >= 1 && event->jets_HT.v() > 200. && event->lepTopMVAT_1pt.v()>25. && event->lepTopMVAT_2pt.v()>13. ;//leptonPt selection should be weighed lepton cone corrected pt for fakeLepton; done in createFakeLepton.py
             // pass = event->jets_num.v() >= 2 && event->bjetsM_num.v() >= 1 && event->jets_HT.v() > 200.  ;//!testing
         }
     }else{
@@ -91,7 +90,7 @@ Bool_t SR1tau1lSel(event *e, const Int_t channel, Bool_t isRun3, Bool_t isFakeTa
     case 0: // 1tau1lSR
         isPass = tausTNum == 1 && lepNum == 1 && e->jets_num.v() >= 7 && bjetsMNum >= 3 ;
         break;
-    case 1: //!NEW 1tau0lSR
+    case 1: // 1tau0lSR
         isPass = tausTNum == 1 && lepNum == 0 && e->jets_num.v() >= 8 && bjetsMNum >= 3 &&e->tausF_num.v()==1;
         break;
     case 2: // !1tau2lSR
@@ -99,13 +98,15 @@ Bool_t SR1tau1lSel(event *e, const Int_t channel, Bool_t isRun3, Bool_t isFakeTa
         isPass = tausTNum == 1 && lepCut2L && e->jets_num.v() >= 4 && bjetsMNum >= 2;//SR, MC: (FTPromp, FTPrompt)
         break;
     case 3: // 1tau1lCR12
-        isPass = tausTNum == 1 && lepNum == 1 &&( (e->jets_num.v() >= 6 && bjetsMNum == 2) || (e->jets_num.v() == 6 && bjetsMNum >= 3));
+        // isPass = tausTNum == 1 && lepNum == 1 &&( (e->jets_num.v() >= 6 && bjetsMNum == 2) || (e->jets_num.v() == 6 && bjetsMNum >= 3));
+        isPass = tausTNum == 1 && lepCut &&( (e->jets_num.v() >= 6 && bjetsMNum == 2) || (e->jets_num.v() == 6 && bjetsMNum >= 3));
         break;
     case 4: // 1tau1lCR2
-        isPass = tausTNum == 1 && lepNum == 1 && e->jets_num.v() == 6 && bjetsMNum >= 3;
+        // isPass = tausTNum == 1 && lepNum == 1 && e->jets_num.v() == 6 && bjetsMNum >= 3;
+        isPass = tausTNum == 1 && lepCut && e->jets_num.v() == 6 && bjetsMNum >= 3;
         break;
     case 5: // 1tau1lCR1
-        isPass = tausTNum == 1 && lepNum == 1 && e->jets_num.v() >=6 && bjetsMNum ==2 ;
+        isPass = tausTNum == 1 && lepCut && e->jets_num.v() >=6 && bjetsMNum ==2 ;
         break;
     case 6: // 1tau0lCR
         isPass = tausTNum == 1 && lepNum == 0 && e->jets_num.v() >= 8 && bjetsMNum == 0 ;
@@ -136,14 +137,18 @@ Bool_t SR1tau1lSel(event *e, const Int_t channel, Bool_t isRun3, Bool_t isFakeTa
     return isPass;
 }
 
-Double_t baseWeightCal(event *e, UInt_t entry, const Bool_t isRun3, Bool_t isData, Int_t channel )
-{
+Double_t baseWeightCal(event *e, UInt_t entry, const Bool_t isRun3, Bool_t isData, Int_t channel, const Bool_t isFakeTau, const Bool_t isFakeLepton)
+{//todo: would be very nice to be able to print the weight calculation
     Double_t basicWeight = 1.0;
-    if(isData){
+    if(isData || isRun3){
         return basicWeight;
     }
-    if (!isRun3)
-    {
+    if(isFakeTau){
+        return e->FR_weight_final;  
+    }
+    if(isFakeLepton){
+        return e->lepTopMVAF_FRweight.v();
+    }
         // Double_t basicWeight = EVENT_prefireWeight * EVENT_genWeight * PUweight_ * HLT_weight * tauT_IDSF_weight_new * elesTopMVAT_weight * musTopMVAT_weight * btagShape_weight * btagShapeR;
         // basicWeight = e->EVENT_genWeight.v() * e->EVENT_prefireWeight.v() * e->PUweight_.v() * e->HLT_weight.v() * e->tauT_IDSF_weight_new.v() * e->elesTopMVAT_weight.v() * e->musTopMVAT_weight.v() * e->btagShape_weight.v() * e->btagShapeR.v();
         Double_t btagWeight = 1.0;
@@ -179,10 +184,5 @@ Double_t baseWeightCal(event *e, UInt_t entry, const Bool_t isRun3, Bool_t isDat
         if(entry==100){
             std::cout<<"event weight: "<<e->EVENT_genWeight.n() <<"*"<< e->EVENT_prefireWeight.n() <<"*"<< e->PUweight_.n() <<"*"<< e->HLT_weight.n() <<"*"<< e->tauT_IDSF_weight_new.n() <<"*"<< e->elesTopMVAT_weight.n() <<"*"<< e->musTopMVAT_weight.n()<<"*"<< btagName<<"\n";
         }
-    }
-    else
-    {
-        basicWeight = e->EVENT_genWeight.v();
-    }
     return basicWeight;
 }

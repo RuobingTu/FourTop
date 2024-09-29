@@ -9,13 +9,6 @@
 #include "../../myLibrary/commenFunction.h"
 
 void run_objectSelection(
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/V75NoHLTNoTauBjet2/mc/",
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v75NoHLTNoTauHT400Jet6pt30/mc/",
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v77ForHLT/mc/",
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v76WithVLLSample/mc/",
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v76WithVLLAllMass/mc/",
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2017/v77ForHLT/mc/",
-    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2017/v77forBtagMeasurement/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2016_postVFP/v77forBtagMeasurement/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2017/v77HadroPresel/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2017/v77HadroPresel/data/",
@@ -37,13 +30,13 @@ void run_objectSelection(
     TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdateV2/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdate/data/",
 
-    // TString inputDir = "tttt",
+    TString inputDir = "tttt",
     // TString inputDir = "ZGToLLG",
     // TString inputDir = "WZTo3LNu",
     // TString inputDir = "VLL_EE_M600",
     TString inputDir = "ttbar_0l",
     // TString inputDir = "ttbar_1l",
-    // TString inputDir = "TTTo2L2Nu0",
+    TString inputDir = "TTTo2L2Nu0",
     // TString inputDir = "jetHT_2017f",
     // TString inputDir = "BTagCSV_2017c",
     // TString inputDir = "singleMu_2017b",
@@ -56,21 +49,17 @@ void run_objectSelection(
     // TString inputDir = "output",
     TString outputDir = "/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/mc/",
     // Int_t numEntries = 100000)
-    // Int_t numEntries = 3000)
-    // Int_t numEntries = 3000)
-    // Int_t numEntries = 10000)
     Int_t numEntries = 0)
-{   
-    //for(std::vector<TString>::size_type i=0; i<allProcesses.size();i++){
-        TStopwatch t;
-        t.Start();
-        //inputDir = allProcesses[i];
-        TString inputDir1 = inputBase + inputDir + "/";
-        TString processName = inputDir;
-        Bool_t isData = TTTT::getIsData(inputDir1);
-        TString era = TTTT::getEra2(inputDir1);
-        Bool_t isRun3 = TTTT::isRun3(era);
-        std::cout << "isRun3=" << isRun3 << " era=" << era << "\n";
+{
+    TStopwatch t;
+    t.Start();
+
+    TString inputDir1 = inputBase + inputDir + "/";
+    TString processName = inputDir;
+    Bool_t isData = TTTT::getIsData(inputDir1);
+    TString era = TTTT::getEra2(inputDir1);
+    Bool_t isRun3 = TTTT::isRun3(era);
+    std::cout << "isRun3=" << isRun3 << " era=" << era << "\n";
 
     MakeVariablesMain mv(inputDir1, outputDir, processName, isData, era, isRun3);
     Bool_t baseline = kTRUE;
