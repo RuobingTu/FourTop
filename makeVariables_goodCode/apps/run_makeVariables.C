@@ -34,9 +34,9 @@ void run_objectSelection(
     // TString inputDir = "ZGToLLG",
     // TString inputDir = "WZTo3LNu",
     // TString inputDir = "VLL_EE_M600",
-    TString inputDir = "ttbar_0l",
+    // TString inputDir = "ttbar_0l",
     // TString inputDir = "ttbar_1l",
-    TString inputDir = "TTTo2L2Nu0",
+    // TString inputDir = "TTTo2L2Nu0",
     // TString inputDir = "jetHT_2017f",
     // TString inputDir = "BTagCSV_2017c",
     // TString inputDir = "singleMu_2017b",
@@ -63,14 +63,14 @@ void run_objectSelection(
 
     MakeVariablesMain mv(inputDir1, outputDir, processName, isData, era, isRun3);
     Bool_t baseline = kTRUE;
-    Bool_t if1tau2l = kTRUE;
+    Bool_t if1tau2l = kFALSE;
     // Bool_t baseline = kFALSE;
     // mv.EventLoop(baseline, kTRUE, numEntries); //1tau1l cut 
     mv.EventLoop(baseline, kFALSE, numEntries);
     mv.Terminate();
 
-        t.Stop();
-        t.Print();
+    t.Stop();
+    t.Print();
     //}
     return;
 }

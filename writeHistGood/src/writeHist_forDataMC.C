@@ -42,8 +42,8 @@ void WH_forDataMC::LoopTree(UInt_t entry)
     {
         m_tree->GetEntry(i);
 
-        // const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kFALSE); //!for 1tau1l and 1tau0l
-        const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kTRUE); //!for 1tau2l
+        const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kFALSE); //!for 1tau1l and 1tau0l
+        // const Bool_t ifBaseline = baselineSelection(e, m_isRun3, kTRUE); //!for 1tau2l
         if (!ifBaseline)
         {
             continue;
@@ -76,8 +76,8 @@ void WH_forDataMC::LoopTree(UInt_t entry)
         // SR
         if (!m_isData)
         {
-            Bool_t is1tau0lSR = SR1tau1lSel(e, 1, m_isRun3, m_isFakeTau);
-            Bool_t is1tau1lSR = SR1tau1lSel(e, 0, m_isRun3, m_isFakeTau);
+            Bool_t is1tau0lSR = SR1tau1lSel(e, 1, m_isRun3, m_isFakeTau, m_isFakeLepton, !m_isData);
+            Bool_t is1tau1lSR = SR1tau1lSel(e, 0, m_isRun3, m_isFakeTau, m_isFakeLepton, !m_isData);
             WH::histRegionVectFill(histsForRegion_vec, is1tau0lSR, "1tau0lSR", eventWeight_1tau0l, m_isData);
             WH::histRegionVectFill(histsForRegion_vec, is1tau1lSR, "1tau1lSR", basicWeight, m_isData);
 
@@ -96,8 +96,8 @@ void WH_forDataMC::LoopTree(UInt_t entry)
         WH::histRegionVectFill(histsForRegion_vec, is1tau0lCR, "1tau0lCR", eventWeight_1tau0l, m_isData);
 
         // 1tau1lCR
-        Bool_t is1tau1lCR1 = SR1tau1lSel(e, 5, m_isRun3, m_isFakeTau); // CR1 in slides
-        Bool_t is1tau1lCR2 = SR1tau1lSel(e, 4, m_isRun3, m_isFakeTau);
+        Bool_t is1tau1lCR1 = SR1tau1lSel(e, 5, m_isRun3, m_isFakeTau, m_isFakeLepton, !m_isData); // CR1 in slides
+        Bool_t is1tau1lCR2 = SR1tau1lSel(e, 4, m_isRun3, m_isFakeTau, m_isFakeLepton, !m_isData);
         WH::histRegionVectFill(histsForRegion_vec, is1tau1lCR1, "1tau1lCR1", basicWeight, m_isData);
         WH::histRegionVectFill(histsForRegion_vec, is1tau1lCR2, "1tau1lCR2", basicWeight, m_isData);
         //1tau1lCR1+CR2

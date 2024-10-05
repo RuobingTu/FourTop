@@ -99,9 +99,9 @@ def main():
     # "tausT_invariantMass"
     # ]
     #regionList = ['1tau0lSR', '1tau0lMR', '1tau0lVR', '1tau0lCR']
-    plotName = 'TausT_genFlavorCheckM700'
+    plotName = 'TausT_genFlavorCheckM600'
     ifFTau = False
-    ifVLL = 'VLLm700'
+    ifVLL = 'VLLm600'
     # ifVLL = 'VLLm800'
     # ifVLL = 'VLLm700'
     is1tau0l = False

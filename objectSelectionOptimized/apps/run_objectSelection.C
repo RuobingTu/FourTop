@@ -31,7 +31,7 @@ void run_objectSelection(
     // TString singleFileName = "tree_1.root", // run3, output of nanoAOD tool
     TString outputDir = "./output/",
     // Int_t eventNum = 1000)
-Int_t eventNum = 10000)
+Int_t eventNum = 0)
 // Int_t eventNum = 0)
 {
     TStopwatch t;
@@ -39,7 +39,6 @@ Int_t eventNum = 10000)
     std::cout<<"input file="<<inputDir<<singleFileName<<"\n";
 
     Bool_t isData = TTTT::getIsData(inputDir);
-    isData = kFALSE;
     TString era = TTTT::getEra(inputDir);
     const Bool_t isRun3 = TTTT::isRun3(era);
     if(eventNum >0) {
