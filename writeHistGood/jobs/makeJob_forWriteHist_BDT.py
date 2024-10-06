@@ -8,7 +8,8 @@ def main():
     #inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lSRTauF_v76addTTExtra1Official/'
     #inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2017/v0baselineHardroSR_v81addSysSum/'
     # inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v2cut1tau1lCR1TauF_v76WithVLLAllMassOfficial/'
-    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/'
+    # inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baselineHardroSR_v81addSysSum/'
+    inputDir = '/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baseline1tau1l_v2_v84fakeLeptonUpdateV2/'
 
 
     #!fakerate
@@ -67,7 +68,7 @@ def main():
     
    
     #justMC = False
-    justMC = True
+    justMC = False
     isTest = 0
     print( inputDir, ' ', version )
 

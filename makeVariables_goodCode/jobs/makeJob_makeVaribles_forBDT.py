@@ -37,9 +37,9 @@ def main():
     # inVersion = 'v81addSysSum'
     # inVersion = 'v82for1tau2l'
     # inVersion = 'v83for1tau2lEleEtaCut'
-    # inVersion = 'v84fakeLeptonUpdateV2'
+    inVersion = 'v84fakeLeptonUpdateV2'
     # inVersion = 'v84Pre1tau2lNoLepCut'
-    inVersion = 'v84Pre1tau2lLepF2'
+    # inVersion = 'v84Pre1tau2lLepF2'
 
     # outVersion = 'v0baselineHardro'
     # outVersion = 'v0baseline1tau2l'

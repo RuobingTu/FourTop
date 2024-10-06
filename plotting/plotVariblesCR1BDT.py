@@ -19,7 +19,7 @@ def main():
         
         #regionList = ['1tau1lCR1']
         #regionList = ['newtree']
-        regionList = ['1tau1lCR1']
+        regionList = ['1tau1lCR1', '1tau1lCR2']
         #regionList = ['1tau1lSR']
         # regionList = ['1tau2lSR']
         variables = ['BDT']

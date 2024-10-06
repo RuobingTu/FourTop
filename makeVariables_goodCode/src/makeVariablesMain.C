@@ -2,7 +2,7 @@
 #include "../include/variablesFunctions.h"
 
 void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t numEntries)
-{   
+{
     ULong_t entryCount = 0;
     if (numEntries <= 0)
     {
@@ -80,7 +80,7 @@ void MakeVariablesMain::EventLoop(Bool_t baselineSel, Bool_t  tau1e1Sel, ULong_t
             // if(!(jetVarMaker.getJet_num()>= 7 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==1 )){//!1tau1l SR loosed for more tt events
             // if(!(jetVarMaker.getJet_num()>= 8 && bjetM_num >= 3 && tauFVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==0  )){ //!1tau0lSR, can not add tauT cut, for fake tau estimation later
             // if(!(jetVarMaker.getJet_num()>= 8 && bjetM_num >= 3 && tauFVarMaker.getNum()==1 && (eleTopVarMaker.getNum()+muTopTVarMaker.getNum())==0  )){ //!1tau0lSR, can not add tauT cut, for fake tau estimation later
-            if(!(jetVarMaker.getJet_num()>= 4 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && lepVarMaker.getNum()==2 && lepVarMaker.get1pt()>25. && lepVarMaker.get2pt()>13. )){ //!1tau2lSR, for BDTraining, not including fakeLepton
+            // if(!(jetVarMaker.getJet_num()>= 4 && bjetM_num >= 2 && tauVarMaker.getNum()==1 && lepVarMaker.getNum()==2 && lepVarMaker.get1pt()>25. && lepVarMaker.get2pt()>13. )){ //!1tau2lSR, for BDTraining, not including fakeLepton
                 continue;
             }
         }

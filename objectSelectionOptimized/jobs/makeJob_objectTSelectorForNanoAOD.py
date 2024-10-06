@@ -30,16 +30,16 @@ codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
 # jobVersionName = 'v82for1tau2l/'
 # jobVersionName = 'v83for1tau2lEleEtaCut/'
 # jobVersionName = 'v84fakeLeptonUpdate/'
-# jobVersionName = 'v84fakeLeptonUpdateV2/'
+jobVersionName = 'v84fakeLeptonUpdateV2/'
 # jobVersionName = 'v84Pre1tau2lNoLepCut/'
-jobVersionName = 'v84Pre1tau2lLepF2/'
+#jobVersionName = 'v84Pre1tau2lLepF2/'
 
 #!same version numbers means no change in algrithm but only in selection
 
 def main():
-    # era = '2016'
+    era = '2016'
     # era = '2016APV'
-    era = '2017'
+    # era = '2017'
     # era = '2018'
     # era = '2022_13p6/crabNanoPost_2022postEE_v3'
     # era = '2022_13p6/crabNanoPost_2022preEE_v3'
@@ -55,7 +55,7 @@ def main():
     sumProToSkip = ['ttExtra', 'doubleMu', 'muonEG', 'eGamma', 'singleMu'] #! and 1tau2l
 
 
-    onlyMC = False
+    onlyMC = True
 
 
 ###########################################
@@ -77,10 +77,10 @@ def main():
 
     inputDirMC = inputDir + 'mc/'
     makeJobsInDir( inputDirMC, outputDir , jobScriptsFolder, False,   eraOut, isRun3,  sumProToSkip)
-    # if not onlyMC:
-        # for idata in dataList:
-    inputDirData = inputDir + 'data/'
-    makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, eraOut , isRun3, sumProToSkip)
+    if not onlyMC:
+        for idata in dataList:
+            inputDirData = inputDir + 'data/'
+            makeJobsInDir( inputDirData, outputDir, jobScriptsFolder, True, eraOut , isRun3, sumProToSkip)
 
     makeSubAllJobs( jobsDir , eraOut)
     subprocess.run('chmod 777 '+jobScriptsFolder + "*sh", shell=True )

@@ -125,10 +125,10 @@ def main():
     # regionList = ['1tau0lVR', '1tau0lMR', '1tau0lCR', '1tau0lSR']
     # ifFTau = True #if use fakeTau bg and other bg with genTau requirement
 
-    for mass in [60]:
-        for i in [6]:
+    for mass in [65]:
+        for i in [4]:
             ifVLL = f'VLLm{mass}0'
-            inputDir = f'/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2016preVFP/v0baselineHardroSR_v81addSysSum/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}0_{i}/'
+            inputDir = f'/publicfs/cms/user/turuobing/tauOfTTTT_NanoAODOfficial/forMVA/2018/v0baseline1tau1l_v2_v84fakeLeptonUpdateV2/mc/variableHists_v0Basictraining1tau1l_VLLm{mass}0_{i}/'
             era = uf.getEraFromDir(inputDir)
             print('era=', era)
             isRun3 = uf.isRun3(inputDir)
