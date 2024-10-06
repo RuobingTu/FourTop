@@ -1,4 +1,3 @@
-
 #include <boost/lexical_cast.hpp>
 #include <fstream>
 #include <vector>
@@ -91,6 +90,27 @@ void getProcessesVec(TString inputDir, std::vector<Process>& processVec, const T
                               "fakeTau_tauTGen",
                           }},
 
+        {"1tau2l",{
+            "tttt",
+            // "ttbar_0l", //!should be with TTExtra in training
+            // "ttbar_2l",
+            // "ttbar_1l",
+            "TTToHadronic",//!have to merge seperate files first with hadd
+            "TTToSemiLeptonic",
+            "TTTo2L2Nu",
+            "ttG",
+            "ttZ",
+            "ttW",
+            "ttH_bb",
+            "ttH_nonbb",
+            "ttWW",
+            "st_tZq",
+            "st_tW_antitop",
+            "st_tW_top",
+            }
+        },
+
+
     };
 
 
@@ -119,8 +139,7 @@ int tmvaBDT_training(
     // TString variableListCsv = "/workfs2/cms/huahuil/4topCode/CMSSW_10_2_20_UL/src/FourTop/hua/tmva/newCode/inputList/inputList_1tau2l.csv",
     TString variableListCsv = "/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/inputList/inputList_Official_1tau1l_M600_25var.csv",
 // const TCut g_weight = "EVENT_genWeight *EVENT_prefireWeight *PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagShape_weight * btagShapeR ";
-    const TString g_weight = "global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*HLT_weight*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagWPMedium_weight ", //for btag WP
-    // const TString g_weight = "global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*tauT_IDSF_weight_new*elesTopMVAT_weight*musTopMVAT_weight*btagWPMedium_weight ",
+    const TString g_weight = "global_weight*EVENT_genWeight *EVENT_prefireWeight *PUweight_*tauT_IDSF_weight_new*elesTopMVAT_weight * musTopMVAT_weight * btagWPMT_weight",//1tau2l
     // const TString g_weight = "event_allWeight_1tau0l", //1tau0l
     // const TString channel = "1tau2l"
     // const TString channel = "1tau1l",

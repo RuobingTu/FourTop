@@ -6,16 +6,6 @@ import usefulFunc as uf
 
 
 codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
-# jobVersionName = 'v64PreAndHLTSel_JERDown/'
-# jobVersionName = 'v64PreAndHLTSel_JESUp/'
-# jobVersionName = 'v64PreAndHLTSel_JESDown/'
-# jobVersionName = 'v64PreAndHLTSel_TESUp/'
-# jobVersionName = 'v64PreAndHLTSel_TESDown/'
-# jobVersionName = 'v65TheoryWeightAdded/'
-# jobVersionName = 'v66TheoryWeightAdded/'
-# jobVersionName = 'v67TheoryWeightAdded/'
-# jobVersionName = 'v70BetterHLT/'
-# jobVersionName = 'v71NoHLTNoTau/'
 # jobVersionName = 'v72PreSelWithTauF_METAdd'
 # jobVersionName = 'v73NoHLTNoTauHT400/'
 # jobVersionName = 'v73NoHLTTauFHT400/'
@@ -40,15 +30,17 @@ codePath = os.path.dirname(os.path.abspath(__file__)) + '/'
 # jobVersionName = 'v82for1tau2l/'
 # jobVersionName = 'v83for1tau2lEleEtaCut/'
 # jobVersionName = 'v84fakeLeptonUpdate/'
-jobVersionName = 'v84fakeLeptonUpdateV2/'
+# jobVersionName = 'v84fakeLeptonUpdateV2/'
+# jobVersionName = 'v84Pre1tau2lNoLepCut/'
+jobVersionName = 'v84Pre1tau2lLepF2/'
 
 #!same version numbers means no change in algrithm but only in selection
 
 def main():
     # era = '2016'
     # era = '2016APV'
-    # era = '2017'
-    era = '2018'
+    era = '2017'
+    # era = '2018'
     # era = '2022_13p6/crabNanoPost_2022postEE_v3'
     # era = '2022_13p6/crabNanoPost_2022preEE_v3'
     # onlyMC = True

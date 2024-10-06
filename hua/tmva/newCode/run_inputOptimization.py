@@ -13,6 +13,12 @@ def main():
 
     # inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/inputList_1tau0l.csv.root'
     # inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v0allVar/training.log'
+    # inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v1allVar/inputList_1tau0l.csv.root'
+    # inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau0lSRTauF_v76WithVLLAllMass/mc/BDTTrain/v1allVar/training.log'
+
+    
+    # inputRoot = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau2lSR_v84Pre1tau2lLepF2/mc/BDTTrain/v0allVar/inputList_1tau2l_all.csv.root'
+    # inputLog = '/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/forMVA/2018/v2cut1tau2lSR_v84Pre1tau2lLepF2/mc/BDTTrain/v0allVar/training.log'
     inputRoot = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/inputList_1tau1l.csv.root'
     inputLog = '/afs/ihep.ac.cn/users/t/turuobing/CMSSW_10_6_20/src/FourTop/hua/tmva/newCode/BDTTrain/v1VLLM600_Fullvar/training.log'
 
@@ -190,7 +196,6 @@ def generateVarList(inputRoot, inputLog, varListVer = 'v0'):
 
 def createNextVariableList_correlation( vlist, TMVAroot):
     #only stores variable in vlist
-    #  inputFile = ROOT.TFile("/publicfs/cms/user/huahuil/TauOfTTTT/2016v1/TMVAOutput/v1HT400Cut_v44_fixedSingJetHLTBugAndAddHLTcut/1tau1l_forvariables_variables.root")
     inputFile = ROOT.TFile( TMVAroot )
     inputFile.Print()
     h2 = inputFile.Get("dataset/CorrelationMatrixS"); #TH2F

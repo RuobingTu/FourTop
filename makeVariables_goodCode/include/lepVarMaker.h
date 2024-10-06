@@ -15,6 +15,8 @@ public:
     void processSingleLep(const EventForMV* e, const UInt_t muonSize, const UInt_t eleSize);
     void processingDoubleLep(const EventForMV* e, const UInt_t muonSize, const UInt_t eleSize);
     void setupLorentzObjs(const EventForMV *e);
+    Double_t get1pt();
+    Double_t get2pt();
 
 private:
     TString m_era;
@@ -41,6 +43,8 @@ private:
     Double_t muonsTopMVAF_2ptCorrected;
     Double_t lepTopMVAF_1ptCorrected;
     Double_t lepTopMVAF_2ptCorrected;
+    Int_t elesTopMVAF_num;
+    Int_t muonsTopMVAF_num;
 
 
     std::vector<Double_t> lep_ptConeCorrected;

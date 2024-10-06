@@ -27,8 +27,11 @@ void run_objectSelection(
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v82for1tau2l/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v83for1tau2lEleEtaCut/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdate/mc/",
-    TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdateV2/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdateV2/mc/",
     // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84fakeLeptonUpdate/data/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84Pre1tau2lNoLepCut/mc/",
+    // TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2018/v84Pre1tau2lLepF2/mc/",
+    TString inputBase = "/publicfs/cms/user/huahuil/tauOfTTTT_NanoAOD/UL2017/v84Pre1tau2lLepF2/mc/",
 
     TString inputDir = "tttt",
     // TString inputDir = "ZGToLLG",
@@ -63,9 +66,8 @@ void run_objectSelection(
 
     MakeVariablesMain mv(inputDir1, outputDir, processName, isData, era, isRun3);
     Bool_t baseline = kTRUE;
-    Bool_t if1tau2l = kFALSE;
-    // Bool_t baseline = kFALSE;
-    // mv.EventLoop(baseline, kTRUE, numEntries); //1tau1l cut 
+    // Bool_t if1tau2l = kFALSE;
+    // mv.EventLoop(baseline, kTRUE, numEntries); //!channel cut, for BDT training only 
     mv.EventLoop(baseline, kFALSE, numEntries);
     mv.Terminate();
 

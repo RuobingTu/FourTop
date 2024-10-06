@@ -193,33 +193,33 @@ histoGramPerSample = {
     "ttWW": "ttX",
     
     # "wz":"VV",
-    "WZTo3LNu":"VV", #!use this instead of wz
-    "ww":"VV",
-    "zz":"VV",
-    'WWW': "VVV",
-    'WWZ': 'VVV',
-    'WZZ': 'VVV',
-    'ZZZ': 'VVV',
+    "WZTo3LNu":"Minor", #!use this instead of wz
+    "ww":"Minor",
+    "zz":"Minor",
+    'WWW': "Minor",
+    'WWZ': 'Minor',
+    'WZZ': 'Minor',
+    'ZZZ': 'Minor',
     
     "st_tZq":"singleTop",
     "st_tW_antitop":"singleTop",
     "st_tW_top":"singleTop",
     
-    "TGJets": "XGamma",
-    "ZGToLLG": "XGamma",
-    "WGToLNuG": "XGamma",
+    "TGJets": "Minor",#"XGamma",
+    "ZGToLLG": "Minor",#"XGamma",
+    "WGToLNuG": "Minor",#"XGamma",
    
     
-    "ggH_bb": "Higgs",
-    "ggH_tautau": "Higgs",
-    "ggH_WW_2l": "Higgs",
-    "ggH_ZZ_2l": "Higgs",
-    "ggH_ZZ_4l": "Higgs",
-    "ggH_gg": "Higgs",
-    "vbfH_bb": "Higgs",
-    "vbfH_tautau": "Higgs",
-    "vbfH_WW_2l": "Higgs",
-    # "VH_nonbb": "Higgs", #!not in MV
+    "ggH_bb": "Minor",#"Higgs",
+    "ggH_tautau": "Minor",#"Higgs",
+    "ggH_WW_2l": "Minor",#"Higgs",
+    "ggH_ZZ_2l": "Minor",#"Higgs",
+    "ggH_ZZ_4l": "Minor",#"Higgs",
+    "ggH_gg": "Minor",#"Higgs",
+    "vbfH_bb": "Minor",#"Higgs",
+    "vbfH_tautau": "Minor",#"Higgs",
+    "vbfH_WW_2l": "Minor",#"Higgs",
+    # "VH_nonbb": "Minor",#"Higgs", #!not in MV
     
     "WJetsToLNu_HT-200To400": "WJets",
     "WJetsToLNu_HT-400To600": "WJets",
@@ -320,8 +320,7 @@ histoGramPerSample = {
     'singleMu_2017e': 'singleMu',
     'singleMu_2017f': 'singleMu',
     
-    #!how to ovoid overlap of data in 1tau2l? 
-    #may additonal python code to remove the overlap
+    #additonal python code to remove the overlap
     'doubleMu_2018a': 'doubleMu',
     'doubleMu_2018b': 'doubleMu',
     'doubleMu_2018c': 'doubleMu',
@@ -334,6 +333,27 @@ histoGramPerSample = {
     'eGamma_2018b': 'eGamma',
     'eGamma_2018c': 'eGamma',
     'eGamma_2018d': 'eGamma',
+    
+    'doubleMu_2017b': 'doubleMu',
+    'doubleMu_2017c': 'doubleMu',
+    'doubleMu_2017d': 'doubleMu',
+    'doubleMu_2017e': 'doubleMu',
+    'doubleMu_2017f': 'doubleMu',
+    'doubleEG_2017b': 'doubleEG',
+    'doubleEG_2017c': 'doubleEG',
+    'doubleEG_2017d': 'doubleEG',
+    'doubleEG_2017e': 'doubleEG',
+    'doubleEG_2017f': 'doubleEG',
+    'MuonEG_2017b': 'muonEG',
+    'MuonEG_2017c': 'muonEG',
+    'MuonEG_2017d': 'muonEG',
+    'MuonEG_2017e': 'muonEG',
+    'MuonEG_2017f': 'muonEG',
+    'singleE_2017b': 'singleE',
+    'singleE_2017c': 'singleE',
+    'singleE_2017d': 'singleE',
+    'singleE_2017e': 'singleE',
+    'singleE_2017f': 'singleE',
     
     #overlap removed data for 1tau2l
     'leptonSum_2018': 'leptonSum',
@@ -481,5 +501,6 @@ dataDict = {
 proChannelDic = {
     '1tau1l':  ['tt', 'ttX', 'singleTop', 'WJets', 'tttt', 'jetHT', 'fakeLepton'], #! 1tau1l, for now not considering data
     '1tau0l':  ['tttt', 'tt', 'fakeTau', 'ttX', 'singleTop', 'WJets', 'jetHT'], #!1tau0l
-    '1tau2l':  ['tt', 'ttX', 'singleTop', 'WJets',  'VV','VVV','Higgs', 'XGamma', 'fakeLepton', 'tttt', 'leptonSum'], 
+    # '1tau2l':  ['tt', 'ttX', 'singleTop', 'WJets',  'VV','VVV','Higgs', 'XGamma', 'fakeLepton', 'tttt', 'leptonSum'], 
+    '1tau2l':  ['tt', 'ttX', 'fakeLepton', 'singleTop',  'Minor',  'tttt', 'leptonSum'], 
 }

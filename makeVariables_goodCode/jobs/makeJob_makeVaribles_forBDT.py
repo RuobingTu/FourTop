@@ -37,7 +37,9 @@ def main():
     # inVersion = 'v81addSysSum'
     # inVersion = 'v82for1tau2l'
     # inVersion = 'v83for1tau2lEleEtaCut'
-    inVersion = 'v84fakeLeptonUpdateV2'
+    # inVersion = 'v84fakeLeptonUpdateV2'
+    # inVersion = 'v84Pre1tau2lNoLepCut'
+    inVersion = 'v84Pre1tau2lLepF2'
 
     # outVersion = 'v0baselineHardro'
     # outVersion = 'v0baseline1tau2l'
@@ -48,7 +50,7 @@ def main():
     # outVersion = 'v1baselineHardro_FRweightSys'
     # outVersion = 'v2cut1tau0lSRTauF'
     # outVersion = 'v1cut1tau1lSR'
-    # outVersion = 'v4cut1tau2lSR'
+    # outVersion = 'v2cut1tau2lSR'
     
     #2022
     # year = '2022postEE'
